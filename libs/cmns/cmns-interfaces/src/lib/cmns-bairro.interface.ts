@@ -1,4 +1,5 @@
 import { LocalDateTime } from '@js-joda/core';
+import { ICmnsLocalidade } from './cmns-localidade.interface';
 
 export interface ICmnsBairro {
     bairId: string;

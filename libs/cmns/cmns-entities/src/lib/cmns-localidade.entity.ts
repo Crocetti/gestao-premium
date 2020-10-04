@@ -1,3 +1,4 @@
+import { LocalDateTime } from '@js-joda/core';
 import {
   BaseEntity,
   Column,
@@ -8,8 +9,8 @@ import {
   OneToMany,
   RelationId,
 } from "typeorm";
-import { CmnsBairro } from "./cmns-bairro";
-import { CmnsUnidadeFederativa } from "./cmns-unidade-federativa";
+import { CmnsBairro } from "./cmns-bairro.entity";
+import { CmnsUnidadeFederativa } from "./cmns-unidade-federativa.entity";
 
 @Index("FK_UNFD_RS_LCLD", ["lcldUnfdId"], {})
 @Index("PK_CMNS_LOCALIDADE", ["lcldId"], { unique: true })
@@ -43,20 +44,13 @@ export class CmnsLocalidade extends BaseEntity {
   public lcldLastupdate: LocalDateTime | null;
 
   @OneToMany(() => CmnsBairro, (cmnsBairro) => cmnsBairro.bairLcld)
-  public cmnsBairros: CmnsBairro[];
+  public cmnsBairros?: CmnsBairro[];
 
   @ManyToOne(
     () => CmnsUnidadeFederativa,
     (cmnsUnidadeFederativa) => cmnsUnidadeFederativa.cmnsLocalidades
   )
   @JoinColumn([{ name: "LCLD_UNFD_ID", referencedColumnName: "unfdId" }])
-  public lcldUnfd: CmnsUnidadeFederativa;
+  public cmnsUnFd: CmnsUnidadeFederativa;
 
-  @RelationId((cmnsLocalidade: CmnsLocalidade) => cmnsLocalidade.lcldUnfd)
-  public lcldUnfdId2: string | null;
-
-  public constructor(init?: Partial<CmnsLocalidade>) {
-    super();
-    Object.assign(this, init);
-  }
 }

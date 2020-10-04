@@ -1,5 +1,5 @@
 import { LocalDateTime } from '@js-joda/core';
-import { ICmnsPais, ICmnsUnidadeFederativa } from '@gestao-premium/cmns-interfaces';
+import { ICmnsLocalidade, ICmnsPais, ICmnsUnidadeFederativa } from '@gestao-premium/cmns-interfaces';
 import {
   BaseEntity,
   Column,
@@ -11,16 +11,14 @@ import {
   RelationId,
 } from "typeorm";
 import { CmnsPais } from "./cmns-pais.entity";
+import { CmnsLocalidade } from './cmns-localidade.entity';
 
 @Index("FK_PAIS_RS_UNFD", ["unfdPaisId"], {})
 @Index("PK_CMNS_UNIDADE_FEDERATIVA", ["unfdId"], { unique: true })
 @Entity("CMNS_UNIDADE_FEDERATIVA")
-export class CmnsUnidadeFederativa extends BaseEntity implements ICmnsUnidadeFederativa {
+export class CmnsUnidadeFederativa implements ICmnsUnidadeFederativa {
   @Column("varchar", { primary: true, name: "UNFD_ID", length: 27 })
   public unfdId: string;
-
-  @Column("varchar", { name: "UNFD_PAIS_ID", nullable: true, length: 27 })
-  public unfdPaisId: string | null;
 
   @Column("varchar", { name: "UNFD_NOME", nullable: true, length: 64 })
   public unfdNome: string | null;
@@ -47,8 +45,7 @@ export class CmnsUnidadeFederativa extends BaseEntity implements ICmnsUnidadeFed
   @JoinColumn([{ name: "UNFD_PAIS_ID", referencedColumnName: "paisId" }])
   public cmnsPais: ICmnsPais;
 
-  public constructor(init?: Partial<ICmnsUnidadeFederativa>) {
-    super();
-    Object.assign(this, init);
-  }
+  @OneToMany(() => CmnsLocalidade, (cmnsLocalidade) => cmnsLocalidade.cmnsUnFd)
+  public cmnsLocalidades?: ICmnsLocalidade[];
+
 }

@@ -1,11 +1,11 @@
 import { LocalDateTime } from '@js-joda/core';
 import { BaseEntity, Column, Entity, Index, OneToMany } from "typeorm";
-import { CmnsUnidadeFederativa } from "./cmns-unidade-federativa";
-import { ICmnsPais } from '@gestao-premium/cmns-interfaces'
+import { CmnsUnidadeFederativa } from "./cmns-unidade-federativa.entity";
+import { ICmnsPais, ICmnsUnidadeFederativa } from '@gestao-premium/cmns-interfaces'
 
 @Index("PK_CMNS_PAIS", ["paisId"], { unique: true })
 @Entity("CMNS_PAIS")
-export class CmnsPais extends BaseEntity implements ICmnsPais {
+export class CmnsPais  implements ICmnsPais {
   @Column("varchar", { primary: true, name: "PAIS_ID", length: 27 })
   public paisId?: string;
 
@@ -34,8 +34,7 @@ export class CmnsPais extends BaseEntity implements ICmnsPais {
   @Column("datetime", { name: "PAIS_LASTUPDATE", nullable: true })
   public paisLastupdate: LocalDateTime | null;
 
-  public constructor(init?: Partial<CmnsPais>) {
-    super();
-    Object.assign(this, init);
-  }
+  @OneToMany( () => CmnsUnidadeFederativa, (cmnsUnidadeFederativa) => cmnsUnidadeFederativa.cmnsPais)
+  public cmnsUnidadesFederativas: ICmnsUnidadeFederativa[]
+
 }
