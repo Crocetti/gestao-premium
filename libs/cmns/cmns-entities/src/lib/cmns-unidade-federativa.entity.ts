@@ -1,0 +1,54 @@
+import { LocalDateTime } from '@js-joda/core';
+import { ICmnsPais, ICmnsUnidadeFederativa } from '@gestao-premium/cmns-interfaces';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  RelationId,
+} from "typeorm";
+import { CmnsPais } from "./cmns-pais.entity";
+
+@Index("FK_PAIS_RS_UNFD", ["unfdPaisId"], {})
+@Index("PK_CMNS_UNIDADE_FEDERATIVA", ["unfdId"], { unique: true })
+@Entity("CMNS_UNIDADE_FEDERATIVA")
+export class CmnsUnidadeFederativa extends BaseEntity implements ICmnsUnidadeFederativa {
+  @Column("varchar", { primary: true, name: "UNFD_ID", length: 27 })
+  public unfdId: string;
+
+  @Column("varchar", { name: "UNFD_PAIS_ID", nullable: true, length: 27 })
+  public unfdPaisId: string | null;
+
+  @Column("varchar", { name: "UNFD_NOME", nullable: true, length: 64 })
+  public unfdNome: string | null;
+
+  @Column("varchar", { name: "UNFD_SIGLA", nullable: true, length: 3 })
+  public unfdSigla: string | null;
+
+  @Column("varchar", { name: "UNFD_PREPOSICAO", nullable: true, length: 3 })
+  public unfdPreposicao: string | null;
+
+  @Column("varchar", { name: "UNFD_NR_IBGE", nullable: true, length: 12 })
+  public unfdNrIbge: string | null;
+
+  @Column("varchar", { name: "UNFD_CEP_INICIAL", nullable: true, length: 9 })
+  public unfdCepInicial: string | null;
+
+  @Column("varchar", { name: "UNFD_CEP_FINAL", nullable: true, length: 9 })
+  public unfdCepFinal: string | null;
+
+  @Column("datetime", { name: "UNFD_LASTUPDATE", nullable: true })
+  public unfdLastupdate: LocalDateTime | null;
+
+  @ManyToOne(() => CmnsPais)
+  @JoinColumn([{ name: "UNFD_PAIS_ID", referencedColumnName: "paisId" }])
+  public cmnsPais: ICmnsPais;
+
+  public constructor(init?: Partial<ICmnsUnidadeFederativa>) {
+    super();
+    Object.assign(this, init);
+  }
+}

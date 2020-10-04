@@ -1,0 +1,126 @@
+{
+  "npmScope": "gestao-premium",
+  "affected": {
+    "defaultBase": "master"
+  },
+  "implicitDependencies": {
+    "angular.json": "*",
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
+    "tsconfig.base.json": "*",
+    "tslint.json": "*",
+    "nx.json": "*"
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/nx-cloud",
+      "options": {
+        "accessToken": "ZDYzNDFlODAtMDc5Mi00NmFmLWE2MGYtMWVkMzNjZDQwZjY3fHJlYWQtd3JpdGU=",
+        "cacheableOperations": ["build", "test", "lint", "e2e"],
+        "canTrackAnalytics": false,
+        "showUsageWarnings": true
+      }
+    }
+  },
+  "projects": {
+    "gp-fazenda": {
+      "tags": []
+    },
+    "gp-fazenda-e2e": {
+      "tags": [],
+      "implicitDependencies": ["gp-fazenda"]
+    },
+    "api": {
+      "tags": []
+    },
+    "api-interfaces": {
+      "tags": []
+    },
+    "cdst-entities": {
+      "tags": []
+    },
+    "cmns-entities": {
+      "tags": []
+    },
+    "core-entities": {
+      "tags": []
+    },
+    "estq-entities": {
+      "tags": []
+    },
+    "fncr-entities": {
+      "tags": []
+    },
+    "fscl-entities": {
+      "tags": []
+    },
+    "mail-entities": {
+      "tags": []
+    },
+    "menu-entities": {
+      "tags": []
+    },
+    "pecf-entities": {
+      "tags": []
+    },
+    "pecr-entities": {
+      "tags": []
+    },
+    "rchm-entities": {
+      "tags": []
+    },
+    "srvc-entities": {
+      "tags": []
+    },
+    "sstm-entities": {
+      "tags": []
+    },
+    "vete-entities": {
+      "tags": []
+    },
+    "cdst-interfaces": {
+      "tags": []
+    },
+    "cmns-interfaces": {
+      "tags": []
+    },
+    "core-interfaces": {
+      "tags": []
+    },
+    "estq-interfaces": {
+      "tags": []
+    },
+    "fncr-interfaces": {
+      "tags": []
+    },
+    "fscl-interfaces": {
+      "tags": []
+    },
+    "mail-interfaces": {
+      "tags": []
+    },
+    "menu-interfaces": {
+      "tags": []
+    },
+    "pecf-interfaces": {
+      "tags": []
+    },
+    "pecr-interfaces": {
+      "tags": []
+    },
+    "rchm-interfaces": {
+      "tags": []
+    },
+    "srvc-interfaces": {
+      "tags": []
+    },
+    "sstm-interfaces": {
+      "tags": []
+    },
+    "vete-interfaces": {
+      "tags": []
+    },
+  }
+}

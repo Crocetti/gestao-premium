@@ -1,0 +1,77 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "typeRoots": ["node_modules/@types"],
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@gestao-premium/api-interfaces": ["libs/api-interfaces/src/index.ts"],
+      "@gestao-premium/cdst-entities": ["libs/cdst/cdst-entities/src/index.ts"],
+      "@gestao-premium/cmns-entities": ["libs/cmns/cmns-entities/src/index.ts"],
+      "@gestao-premium/core-entities": ["libs/core/core-entities/src/index.ts"],
+      "@gestao-premium/estq-entities": ["libs/estq/estq-entities/src/index.ts"],
+      "@gestao-premium/fncr-entities": ["libs/fncr/fncr-entities/src/index.ts"],
+      "@gestao-premium/fscl-entities": ["libs/fscl/fscl-entities/src/index.ts"],
+      "@gestao-premium/mail-entities": ["libs/mail/mail-entities/src/index.ts"],
+      "@gestao-premium/menu-entities": ["libs/menu/menu-entities/src/index.ts"],
+      "@gestao-premium/pecf-entities": ["libs/pecf/pecf-entities/src/index.ts"],
+      "@gestao-premium/pecr-entities": ["libs/pecr/pecr-entities/src/index.ts"],
+      "@gestao-premium/rchm-entities": ["libs/rchm/rchm-entities/src/index.ts"],
+      "@gestao-premium/srvc-entities": ["libs/srvc/srvc-entities/src/index.ts"],
+      "@gestao-premium/sstm-entities": ["libs/sstm/sstm-entities/src/index.ts"],
+      "@gestao-premium/vete-entities": ["libs/vete/vete-entities/src/index.ts"],
+      "@gestao-premium/cdst-interfaces": ["libs/cdst/cdst-interfaces/src/index.ts"],
+      "@gestao-premium/cmns-interfaces": [
+        "libs/cmns/cmns-interfaces/src/index.ts"
+      ],
+      "@gestao-premium/core-interfaces": [
+        "libs/core/core-interfaces/src/index.ts"
+      ],
+      "@gestao-premium/estq-interfaces": [
+        "libs/estq/estq-interfaces/src/index.ts"
+      ],
+      "@gestao-premium/fncr-interfaces": [
+        "libs/fncr/fncr-interfaces/src/index.ts"
+      ],
+      "@gestao-premium/fscl-interfaces": [
+        "libs/fscl/fscl-interfaces/src/index.ts"
+      ],
+      "@gestao-premium/mail-interfaces": [
+        "libs/mail/mail-interfaces/src/index.ts"
+      ],
+      "@gestao-premium/menu-interfaces": [
+        "libs/menu/menu-interfaces/src/index.ts"
+      ],
+      "@gestao-premium/pecf-interfaces": [
+        "libs/pecf/pecf-interfaces/src/index.ts"
+      ],
+      "@gestao-premium/pecr-interfaces": [
+        "libs/pecr/pecr-interfaces/src/index.ts"
+      ],
+      "@gestao-premium/rchm-interfaces": [
+        "libs/rchm/rchm-interfaces/src/index.ts"
+      ],
+      "@gestao-premium/srvc-interfaces": [
+        "libs/srvc/srvc-interfaces/src/index.ts"
+      ],
+      "@gestao-premium/sstm-interfaces": [
+        "libs/sstm/sstm-interfaces/src/index.ts"
+      ],
+      "@gestao-premium/vete-interfaces": [
+        "libs/vete/vete-interfaces/src/index.ts"
+      ]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}
