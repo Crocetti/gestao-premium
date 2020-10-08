@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Message } from '@gestao-premium/api-interfaces';
+import { Message } from '@gpremium/api-interfaces';
 
 @Injectable()
 export class AppService {

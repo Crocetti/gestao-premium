@@ -1,7 +1,7 @@
 import { LocalDateTime } from '@js-joda/core';
 import { BaseEntity, Column, Entity, Index, OneToMany } from "typeorm";
 import { CmnsUnidadeFederativa } from "./cmns-unidade-federativa.entity";
-import { ICmnsPais, ICmnsUnidadeFederativa } from '@gestao-premium/cmns-interfaces'
+import { ICmnsPais, ICmnsUnidadeFederativa } from '@gpremium/cmns-interfaces'
 
 @Index("PK_CMNS_PAIS", ["paisId"], { unique: true })
 @Entity("CMNS_PAIS")

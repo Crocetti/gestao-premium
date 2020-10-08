@@ -2,7 +2,7 @@
   "extends": "../../../tslint.json",
   "rules": {
     "directive-selector": [true, "attribute", "gestaoPremium", "camelCase"],
-    "component-selector": [true, "element", "gestao-premium", "kebab-case"]
+    "component-selector": [true, "element", "gpremium", "kebab-case"]
   },
   "linterOptions": {
     "exclude": ["!**/*"]

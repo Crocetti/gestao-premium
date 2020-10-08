@@ -16,64 +16,64 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@gestao-premium/api-interfaces": ["libs/api-interfaces/src/index.ts"],
-      "@gestao-premium/cdst-entities": ["libs/cdst/cdst-entities/src/index.ts"],
-      "@gestao-premium/cmns-entities": ["libs/cmns/cmns-entities/src/index.ts"],
-      "@gestao-premium/core-entities": ["libs/core/core-entities/src/index.ts"],
-      "@gestao-premium/estq-entities": ["libs/estq/estq-entities/src/index.ts"],
-      "@gestao-premium/fncr-entities": ["libs/fncr/fncr-entities/src/index.ts"],
-      "@gestao-premium/fscl-entities": ["libs/fscl/fscl-entities/src/index.ts"],
-      "@gestao-premium/mail-entities": ["libs/mail/mail-entities/src/index.ts"],
-      "@gestao-premium/menu-entities": ["libs/menu/menu-entities/src/index.ts"],
-      "@gestao-premium/pecf-entities": ["libs/pecf/pecf-entities/src/index.ts"],
-      "@gestao-premium/pecr-entities": ["libs/pecr/pecr-entities/src/index.ts"],
-      "@gestao-premium/rchm-entities": ["libs/rchm/rchm-entities/src/index.ts"],
-      "@gestao-premium/srvc-entities": ["libs/srvc/srvc-entities/src/index.ts"],
-      "@gestao-premium/sstm-entities": ["libs/sstm/sstm-entities/src/index.ts"],
-      "@gestao-premium/vete-entities": ["libs/vete/vete-entities/src/index.ts"],
-      "@gestao-premium/cdst-interfaces": [
+      "@gpremium/api-interfaces": ["libs/api-interfaces/src/index.ts"],
+      "@gpremium/cdst-entities": ["libs/cdst/cdst-entities/src/index.ts"],
+      "@gpremium/cmns-entities": ["libs/cmns/cmns-entities/src/index.ts"],
+      "@gpremium/core-entities": ["libs/core/core-entities/src/index.ts"],
+      "@gpremium/estq-entities": ["libs/estq/estq-entities/src/index.ts"],
+      "@gpremium/fncr-entities": ["libs/fncr/fncr-entities/src/index.ts"],
+      "@gpremium/fscl-entities": ["libs/fscl/fscl-entities/src/index.ts"],
+      "@gpremium/mail-entities": ["libs/mail/mail-entities/src/index.ts"],
+      "@gpremium/menu-entities": ["libs/menu/menu-entities/src/index.ts"],
+      "@gpremium/pecf-entities": ["libs/pecf/pecf-entities/src/index.ts"],
+      "@gpremium/pecr-entities": ["libs/pecr/pecr-entities/src/index.ts"],
+      "@gpremium/rchm-entities": ["libs/rchm/rchm-entities/src/index.ts"],
+      "@gpremium/srvc-entities": ["libs/srvc/srvc-entities/src/index.ts"],
+      "@gpremium/sstm-entities": ["libs/sstm/sstm-entities/src/index.ts"],
+      "@gpremium/vete-entities": ["libs/vete/vete-entities/src/index.ts"],
+      "@gpremium/cdst-interfaces": [
         "libs/cdst/cdst-interfaces/src/index.ts"
       ],
-      "@gestao-premium/cmns-interfaces": [
+      "@gpremium/cmns-interfaces": [
         "libs/cmns/cmns-interfaces/src/index.ts"
       ],
-      "@gestao-premium/core-interfaces": [
+      "@gpremium/core-interfaces": [
         "libs/core/core-interfaces/src/index.ts"
       ],
-      "@gestao-premium/estq-interfaces": [
+      "@gpremium/estq-interfaces": [
         "libs/estq/estq-interfaces/src/index.ts"
       ],
-      "@gestao-premium/fncr-interfaces": [
+      "@gpremium/fncr-interfaces": [
         "libs/fncr/fncr-interfaces/src/index.ts"
       ],
-      "@gestao-premium/fscl-interfaces": [
+      "@gpremium/fscl-interfaces": [
         "libs/fscl/fscl-interfaces/src/index.ts"
       ],
-      "@gestao-premium/mail-interfaces": [
+      "@gpremium/mail-interfaces": [
         "libs/mail/mail-interfaces/src/index.ts"
       ],
-      "@gestao-premium/menu-interfaces": [
+      "@gpremium/menu-interfaces": [
         "libs/menu/menu-interfaces/src/index.ts"
       ],
-      "@gestao-premium/pecf-interfaces": [
+      "@gpremium/pecf-interfaces": [
         "libs/pecf/pecf-interfaces/src/index.ts"
       ],
-      "@gestao-premium/pecr-interfaces": [
+      "@gpremium/pecr-interfaces": [
         "libs/pecr/pecr-interfaces/src/index.ts"
       ],
-      "@gestao-premium/rchm-interfaces": [
+      "@gpremium/rchm-interfaces": [
         "libs/rchm/rchm-interfaces/src/index.ts"
       ],
-      "@gestao-premium/srvc-interfaces": [
+      "@gpremium/srvc-interfaces": [
         "libs/srvc/srvc-interfaces/src/index.ts"
       ],
-      "@gestao-premium/sstm-interfaces": [
+      "@gpremium/sstm-interfaces": [
         "libs/sstm/sstm-interfaces/src/index.ts"
       ],
-      "@gestao-premium/vete-interfaces": [
+      "@gpremium/vete-interfaces": [
         "libs/vete/vete-interfaces/src/index.ts"
       ],
-      "@gestao-premium/cmns/cmns-controllers": [
+      "@gpremium/cmns/cmns-controllers": [
         "libs/cmns/cmns-controllers/src/index.ts"
       ]
     }

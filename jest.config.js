@@ -33,5 +33,6 @@ module.exports = {
     '<rootDir>/libs/fncr/fncr-entities',
     '<rootDir>/libs/cmns/cmns-controllers',
     '<rootDir>/apps/gp-api',
+    '<rootDir>/apps/gp-app',
   ],
 };

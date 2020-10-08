@@ -1,5 +1,5 @@
 {
-  "npmScope": "gestao-premium",
+  "npmScope": "gpremium",
   "affected": {
     "defaultBase": "master"
   },
@@ -127,6 +127,13 @@
     },
     "gp-api": {
       "tags": ["gp"]
+    },
+    "gp-app": {
+      "tags": []
+    },
+    "gp-app-e2e": {
+      "tags": [],
+      "implicitDependencies": ["gp-app"]
     }
   }
 }

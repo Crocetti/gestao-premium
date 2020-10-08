@@ -1,5 +1,5 @@
 import { LocalDateTime } from '@js-joda/core';
-import { ICmnsLocalidade, ICmnsPais, ICmnsUnidadeFederativa } from '@gestao-premium/cmns-interfaces';
+import { ICmnsLocalidade, ICmnsPais, ICmnsUnidadeFederativa } from '@gpremium/cmns-interfaces';
 import {
   BaseEntity,
   Column,

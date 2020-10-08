@@ -10,7 +10,7 @@
       },
       "root": "apps/gp-fazenda",
       "sourceRoot": "apps/gp-fazenda/src",
-      "prefix": "gestao-premium",
+      "prefix": "gpremium",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -206,7 +206,7 @@
       "projectType": "library",
       "root": "libs/cdst/cdst-entities",
       "sourceRoot": "libs/cdst/cdst-entities/src",
-      "prefix": "gestao-premium",
+      "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -236,7 +236,7 @@
       "projectType": "library",
       "root": "libs/cmns/cmns-entities",
       "sourceRoot": "libs/cmns/cmns-entities/src",
-      "prefix": "gestao-premium",
+      "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -266,7 +266,7 @@
       "projectType": "library",
       "root": "libs/core/core-entities",
       "sourceRoot": "libs/core/core-entities/src",
-      "prefix": "gestao-premium",
+      "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -296,7 +296,7 @@
       "projectType": "library",
       "root": "libs/estq/estq-entities",
       "sourceRoot": "libs/estq/estq-entities/src",
-      "prefix": "gestao-premium",
+      "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -326,7 +326,7 @@
       "projectType": "library",
       "root": "libs/fscl/fscl-entities",
       "sourceRoot": "libs/fscl/fscl-entities/src",
-      "prefix": "gestao-premium",
+      "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -356,7 +356,7 @@
       "projectType": "library",
       "root": "libs/mail/mail-entities",
       "sourceRoot": "libs/mail/mail-entities/src",
-      "prefix": "gestao-premium",
+      "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -386,7 +386,7 @@
       "projectType": "library",
       "root": "libs/menu/menu-entities",
       "sourceRoot": "libs/menu/menu-entities/src",
-      "prefix": "gestao-premium",
+      "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -416,7 +416,7 @@
       "projectType": "library",
       "root": "libs/pecf/pecf-entities",
       "sourceRoot": "libs/pecf/pecf-entities/src",
-      "prefix": "gestao-premium",
+      "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -446,7 +446,7 @@
       "projectType": "library",
       "root": "libs/pecr/pecr-entities",
       "sourceRoot": "libs/pecr/pecr-entities/src",
-      "prefix": "gestao-premium",
+      "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -476,7 +476,7 @@
       "projectType": "library",
       "root": "libs/rchm/rchm-entities",
       "sourceRoot": "libs/rchm/rchm-entities/src",
-      "prefix": "gestao-premium",
+      "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -506,7 +506,7 @@
       "projectType": "library",
       "root": "libs/srvc/srvc-entities",
       "sourceRoot": "libs/srvc/srvc-entities/src",
-      "prefix": "gestao-premium",
+      "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -536,7 +536,7 @@
       "projectType": "library",
       "root": "libs/sstm/sstm-entities",
       "sourceRoot": "libs/sstm/sstm-entities/src",
-      "prefix": "gestao-premium",
+      "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -566,7 +566,7 @@
       "projectType": "library",
       "root": "libs/vete/vete-entities",
       "sourceRoot": "libs/vete/vete-entities/src",
-      "prefix": "gestao-premium",
+      "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -596,7 +596,7 @@
       "projectType": "library",
       "root": "libs/cdst/cdst-interfaces",
       "sourceRoot": "libs/cdst/cdst-interfaces/src",
-      "prefix": "gestao-premium",
+      "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -626,7 +626,7 @@
       "projectType": "library",
       "root": "libs/cmns/cmns-interfaces",
       "sourceRoot": "libs/cmns/cmns-interfaces/src",
-      "prefix": "gestao-premium",
+      "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -656,7 +656,7 @@
       "projectType": "library",
       "root": "libs/core/core-interfaces",
       "sourceRoot": "libs/core/core-interfaces/src",
-      "prefix": "gestao-premium",
+      "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -686,7 +686,7 @@
       "projectType": "library",
       "root": "libs/estq/estq-interfaces",
       "sourceRoot": "libs/estq/estq-interfaces/src",
-      "prefix": "gestao-premium",
+      "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -716,7 +716,7 @@
       "projectType": "library",
       "root": "libs/fncr/fncr-interfaces",
       "sourceRoot": "libs/fncr/fncr-interfaces/src",
-      "prefix": "gestao-premium",
+      "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -746,7 +746,7 @@
       "projectType": "library",
       "root": "libs/fscl/fscl-interfaces",
       "sourceRoot": "libs/fscl/fscl-interfaces/src",
-      "prefix": "gestao-premium",
+      "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -776,7 +776,7 @@
       "projectType": "library",
       "root": "libs/mail/mail-interfaces",
       "sourceRoot": "libs/mail/mail-interfaces/src",
-      "prefix": "gestao-premium",
+      "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -806,7 +806,7 @@
       "projectType": "library",
       "root": "libs/menu/menu-interfaces",
       "sourceRoot": "libs/menu/menu-interfaces/src",
-      "prefix": "gestao-premium",
+      "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -836,7 +836,7 @@
       "projectType": "library",
       "root": "libs/pecf/pecf-interfaces",
       "sourceRoot": "libs/pecf/pecf-interfaces/src",
-      "prefix": "gestao-premium",
+      "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -866,7 +866,7 @@
       "projectType": "library",
       "root": "libs/pecr/pecr-interfaces",
       "sourceRoot": "libs/pecr/pecr-interfaces/src",
-      "prefix": "gestao-premium",
+      "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -896,7 +896,7 @@
       "projectType": "library",
       "root": "libs/rchm/rchm-interfaces",
       "sourceRoot": "libs/rchm/rchm-interfaces/src",
-      "prefix": "gestao-premium",
+      "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -926,7 +926,7 @@
       "projectType": "library",
       "root": "libs/srvc/srvc-interfaces",
       "sourceRoot": "libs/srvc/srvc-interfaces/src",
-      "prefix": "gestao-premium",
+      "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -956,7 +956,7 @@
       "projectType": "library",
       "root": "libs/sstm/sstm-interfaces",
       "sourceRoot": "libs/sstm/sstm-interfaces/src",
-      "prefix": "gestao-premium",
+      "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -986,7 +986,7 @@
       "projectType": "library",
       "root": "libs/vete/vete-interfaces",
       "sourceRoot": "libs/vete/vete-interfaces/src",
-      "prefix": "gestao-premium",
+      "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -1016,7 +1016,7 @@
       "projectType": "library",
       "root": "libs/fncr/fncr-entities",
       "sourceRoot": "libs/fncr/fncr-entities/src",
-      "prefix": "gestao-premium",
+      "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -1120,6 +1120,126 @@
           "options": {
             "jestConfig": "apps/gp-api/jest.config.js",
             "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "gp-app": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/gp-app",
+      "sourceRoot": "apps/gp-app/src",
+      "prefix": "gpremium",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/gp-app",
+            "index": "apps/gp-app/src/index.html",
+            "main": "apps/gp-app/src/main.ts",
+            "polyfills": "apps/gp-app/src/polyfills.ts",
+            "tsConfig": "apps/gp-app/tsconfig.app.json",
+            "aot": true,
+            "assets": ["apps/gp-app/src/favicon.ico", "apps/gp-app/src/assets"],
+            "styles": ["apps/gp-app/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/gp-app/src/environments/environment.ts",
+                  "with": "apps/gp-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "gp-app:build",
+            "proxyConfig": "apps/gp-app/proxy.conf.json"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "gp-app:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "gp-app:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/gp-app/tsconfig.app.json",
+              "apps/gp-app/tsconfig.spec.json",
+              "apps/gp-app/tsconfig.editor.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/gp-app/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/gp-app/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "gp-app-e2e": {
+      "root": "apps/gp-app-e2e",
+      "sourceRoot": "apps/gp-app-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/gp-app-e2e/cypress.json",
+            "tsConfig": "apps/gp-app-e2e/tsconfig.e2e.json",
+            "devServerTarget": "gp-app:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "gp-app:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["apps/gp-app-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/gp-app-e2e/**/*"]
           }
         }
       }
