@@ -1041,6 +1041,88 @@
           "style": "scss"
         }
       }
+    },
+    "cmns-cmns-controllers": {
+      "root": "libs/cmns/cmns-controllers",
+      "sourceRoot": "libs/cmns/cmns-controllers/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/cmns/cmns-controllers/tsconfig.lib.json",
+              "libs/cmns/cmns-controllers/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/cmns/cmns-controllers/**/*"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/cmns/cmns-controllers/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "gp-api": {
+      "root": "apps/gp-api",
+      "sourceRoot": "apps/gp-api/src",
+      "projectType": "application",
+      "prefix": "gp-api",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/gp-api",
+            "main": "apps/gp-api/src/main.ts",
+            "tsConfig": "apps/gp-api/tsconfig.app.json",
+            "assets": ["apps/gp-api/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/gp-api/src/environments/environment.ts",
+                  "with": "apps/gp-api/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "gp-api:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/gp-api/tsconfig.app.json",
+              "apps/gp-api/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/gp-api/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/gp-api/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   },
   "cli": {

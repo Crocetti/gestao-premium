@@ -122,5 +122,11 @@
     "vete-interfaces": {
       "tags": []
     },
+    "cmns-cmns-controllers": {
+      "tags": ["global"]
+    },
+    "gp-api": {
+      "tags": ["gp"]
+    }
   }
 }

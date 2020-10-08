@@ -31,7 +31,9 @@
       "@gestao-premium/srvc-entities": ["libs/srvc/srvc-entities/src/index.ts"],
       "@gestao-premium/sstm-entities": ["libs/sstm/sstm-entities/src/index.ts"],
       "@gestao-premium/vete-entities": ["libs/vete/vete-entities/src/index.ts"],
-      "@gestao-premium/cdst-interfaces": ["libs/cdst/cdst-interfaces/src/index.ts"],
+      "@gestao-premium/cdst-interfaces": [
+        "libs/cdst/cdst-interfaces/src/index.ts"
+      ],
       "@gestao-premium/cmns-interfaces": [
         "libs/cmns/cmns-interfaces/src/index.ts"
       ],
@@ -70,6 +72,9 @@
       ],
       "@gestao-premium/vete-interfaces": [
         "libs/vete/vete-interfaces/src/index.ts"
+      ],
+      "@gestao-premium/cmns/cmns-controllers": [
+        "libs/cmns/cmns-controllers/src/index.ts"
       ]
     }
   },
