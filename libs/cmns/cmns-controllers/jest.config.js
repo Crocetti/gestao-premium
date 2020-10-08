@@ -1,6 +1,5 @@
 module.exports = {
-  name: 'cmns-cmns-controllers',
-  preset: '../../../jest.config.js',
+  preset: '../../../jest.preset.js',
   globals: {
     'ts-jest': {
       tsConfig: '<rootDir>/tsconfig.spec.json',
@@ -12,4 +11,5 @@ module.exports = {
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../../coverage/libs/cmns/cmns-controllers',
+  displayName: 'cmns-cmns-controllers',
 };
