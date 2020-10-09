@@ -31,51 +31,26 @@
       "@gpremium/srvc-entities": ["libs/srvc/srvc-entities/src/index.ts"],
       "@gpremium/sstm-entities": ["libs/sstm/sstm-entities/src/index.ts"],
       "@gpremium/vete-entities": ["libs/vete/vete-entities/src/index.ts"],
-      "@gpremium/cdst-interfaces": [
-        "libs/cdst/cdst-interfaces/src/index.ts"
+      "@gpremium/cdst-interfaces": ["libs/cdst/cdst-interfaces/src/index.ts"],
+      "@gpremium/cmns-interfaces": ["libs/cmns/cmns-interfaces/src/index.ts"],
+      "@gpremium/core-interfaces": ["libs/core/core-interfaces/src/index.ts"],
+      "@gpremium/estq-interfaces": ["libs/estq/estq-interfaces/src/index.ts"],
+      "@gpremium/fncr-interfaces": ["libs/fncr/fncr-interfaces/src/index.ts"],
+      "@gpremium/fscl-interfaces": ["libs/fscl/fscl-interfaces/src/index.ts"],
+      "@gpremium/mail-interfaces": ["libs/mail/mail-interfaces/src/index.ts"],
+      "@gpremium/menu-interfaces": ["libs/menu/menu-interfaces/src/index.ts"],
+      "@gpremium/pecf-interfaces": ["libs/pecf/pecf-interfaces/src/index.ts"],
+      "@gpremium/pecr-interfaces": ["libs/pecr/pecr-interfaces/src/index.ts"],
+      "@gpremium/rchm-interfaces": ["libs/rchm/rchm-interfaces/src/index.ts"],
+      "@gpremium/srvc-interfaces": ["libs/srvc/srvc-interfaces/src/index.ts"],
+      "@gpremium/sstm-interfaces": ["libs/sstm/sstm-interfaces/src/index.ts"],
+      "@gpremium/vete-interfaces": ["libs/vete/vete-interfaces/src/index.ts"],
+      "@gpremium/cmns-controllers": ["libs/cmns/cmns-controllers/src/index.ts"],
+      "@gpremium/page-main-menu": ["libs/shared/page-main-menu/src/index.ts"],
+      "@gpremium/page-main-nomenu": [
+        "libs/shared/page-main-nomenu/src/index.ts"
       ],
-      "@gpremium/cmns-interfaces": [
-        "libs/cmns/cmns-interfaces/src/index.ts"
-      ],
-      "@gpremium/core-interfaces": [
-        "libs/core/core-interfaces/src/index.ts"
-      ],
-      "@gpremium/estq-interfaces": [
-        "libs/estq/estq-interfaces/src/index.ts"
-      ],
-      "@gpremium/fncr-interfaces": [
-        "libs/fncr/fncr-interfaces/src/index.ts"
-      ],
-      "@gpremium/fscl-interfaces": [
-        "libs/fscl/fscl-interfaces/src/index.ts"
-      ],
-      "@gpremium/mail-interfaces": [
-        "libs/mail/mail-interfaces/src/index.ts"
-      ],
-      "@gpremium/menu-interfaces": [
-        "libs/menu/menu-interfaces/src/index.ts"
-      ],
-      "@gpremium/pecf-interfaces": [
-        "libs/pecf/pecf-interfaces/src/index.ts"
-      ],
-      "@gpremium/pecr-interfaces": [
-        "libs/pecr/pecr-interfaces/src/index.ts"
-      ],
-      "@gpremium/rchm-interfaces": [
-        "libs/rchm/rchm-interfaces/src/index.ts"
-      ],
-      "@gpremium/srvc-interfaces": [
-        "libs/srvc/srvc-interfaces/src/index.ts"
-      ],
-      "@gpremium/sstm-interfaces": [
-        "libs/sstm/sstm-interfaces/src/index.ts"
-      ],
-      "@gpremium/vete-interfaces": [
-        "libs/vete/vete-interfaces/src/index.ts"
-      ],
-      "@gpremium/cmns/cmns-controllers": [
-        "libs/cmns/cmns-controllers/src/index.ts"
-      ]
+      "@gpremium/primeng-all": ["libs/shared/primeng-all/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

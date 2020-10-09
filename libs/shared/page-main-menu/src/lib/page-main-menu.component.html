@@ -1,0 +1,20 @@
+<div class="p-grid applications-layout">
+    <div class="p-col bloco" >
+        <p-toolbar>
+
+        </p-toolbar>
+        <p-panelMenu [model]="items" [style]="{'width':'100%'}"></p-panelMenu>
+    </div>
+    <div class="p-col-10 bloco">
+        <div class="p-grid">
+            <div class="p-col-12">
+                <p-toolbar ></p-toolbar>
+            </div>
+            <div class="p-col-12">
+                <ng-content></ng-content>
+            </div>
+            <div class="p-col-12"></div>
+        </div>
+    </div>
+</div>
+

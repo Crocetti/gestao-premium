@@ -1,3 +1,5 @@
+import { PageMainNomenuModule } from '@gpremium/page-main-nomenu';
+import { PageMainMenuModule } from '@gpremium/page-main-menu';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -8,6 +10,8 @@ import { RouterModule } from '@angular/router';
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    PageMainMenuModule,
+    PageMainNomenuModule,
     RouterModule.forRoot([], { initialNavigation: 'enabled' }),
   ],
   providers: [],

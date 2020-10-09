@@ -134,6 +134,15 @@
     "gp-app-e2e": {
       "tags": [],
       "implicitDependencies": ["gp-app"]
+    },
+    "page-main-menu": {
+      "tags": ["pages shared"]
+    },
+    "page-main-nomenu": {
+      "tags": ["pages shared"]
+    },
+    "primeng-all": {
+      "tags": ["primeng"]
     }
   }
 }
