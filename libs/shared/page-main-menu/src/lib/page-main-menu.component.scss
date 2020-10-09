@@ -1,6 +1,7 @@
+
+
 ::ng-deep body {
-    height: 100vh;
-    min-height: 330px;
+    min-height: 100vh;
     background-color: #cce4f7;
 }
 
@@ -14,6 +15,7 @@
 
 .applications-layout > div {
     text-align: justify;
+    height: 100%;
     // padding-top: 1em;
     // padding-bottom: 1em;
 
