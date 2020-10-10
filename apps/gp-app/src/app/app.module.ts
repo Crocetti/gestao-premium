@@ -1,17 +1,16 @@
-import { PageMainNomenuModule } from '@gpremium/page-main-nomenu';
-import { PageMainMenuModule } from '@gpremium/page-main-menu';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 
+import { MainsModule } from '@gpremium/mains';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    PageMainMenuModule,
-    PageMainNomenuModule,
+    MainsModule,
     RouterModule.forRoot([], { initialNavigation: 'enabled' }),
   ],
   providers: [],

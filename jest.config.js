@@ -34,8 +34,7 @@ module.exports = {
     '<rootDir>/libs/cmns/cmns-controllers',
     '<rootDir>/apps/gp-api',
     '<rootDir>/apps/gp-app',
-    '<rootDir>/libs/shared/page-main-menu',
-    '<rootDir>/libs/shared/page-main-nomenu',
     '<rootDir>/libs/shared/primeng-all',
+    '<rootDir>/libs/shared/mains',
   ],
 };

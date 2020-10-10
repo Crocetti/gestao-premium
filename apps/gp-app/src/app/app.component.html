@@ -1,8 +1,8 @@
-<page-main-menu *ngIf="hasMenu">
+<main-page-menu *ngIf="hasMenu">
     <h1>Com Menu</h1>
     <router-outlet></router-outlet>
-</page-main-menu>
-<page-main-nomenu *ngIf="!hasMenu">
+</main-page-menu>
+<main-page-nomenu *ngIf="!hasMenu">
     <h1>Sem Menu</h1>
     <router-outlet></router-outlet>
-</page-main-nomenu>
+</main-page-nomenu>
