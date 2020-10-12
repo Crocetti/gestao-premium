@@ -1,0 +1,59 @@
+<div id="corpo" class="p-d-flex p-flex-column">
+    <div id="header" class="p-mt-1">
+        <p-toolbar >
+            <div class="p-toolbar-group-left">
+                <p-button icon="pi pi-bars" styleClass="p-button-outlined" (onClick)="btnMenOnClick()"></p-button>
+            </div>
+            <div class="p-toolbar-group-right">
+                <p-button icon="pi pi-home" styleClass="p-button-outlined p-button-secondary" (onClick)="onHomePage()" ></p-button>
+            </div>
+        </p-toolbar>
+    </div>
+    <div id="content" class="p-d-flex p-flex-column  p-flex-md-row p-mt-1 p-ml-0" >
+        <!-- <div class="p-ml-2 p-p-2  bloco" [ngClass] > -->
+        <div [ngClass]="{'p-ml-1 p-p-2 bloco ':menuVisible }" *ngIf="menuVisible" >
+            <div class="p-grid ">
+                <div class="p-col-12">
+                    <p-toolbar></p-toolbar>
+                </div>
+                <div #menuitem class="p-col-12">
+                    <p-panelMenu [model]="items" [style]="{'width':'100%'}"></p-panelMenu>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="p-ml-4 p-mr-2 p-p-2" style="width: 100%;"> -->
+        <div [ngClass]="{'p-ml-1':menuVisible, 'p-p-2': true}" style="width: 100%;">
+            <div class="p-grid bloco">
+                <div class="p-col-12">
+                    <ng-content></ng-content>
+                </div>
+                <div class="p-col-12">
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer" class="p-mt-3 footer bloco">
+        <div class="p-grid celula">
+            <div class="p-col">
+                <p>Teste de rodapé</p>
+                <p>Teste de rodapé</p>
+                <p>Teste de rodapé</p>
+                <p>Teste de rodapé</p>
+            </div>
+            <div class="p-col">
+                <p>Teste de rodapé</p>
+                <p>Teste de rodapé</p>
+                <p>Teste de rodapé</p>
+            </div>
+            <div class="p-col">
+                <p>Teste de rodapé</p>
+                <p>Teste de rodapé</p>
+            </div>
+            <div class="p-col">
+                <p>Teste de rodapé</p>
+                <p>Teste de rodapé</p>
+            </div>
+        </div>
+    </div>
+</div>

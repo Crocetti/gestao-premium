@@ -1,0 +1,54 @@
+import
+
+
+::ng-deep body {
+    min-height: 100vh;
+    background-color: #cce4f7;
+    // text-align: justify;
+}
+
+
+.header {
+    height: 3em;
+}
+.bloco {
+    border: 1px;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 4px;
+    border-color: red;
+}
+
+.footer {
+    bottom: 0;
+    margin: 0;
+    height: auto;
+    border-top: 1pc;
+    border-style: solid;
+    border-color: --;
+    border-radius: 4px;
+    text-align: left;
+    align-items: center;
+    vertical-align: middle;
+    justify-content: center;
+}
+
+::ng-deep .p-panelmenu .p-panelmenu-header > a {
+    font-weight: 600;
+    font-size: small;
+}
+::ng-deep .p-panelmenu .p-panelmenu-header {
+    font-weight: 400;
+    font-size: small;
+}
+
+::ng-deep .p-panelmenu .p-menuitem-text {
+    font-size: small;
+}
+
+.celula {
+    margin-left: 1rem;
+}
+
+
+

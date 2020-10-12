@@ -47,7 +47,8 @@
       "@gpremium/vete-interfaces": ["libs/vete/vete-interfaces/src/index.ts"],
       "@gpremium/cmns-controllers": ["libs/cmns/cmns-controllers/src/index.ts"],
       "@gpremium/primeng-all": ["libs/shared/primeng-all/src/index.ts"],
-      "@gpremium/mains": ["libs/shared/mains/src/index.ts"]
+      "@gpremium/pages": ["libs/shared/pages/src/index.ts"],
+      "@gpremium/home-pages": ["libs/shared/home-pages/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

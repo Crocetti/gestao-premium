@@ -138,8 +138,11 @@
     "primeng-all": {
       "tags": ["primeng"]
     },
-    "mains": {
-      "tags": ["shared mains"]
+    "pages": {
+      "tags": []
+    },
+    "home-pages": {
+      "tags": ["home shared"]
     }
   }
 }

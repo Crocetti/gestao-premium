@@ -36,5 +36,8 @@ module.exports = {
     '<rootDir>/apps/gp-app',
     '<rootDir>/libs/shared/primeng-all',
     '<rootDir>/libs/shared/mains',
+    '<rootDir>/libs/shared/homes',
+    '<rootDir>/libs/shared/pages',
+    '<rootDir>/libs/shared/home-pages',
   ],
 };
