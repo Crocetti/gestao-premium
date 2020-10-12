@@ -2,10 +2,15 @@
     <div id="header" class="p-mt-1">
         <p-toolbar >
             <div class="p-toolbar-group-left">
-                <p-button icon="pi pi-bars" styleClass="p-button-outlined" (onClick)="btnMenOnClick()"></p-button>
+                <img src="./imagens/infotecno/infotecno.png" alt="Info-Tecno" width="37.7" height="39" >
+                <span style="vertical-align: middle; font-size: 1.5em; font-style: italic;">{{"Systems"}}</span>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <p-button icon="pi pi-bars" styleClass="p-button-outlined p-button-sm" (onClick)="btnMenOnClick()"></p-button>
             </div>
             <div class="p-toolbar-group-right">
-                <p-button icon="pi pi-home" styleClass="p-button-outlined p-button-secondary" (onClick)="onHomePage()" ></p-button>
+                <p-button icon="pi pi-home" styleClass="p-button-outlined p-button-primary p-button-sm" (onClick)="onHomePage()" ></p-button>
+                <p-button icon="pi pi-info-circle" styleClass="p-button-outlined p-button-success p-button-sm" (onClick)="onInformation()" ></p-button>
+                <p-button icon="pi pi-times" styleClass="p-button-outlined p-button-danger p-button-sm" (onClick)="onInformation()" ></p-button>
             </div>
         </p-toolbar>
     </div>
@@ -13,17 +18,16 @@
         <!-- <div class="p-ml-2 p-p-2  bloco" [ngClass] > -->
         <div [ngClass]="{'p-ml-1 p-p-2 bloco ':menuVisible }" *ngIf="menuVisible" >
             <div class="p-grid ">
-                <div class="p-col-12">
+                <!-- <div class="p-col-12">
                     <p-toolbar></p-toolbar>
-                </div>
+                </div> -->
                 <div #menuitem class="p-col-12">
                     <p-panelMenu [model]="items" [style]="{'width':'100%'}"></p-panelMenu>
                 </div>
             </div>
         </div>
-        <!-- <div class="p-ml-4 p-mr-2 p-p-2" style="width: 100%;"> -->
-        <div [ngClass]="{'p-ml-1':menuVisible, 'p-p-2': true}" style="width: 100%;">
-            <div class="p-grid bloco">
+        <div [ngClass]="{'p-ml-1':menuVisible, 'p-p-2 bloco': true}" style="width: 100%;">
+            <div class="p-grid">
                 <div class="p-col-12">
                     <ng-content></ng-content>
                 </div>
@@ -33,7 +37,7 @@
             </div>
         </div>
     </div>
-    <div id="footer" class="p-mt-3 footer bloco">
+    <div id="footer" class="p-mt-3 footer">
         <div class="p-grid celula">
             <div class="p-col">
                 <p>Teste de rodapé</p>

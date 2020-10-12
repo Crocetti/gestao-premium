@@ -33,4 +33,8 @@ export class MainPageMenuComponent implements OnInit {
     onHomePage(){
         this.router.navigate(['/home']);
     }
+
+    onInformation() {
+        this.router.navigate(['/info']);
+    }
 }

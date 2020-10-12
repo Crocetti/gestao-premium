@@ -1239,7 +1239,13 @@
                         "aot": true,
                         "assets": [
                             "apps/gp-app/src/favicon.ico",
-                            "apps/gp-app/src/assets"
+                            "apps/gp-app/src/assets",
+                            {
+                                "glob": "**/*",
+                                "input": "./imagens/",
+                                "output": "imagens/"
+                            },
+
                         ],
                         "styles": [
                             "./node_modules/@fullcalendar/daygrid/main.min.css",
