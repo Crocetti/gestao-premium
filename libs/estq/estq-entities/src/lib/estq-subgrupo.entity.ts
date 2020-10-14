@@ -1,36 +1,36 @@
-import {BaseEntity,Column,Entity,Index,OneToMany} from "typeorm";
-import {EstqMercadoria} from './estq-mercadoria'
+import { Column, Entity, Index, OneToMany } from "typeorm";
+import { EstqMercadoria } from "./estq-mercadoria";
 
-
-@Index("PK_ESTQ_SUBGRUPO",["sbgpId",],{ unique:true })
+@Index("PK_ESTQ_SUBGRUPO", ["id"], { unique: true })
 @Entity("ESTQ_SUBGRUPO")
-export  class EstqSubgrupo extends BaseEntity {
+export class EstqSubgrupo {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-@Column("varchar",{ primary:true,name:"SBGP_ID",length:27 })
-public sbgpId:string;
+  @Column("nvarchar", { name: "SBGP_CODIGO", nullable: true, length: 5 })
+  public sbgpCodigo: string | null;
 
-@Column("varchar",{ name:"SBGP_CODIGO",nullable:true,length:5 })
-public sbgpCodigo:string | null;
+  @Column("nvarchar", { name: "SBGP_NOME", nullable: true, length: 40 })
+  public sbgpNome: string | null;
 
-@Column("varchar",{ name:"SBGP_NOME",nullable:true,length:40 })
-public sbgpNome:string | null;
+  @Column("nvarchar", { name: "SBGP_DESCRICAO", nullable: true, length: 128 })
+  public sbgpDescricao: string | null;
 
-@Column("varchar",{ name:"SBGP_DESCRICAO",nullable:true,length:128 })
-public sbgpDescricao:string | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-@Column("smallint",{ name:"SBGP_ATIVO",nullable:true,default: () => "0", })
-public sbgpAtivo:number | null;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-@Column("datetime",{ name:"SBGP_LASTUPDATE",nullable:true })
-public sbgpLastupdate:LocalDateTime | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
-@OneToMany(()=>EstqMercadoria,estqMercadoria=>estqMercadoria.mrcdSbgp)
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
 
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
-public estqMercadorias:EstqMercadoria[];
-
-public constructor(init?: Partial<EstqSubgrupo>) {
-    super();
-    Object.assign(this, init);
-}
+  @OneToMany(() => EstqMercadoria, (estqMercadoria) => estqMercadoria.mrcdSbgp)
+  public estqMercadorias: EstqMercadoria[];
 }

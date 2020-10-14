@@ -1,55 +1,48 @@
-import {BaseEntity,Column,Entity,Index,JoinColumn,ManyToOne,RelationId} from "typeorm";
-import {SstmParametro} from './sstm-parametro'
-import {CoreEmpresa} from './core-empresa'
+import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
+import { CoreEmpresa } from "./core-empresa";
+import { SstmParametro } from "./sstm-parametro";
 
-
-@Index("FK_EMPR_RS_PREM",["premEmprId",],{  })
-@Index("FK_PRMT_RS_PREM",["premPrmtId",],{  })
-@Index("PK_SSTM_PARAMETRO_EMPRESA",["premId",],{ unique:true })
+@Index("PK_SSTM_PARAMETRO_EMPRESA", ["id"], { unique: true })
 @Entity("SSTM_PARAMETRO_EMPRESA")
-export  class SstmParametroEmpresa extends BaseEntity {
+export class SstmParametroEmpresa {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-@Column("varchar",{ primary:true,name:"PREM_ID",length:27 })
-public premId:string;
+  @Column("nvarchar", { name: "PREM_DEFAULT", nullable: true, length: 128 })
+  public premDefault: string | null;
 
-@Column("varchar",{ name:"PREM_EMPR_ID",nullable:true,length:27 })
-public premEmprId:string | null;
+  @Column("nvarchar", { name: "PREM_VALUE", nullable: true, length: 128 })
+  public premValue: string | null;
 
-@Column("varchar",{ name:"PREM_PRMT_ID",nullable:true,length:27 })
-public premPrmtId:string | null;
+  @Column("smallint", { name: "PREM_HABILITADO", nullable: true })
+  public premHabilitado: number | null;
 
-@Column("varchar",{ name:"PREM_DEFAULT",nullable:true,length:128 })
-public premDefault:string | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-@Column("varchar",{ name:"PREM_VALUE",nullable:true,length:128 })
-public premValue:string | null;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-@Column("smallint",{ name:"PREM_HABILITADO",nullable:true,default: () => "0", })
-public premHabilitado:number | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
-@Column("datetime",{ name:"PREM_LASTUPDATE",nullable:true })
-public premLastupdate:LocalDateTime | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
 
-@ManyToOne(()=>SstmParametro,sstmParametro=>sstmParametro.sstmParametroEmpresas)
-@JoinColumn([{ name: "PREM_PRMT_ID", referencedColumnName: "prmtId" },
-])
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
-public premPrmt:SstmParametro;
+  @ManyToOne(
+    () => CoreEmpresa,
+    (coreEmpresa) => coreEmpresa.sstmParametroEmpresas
+  )
+  @JoinColumn([{ name: "PREM_EMPR_ID", referencedColumnName: "id" }])
+  public premEmpr: CoreEmpresa;
 
-@ManyToOne(()=>CoreEmpresa,coreEmpresa=>coreEmpresa.sstmParametroEmpresas)
-@JoinColumn([{ name: "PREM_EMPR_ID", referencedColumnName: "emprId" },
-])
-
-public premEmpr:CoreEmpresa;
-
-@RelationId((sstmParametroEmpresa:SstmParametroEmpresa)=>sstmParametroEmpresa.premPrmt)
-public premPrmtId2:string | null;
-
-@RelationId((sstmParametroEmpresa:SstmParametroEmpresa)=>sstmParametroEmpresa.premEmpr)
-public premEmprId2:string | null;
-
-public constructor(init?: Partial<SstmParametroEmpresa>) {
-    super();
-    Object.assign(this, init);
-}
+  @ManyToOne(
+    () => SstmParametro,
+    (sstmParametro) => sstmParametro.sstmParametroEmpresas
+  )
+  @JoinColumn([{ name: "PREM_PRMT_ID", referencedColumnName: "id" }])
+  public premPrmt: SstmParametro;
 }

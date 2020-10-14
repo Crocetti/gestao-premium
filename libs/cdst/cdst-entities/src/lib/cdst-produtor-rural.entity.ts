@@ -1,58 +1,59 @@
-import {BaseEntity,Column,Entity,Index,JoinColumn,ManyToOne,OneToMany,RelationId} from "typeorm";
-import {CdstProdutorPropriedade} from './cdst-produtor-propriedade'
-import {CmnsPessoa} from './cmns-pessoa'
-import {PecrAfixos} from './pecr-afixos'
-import {PecrProdutoBovino} from './pecr-produto-bovino'
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+} from "typeorm";
+import { CdstProdutorPropriedade } from "./cdst-produtor-propriedade";
+import { CmnsPessoa } from "./cmns-pessoa";
+import { PecrAfixos } from "./pecr-afixos";
+import { PecrProdutoBovino } from "./pecr-produto-bovino";
 
-
-@Index("FK_PESS_RS_PDRR",["pdrrPessId",],{  })
-@Index("PK_CDST_PRODUTOR_RURAL",["pdrrId",],{ unique:true })
+@Index("PK_CDST_PRODUTOR_RURAL", ["id"], { unique: true })
 @Entity("CDST_PRODUTOR_RURAL")
-export  class CdstProdutorRural extends BaseEntity {
+export class CdstProdutorRural {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-@Column("varchar",{ primary:true,name:"PDRR_ID",length:27 })
-public pdrrId:string;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-@Column("varchar",{ name:"PDRR_PESS_ID",nullable:true,length:27 })
-public pdrrPessId:string | null;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-@Column("smallint",{ name:"PDRR_ATIVO",nullable:true,default: () => "0", })
-public pdrrAtivo:number | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
-@Column("datetime",{ name:"PDRR_LASTUPDATE",nullable:true })
-public pdrrLastupdate:LocalDateTime | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
 
-@OneToMany(()=>CdstProdutorPropriedade,cdstProdutorPropriedade=>cdstProdutorPropriedade.pdppPdrr)
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
+  @OneToMany(
+    () => CdstProdutorPropriedade,
+    (cdstProdutorPropriedade) => cdstProdutorPropriedade.pdppPdrr
+  )
+  public cdstProdutorPropriedades: CdstProdutorPropriedade[];
 
-public cdstProdutorPropriedades:CdstProdutorPropriedade[];
+  @ManyToOne(() => CmnsPessoa, (cmnsPessoa) => cmnsPessoa.cdstProdutorRurals)
+  @JoinColumn([{ name: "PDRR_PESS_ID", referencedColumnName: "id" }])
+  public pdrrPess: CmnsPessoa;
 
-@ManyToOne(()=>CmnsPessoa,cmnsPessoa=>cmnsPessoa.cdstProdutorRurals)
-@JoinColumn([{ name: "PDRR_PESS_ID", referencedColumnName: "pessId" },
-])
+  @OneToMany(() => PecrAfixos, (pecrAfixos) => pecrAfixos.afxsPdrr)
+  public pecrAfixos: PecrAfixos[];
 
-public pdrrPess:CmnsPessoa;
+  @OneToMany(
+    () => PecrProdutoBovino,
+    (pecrProdutoBovino) => pecrProdutoBovino.prbvCrdr
+  )
+  public pecrProdutoBovinos: PecrProdutoBovino[];
 
-@OneToMany(()=>PecrAfixos,pecrAfixos=>pecrAfixos.afxsPdrr)
-
-
-public pecrAfixos:PecrAfixos[];
-
-@OneToMany(()=>PecrProdutoBovino,pecrProdutoBovino=>pecrProdutoBovino.prbvCrdr)
-
-
-public pecrProdutoBovinos:PecrProdutoBovino[];
-
-@OneToMany(()=>PecrProdutoBovino,pecrProdutoBovino=>pecrProdutoBovino.prbvPdrr)
-
-
-public pecrProdutoBovinos2:PecrProdutoBovino[];
-
-@RelationId((cdstProdutorRural:CdstProdutorRural)=>cdstProdutorRural.pdrrPess)
-public pdrrPessId2:string | null;
-
-public constructor(init?: Partial<CdstProdutorRural>) {
-    super();
-    Object.assign(this, init);
-}
+  @OneToMany(
+    () => PecrProdutoBovino,
+    (pecrProdutoBovino) => pecrProdutoBovino.prbvPdrr
+  )
+  public pecrProdutoBovinos2: PecrProdutoBovino[];
 }

@@ -1,60 +1,42 @@
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  RelationId,
-} from "typeorm";
-import { VeteRetorno } from "./vete-retorno";
+import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
 import { VeteServico } from "./vete-servico";
+import { VeteRetorno } from "./vete-retorno";
 
-@Index("FK_RTRN_RS_RTSV", ["rtsvRtrnId"], {})
-@Index("FK_SERV_RS_RTSV", ["rtsvServId"], {})
-@Index("PK_VETE_RETORNO_PROCEDIMENTO", ["rtsvId"], { unique: true })
+@Index("PK_VETE_RETORNO_PROCEDIMENTO", ["id"], { unique: true })
 @Entity("VETE_RETORNO_PROCEDIMENTO")
-export class VeteRetornoProcedimento extends BaseEntity {
-  @Column("varchar", { primary: true, name: "RTSV_ID", length: 27 })
-  public rtsvId: string;
+export class VeteRetornoProcedimento {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-  @Column("varchar", { name: "RTSV_SERV_ID", nullable: true, length: 27 })
-  public rtsvServId: string | null;
-
-  @Column("varchar", { name: "RTSV_RTRN_ID", nullable: true, length: 27 })
-  public rtsvRtrnId: string | null;
-
-  @Column("varchar", { name: "RTSV_OBSERVACAO", nullable: true, length: 5000 })
+  @Column("nvarchar", { name: "RTSV_OBSERVACAO", nullable: true })
   public rtsvObservacao: string | null;
 
-  @ManyToOne(
-    () => VeteRetorno,
-    (veteRetorno) => veteRetorno.veteRetornoProcedimentos
-  )
-  @JoinColumn([{ name: "RTSV_RTRN_ID", referencedColumnName: "rtrnId" }])
-  public rtsvRtrn: VeteRetorno;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
+
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
+
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
   @ManyToOne(
     () => VeteServico,
     (veteServico) => veteServico.veteRetornoProcedimentos
   )
-  @JoinColumn([{ name: "RTSV_SERV_ID", referencedColumnName: "servId" }])
+  @JoinColumn([{ name: "RTSV_SERV_ID", referencedColumnName: "id" }])
   public rtsvServ: VeteServico;
 
-  @RelationId(
-    (veteRetornoProcedimento: VeteRetornoProcedimento) =>
-      veteRetornoProcedimento.rtsvRtrn
+  @ManyToOne(
+    () => VeteRetorno,
+    (veteRetorno) => veteRetorno.veteRetornoProcedimentos
   )
-  public rtsvRtrnId2: string | null;
-
-  @RelationId(
-    (veteRetornoProcedimento: VeteRetornoProcedimento) =>
-      veteRetornoProcedimento.rtsvServ
-  )
-  public rtsvServId2: string | null;
-
-  public constructor(init?: Partial<VeteRetornoProcedimento>) {
-    super();
-    Object.assign(this, init);
-  }
+  @JoinColumn([{ name: "RTSV_RTRN_ID", referencedColumnName: "id" }])
+  public rtsvRtrn: VeteRetorno;
 }

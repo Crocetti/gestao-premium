@@ -1,66 +1,58 @@
-import {BaseEntity,Column,Entity,Index,JoinColumn,ManyToOne,RelationId} from "typeorm";
-import {CdstUnidadeMedida} from './cdst-unidade-medida'
-import {PecrCategoria} from './pecr-categoria'
-import {CdstProduto} from './cdst-produto'
+import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
+import { CdstUnidadeMedida } from "./cdst-unidade-medida";
+import { CdstProduto } from "./cdst-produto";
+import { PecrCategoria } from "./pecr-categoria";
 
-
-@Index("FK_CTGR_RS_GPMD",["gpmdCtgrId",],{  })
-@Index("FK_PESO_RS_GPMD",["gpmdPesoId",],{  })
-@Index("FK_PRDT_RS_GPMD",["gpmdPrdtId",],{  })
-@Index("PK_PECR_GANHO_PESO_MEDIO",["gpmdId",],{ unique:true })
+@Index("PK_PECR_GANHO_PESO_MEDIO", ["id"], { unique: true })
 @Entity("PECR_GANHO_PESO_MEDIO")
-export  class PecrGanhoPesoMedio extends BaseEntity {
+export class PecrGanhoPesoMedio {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-@Column("varchar",{ primary:true,name:"GPMD_ID",length:27 })
-public gpmdId:string;
+  @Column("nvarchar", { name: "GPMD_MES", nullable: true, length: 12 })
+  public gpmdMes: string | null;
 
-@Column("varchar",{ name:"GPMD_PESO_ID",nullable:true,length:27 })
-public gpmdPesoId:string | null;
+  @Column("numeric", {
+    name: "GPMD_PESO",
+    nullable: true,
+    precision: 18,
+    scale: 4,
+  })
+  public gpmdPeso: number | null;
 
-@Column("varchar",{ name:"GPMD_PRDT_ID",nullable:true,length:27 })
-public gpmdPrdtId:string | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-@Column("varchar",{ name:"GPMD_CTGR_ID",nullable:true,length:27 })
-public gpmdCtgrId:string | null;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-@Column("varchar",{ name:"GPMD_MES",nullable:true,length:12 })
-public gpmdMes:string | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
-@Column("numeric",{ name:"GPMD_PESO",nullable:true,precision:18,scale:4,default: () => "0", })
-public gpmdPeso:number | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
 
-@Column("datetime",{ name:"GPMD_LASTUPDATE",nullable:true })
-public gpmdLastupdate:LocalDateTime | null;
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
-@ManyToOne(()=>CdstUnidadeMedida,cdstUnidadeMedida=>cdstUnidadeMedida.pecrGanhoPesoMedios)
-@JoinColumn([{ name: "GPMD_PESO_ID", referencedColumnName: "unidId" },
-])
+  @ManyToOne(
+    () => CdstUnidadeMedida,
+    (cdstUnidadeMedida) => cdstUnidadeMedida.pecrGanhoPesoMedios
+  )
+  @JoinColumn([{ name: "GPMD_PESO_ID", referencedColumnName: "id" }])
+  public gpmdPeso2: CdstUnidadeMedida;
 
-public gpmdPeso2:CdstUnidadeMedida;
+  @ManyToOne(
+    () => CdstProduto,
+    (cdstProduto) => cdstProduto.pecrGanhoPesoMedios
+  )
+  @JoinColumn([{ name: "GPMD_PRDT_ID", referencedColumnName: "id" }])
+  public gpmdPrdt: CdstProduto;
 
-@ManyToOne(()=>PecrCategoria,pecrCategoria=>pecrCategoria.pecrGanhoPesoMedios)
-@JoinColumn([{ name: "GPMD_CTGR_ID", referencedColumnName: "ctgrId" },
-])
-
-public gpmdCtgr:PecrCategoria;
-
-@ManyToOne(()=>CdstProduto,cdstProduto=>cdstProduto.pecrGanhoPesoMedios)
-@JoinColumn([{ name: "GPMD_PRDT_ID", referencedColumnName: "prdtId" },
-])
-
-public gpmdPrdt:CdstProduto;
-
-@RelationId((pecrGanhoPesoMedio:PecrGanhoPesoMedio)=>pecrGanhoPesoMedio.gpmdPeso2)
-public gpmdPesoId2:string | null;
-
-@RelationId((pecrGanhoPesoMedio:PecrGanhoPesoMedio)=>pecrGanhoPesoMedio.gpmdCtgr)
-public gpmdCtgrId2:string | null;
-
-@RelationId((pecrGanhoPesoMedio:PecrGanhoPesoMedio)=>pecrGanhoPesoMedio.gpmdPrdt)
-public gpmdPrdtId2:string | null;
-
-public constructor(init?: Partial<PecrGanhoPesoMedio>) {
-    super();
-    Object.assign(this, init);
-}
+  @ManyToOne(
+    () => PecrCategoria,
+    (pecrCategoria) => pecrCategoria.pecrGanhoPesoMedios
+  )
+  @JoinColumn([{ name: "GPMD_CTGR_ID", referencedColumnName: "id" }])
+  public gpmdCtgr: PecrCategoria;
 }

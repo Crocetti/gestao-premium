@@ -1,32 +1,39 @@
-import { BaseEntity, Column, Entity, Index, OneToMany } from "typeorm";
+import { Column, Entity, Index, OneToMany } from "typeorm";
 import { CmnsPessoaDocumento } from "./cmns-pessoa-documento";
 
-@Index("PK_CMNS_ORGAO_EXPEDIDOR", ["orexId"], { unique: true })
+@Index("PK_CMNS_ORGAO_EXPEDIDOR", ["id"], { unique: true })
 @Entity("CMNS_ORGAO_EXPEDIDOR")
-export class CmnsOrgaoExpedidor extends BaseEntity {
-  @Column("varchar", { primary: true, name: "OREX_ID", length: 27 })
-  public orexId: string;
+export class CmnsOrgaoExpedidor {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-  @Column("varchar", { name: "OREX_CODIGO", nullable: true, length: 3 })
+  @Column("nvarchar", { name: "OREX_CODIGO", nullable: true, length: 3 })
   public orexCodigo: string | null;
 
-  @Column("varchar", { name: "OREX_SIGLA", nullable: true, length: 10 })
+  @Column("nvarchar", { name: "OREX_SIGLA", nullable: true, length: 10 })
   public orexSigla: string | null;
 
-  @Column("varchar", { name: "OREX_NOME", nullable: true, length: 64 })
+  @Column("nvarchar", { name: "OREX_NOME", nullable: true, length: 64 })
   public orexNome: string | null;
 
-  @Column("datetime", { name: "OREX_LASTUPDATE", nullable: true })
-  public orexLastupdate: LocalDateTime | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
+
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
+
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
   @OneToMany(
     () => CmnsPessoaDocumento,
     (cmnsPessoaDocumento) => cmnsPessoaDocumento.psdcOrex
   )
   public cmnsPessoaDocumentos: CmnsPessoaDocumento[];
-
-  public constructor(init?: Partial<CmnsOrgaoExpedidor>) {
-    super();
-    Object.assign(this, init);
-  }
 }

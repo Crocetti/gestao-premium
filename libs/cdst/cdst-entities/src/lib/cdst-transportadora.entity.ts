@@ -1,44 +1,42 @@
-import {BaseEntity,Column,Entity,Index,JoinColumn,ManyToOne,OneToMany,RelationId} from "typeorm";
-import {CmnsPessoa} from './cmns-pessoa'
-import {FsclDocumento} from './fscl-documento'
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+} from "typeorm";
+import { CmnsPessoa } from "./cmns-pessoa";
+import { FsclDocumento } from "./fscl-documento";
 
-
-@Index("FK_PESS_RS_TRNS",["trnsPessId",],{  })
-@Index("PK_CDST_TRANSPORTADORA",["trnsId",],{ unique:true })
+@Index("PK_CDST_TRANSPORTADORA", ["id"], { unique: true })
 @Entity("CDST_TRANSPORTADORA")
-export  class CdstTransportadora extends BaseEntity {
+export class CdstTransportadora {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-@Column("varchar",{ primary:true,name:"TRNS_ID",length:27 })
-public trnsId:string;
+  @Column("nvarchar", { name: "TRNS_OBS", nullable: true })
+  public trnsObs: string | null;
 
-@Column("varchar",{ name:"TRNS_PESS_ID",nullable:true,length:27 })
-public trnsPessId:string | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-@Column("smallint",{ name:"TRNS_ATIVO",nullable:true,default: () => "0", })
-public trnsAtivo:number | null;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-@Column("varchar",{ name:"TRNS_OBS",nullable:true,length:5000 })
-public trnsObs:string | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
-@Column("datetime",{ name:"TRNS_LASTUPDATE",nullable:true })
-public trnsLastupdate:LocalDateTime | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
 
-@ManyToOne(()=>CmnsPessoa,cmnsPessoa=>cmnsPessoa.cdstTransportadoras)
-@JoinColumn([{ name: "TRNS_PESS_ID", referencedColumnName: "pessId" },
-])
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
-public trnsPess:CmnsPessoa;
+  @ManyToOne(() => CmnsPessoa, (cmnsPessoa) => cmnsPessoa.cdstTransportadoras)
+  @JoinColumn([{ name: "TRNS_PESS_ID", referencedColumnName: "id" }])
+  public trnsPess: CmnsPessoa;
 
-@OneToMany(()=>FsclDocumento,fsclDocumento=>fsclDocumento.dcmtTrns)
-
-
-public fsclDocumentos:FsclDocumento[];
-
-@RelationId((cdstTransportadora:CdstTransportadora)=>cdstTransportadora.trnsPess)
-public trnsPessId2:string | null;
-
-public constructor(init?: Partial<CdstTransportadora>) {
-    super();
-    Object.assign(this, init);
-}
+  @OneToMany(() => FsclDocumento, (fsclDocumento) => fsclDocumento.dcmtTrns)
+  public fsclDocumentos: FsclDocumento[];
 }

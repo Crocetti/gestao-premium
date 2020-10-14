@@ -1,70 +1,93 @@
-import {BaseEntity,Column,Entity,Index,JoinColumn,ManyToOne,OneToMany,RelationId} from "typeorm";
-import {EstqLoteValidade} from './estq-lote-validade'
-import {CdstProduto} from './cdst-produto'
-import {EstqSaldoCentroCusto} from './estq-saldo-centro-custo'
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+} from "typeorm";
+import { EstqLoteValidade } from "./estq-lote-validade";
+import { CdstProduto } from "./cdst-produto";
+import { EstqSaldoCentroCusto } from "./estq-saldo-centro-custo";
 
-
-@Index("FK_LTVL_RS_PRSD",["prsdLtvlId",],{  })
-@Index("FK_PRDT_RS_PRSD",["prsdPrdtId",],{  })
-@Index("PK_ESTQ_PRODUTO_SALDO",["prsdId",],{ unique:true })
+@Index("PK_ESTQ_PRODUTO_SALDO", ["id"], { unique: true })
 @Entity("ESTQ_PRODUTO_SALDO")
-export  class EstqProdutoSaldo extends BaseEntity {
+export class EstqProdutoSaldo {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-@Column("varchar",{ primary:true,name:"PRSD_ID",length:27 })
-public prsdId:string;
+  @Column("datetime2", { name: "PRSD_MES_REFERENCIA", nullable: true })
+  public prsdMesReferencia: Date | null;
 
-@Column("varchar",{ name:"PRSD_LTVL_ID",nullable:true,length:27 })
-public prsdLtvlId:string | null;
+  @Column("numeric", {
+    name: "PRSD_SALDO_INICIAL",
+    nullable: true,
+    precision: 18,
+    scale: 4,
+  })
+  public prsdSaldoInicial: number | null;
 
-@Column("varchar",{ name:"PRSD_PRDT_ID",nullable:true,length:27 })
-public prsdPrdtId:string | null;
+  @Column("numeric", {
+    name: "PRSD_QTD_ENTRADAS",
+    nullable: true,
+    precision: 18,
+    scale: 4,
+  })
+  public prsdQtdEntradas: number | null;
 
-@Column("datetime",{ name:"PRSD_MES_REFERENCIA",nullable:true })
-public prsdMesReferencia:LocalDateTime | null;
+  @Column("numeric", {
+    name: "PRSD_QTD_SAIDAS",
+    nullable: true,
+    precision: 18,
+    scale: 4,
+  })
+  public prsdQtdSaidas: number | null;
 
-@Column("numeric",{ name:"PRSD_SALDO_INICIAL",nullable:true,precision:18,scale:4,default: () => "0", })
-public prsdSaldoInicial:number | null;
+  @Column("numeric", {
+    name: "PRSD_EM_CAUTELA",
+    nullable: true,
+    precision: 18,
+    scale: 4,
+  })
+  public prsdEmCautela: number | null;
 
-@Column("numeric",{ name:"PRSD_QTD_ENTRADAS",nullable:true,precision:18,scale:4,default: () => "0", })
-public prsdQtdEntradas:number | null;
+  @Column("numeric", {
+    name: "PRSD_SALDO_FINAL",
+    nullable: true,
+    precision: 18,
+    scale: 4,
+  })
+  public prsdSaldoFinal: number | null;
 
-@Column("numeric",{ name:"PRSD_QTD_SAIDAS",nullable:true,precision:18,scale:4,default: () => "0", })
-public prsdQtdSaidas:number | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-@Column("numeric",{ name:"PRSD_EM_CAUTELA",nullable:true,precision:18,scale:4,default: () => "0", })
-public prsdEmCautela:number | null;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-@Column("numeric",{ name:"PRSD_SALDO_FINAL",nullable:true,precision:18,scale:4,default: () => "0", })
-public prsdSaldoFinal:number | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
-@Column("datetime",{ name:"PRSD_LASTUPDATE",nullable:true })
-public prsdLastupdate:LocalDateTime | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
 
-@ManyToOne(()=>EstqLoteValidade,estqLoteValidade=>estqLoteValidade.estqProdutoSaldos)
-@JoinColumn([{ name: "PRSD_LTVL_ID", referencedColumnName: "ltvlId" },
-])
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
-public prsdLtvl:EstqLoteValidade;
+  @ManyToOne(
+    () => EstqLoteValidade,
+    (estqLoteValidade) => estqLoteValidade.estqProdutoSaldos
+  )
+  @JoinColumn([{ name: "PRSD_LTVL_ID", referencedColumnName: "id" }])
+  public prsdLtvl: EstqLoteValidade;
 
-@ManyToOne(()=>CdstProduto,cdstProduto=>cdstProduto.estqProdutoSaldos)
-@JoinColumn([{ name: "PRSD_PRDT_ID", referencedColumnName: "prdtId" },
-])
+  @ManyToOne(() => CdstProduto, (cdstProduto) => cdstProduto.estqProdutoSaldos)
+  @JoinColumn([{ name: "PRSD_PRDT_ID", referencedColumnName: "id" }])
+  public prsdPrdt: CdstProduto;
 
-public prsdPrdt:CdstProduto;
-
-@OneToMany(()=>EstqSaldoCentroCusto,estqSaldoCentroCusto=>estqSaldoCentroCusto.sdccPrsd)
-
-
-public estqSaldoCentroCustos:EstqSaldoCentroCusto[];
-
-@RelationId((estqProdutoSaldo:EstqProdutoSaldo)=>estqProdutoSaldo.prsdLtvl)
-public prsdLtvlId2:string | null;
-
-@RelationId((estqProdutoSaldo:EstqProdutoSaldo)=>estqProdutoSaldo.prsdPrdt)
-public prsdPrdtId2:string | null;
-
-public constructor(init?: Partial<EstqProdutoSaldo>) {
-    super();
-    Object.assign(this, init);
-}
+  @OneToMany(
+    () => EstqSaldoCentroCusto,
+    (estqSaldoCentroCusto) => estqSaldoCentroCusto.sdccPrsd
+  )
+  public estqSaldoCentroCustos: EstqSaldoCentroCusto[];
 }

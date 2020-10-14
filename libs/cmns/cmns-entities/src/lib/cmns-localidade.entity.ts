@@ -1,56 +1,60 @@
-import { LocalDateTime } from '@js-joda/core';
 import {
-  BaseEntity,
   Column,
   Entity,
   Index,
   JoinColumn,
   ManyToOne,
   OneToMany,
-  RelationId,
 } from "typeorm";
-import { CmnsBairro } from "./cmns-bairro.entity";
-import { CmnsUnidadeFederativa } from "./cmns-unidade-federativa.entity";
+import { CmnsBairro } from "./cmns-bairro";
+import { CmnsUnidadeFederativa } from "./cmns-unidade-federativa";
 
-@Index("FK_UNFD_RS_LCLD", ["lcldUnfdId"], {})
-@Index("PK_CMNS_LOCALIDADE", ["lcldId"], { unique: true })
+@Index("PK_CMNS_LOCALIDADE", ["id"], { unique: true })
 @Entity("CMNS_LOCALIDADE")
-export class CmnsLocalidade extends BaseEntity {
-  @Column("varchar", { primary: true, name: "LCLD_ID", length: 27 })
-  public lcldId: string;
+export class CmnsLocalidade {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-  @Column("varchar", { name: "LCLD_UNFD_ID", nullable: true, length: 27 })
-  public lcldUnfdId: string | null;
-
-  @Column("varchar", { name: "LCLD_NR_IBGE", nullable: true, length: 12 })
+  @Column("nvarchar", { name: "LCLD_NR_IBGE", nullable: true, length: 12 })
   public lcldNrIbge: string | null;
 
-  @Column("varchar", { name: "LCLD_NOME", nullable: true, length: 128 })
+  @Column("nvarchar", { name: "LCLD_NOME", nullable: true, length: 128 })
   public lcldNome: string | null;
 
-  @Column("varchar", { name: "LCLD_CEP", nullable: true, length: 9 })
+  @Column("nvarchar", { name: "LCLD_CEP", nullable: true, length: 9 })
   public lcldCep: string | null;
 
-  @Column("varchar", { name: "LCLD_NOME_ABREV", nullable: true, length: 40 })
+  @Column("nvarchar", { name: "LCLD_NOME_ABREV", nullable: true, length: 40 })
   public lcldNomeAbrev: string | null;
 
-  @Column("varchar", { name: "LCLD_CEP_INICIAL", nullable: true, length: 9 })
+  @Column("nvarchar", { name: "LCLD_CEP_INICIAL", nullable: true, length: 9 })
   public lcldCepInicial: string | null;
 
-  @Column("varchar", { name: "LCLD_CEP_FINAL", nullable: true, length: 9 })
+  @Column("nvarchar", { name: "LCLD_CEP_FINAL", nullable: true, length: 9 })
   public lcldCepFinal: string | null;
 
-  @Column("datetime", { name: "LCLD_LASTUPDATE", nullable: true })
-  public lcldLastupdate: LocalDateTime | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
+
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
+
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
   @OneToMany(() => CmnsBairro, (cmnsBairro) => cmnsBairro.bairLcld)
-  public cmnsBairros?: CmnsBairro[];
+  public cmnsBairros: CmnsBairro[];
 
   @ManyToOne(
     () => CmnsUnidadeFederativa,
     (cmnsUnidadeFederativa) => cmnsUnidadeFederativa.cmnsLocalidades
   )
-  @JoinColumn([{ name: "LCLD_UNFD_ID", referencedColumnName: "unfdId" }])
-  public cmnsUnFd: CmnsUnidadeFederativa;
-
+  @JoinColumn([{ name: "LCLD_UNFD_ID", referencedColumnName: "id" }])
+  public lcldUnfd: CmnsUnidadeFederativa;
 }

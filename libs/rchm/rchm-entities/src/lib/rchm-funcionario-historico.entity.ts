@@ -1,51 +1,40 @@
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  RelationId,
-} from "typeorm";
+import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
 import { RchmFuncionario } from "./rchm-funcionario";
 
-@Index("FK_FCNR_RS_FCHS", ["fchsFcnrId"], {})
-@Index("PK_RCHM_FUNCIONARIO_HISTORICO", ["fchsId"], { unique: true })
+@Index("PK_RCHM_FUNCIONARIO_HISTORICO", ["id"], { unique: true })
 @Entity("RCHM_FUNCIONARIO_HISTORICO")
-export class RchmFuncionarioHistorico extends BaseEntity {
-  @Column("varchar", { primary: true, name: "FCHS_ID", length: 27 })
-  public fchsId: string;
+export class RchmFuncionarioHistorico {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-  @Column("varchar", { name: "FCHS_FCNR_ID", nullable: true, length: 27 })
-  public fchsFcnrId: string | null;
+  @Column("datetime2", { name: "FCHS_DATA", nullable: true })
+  public fchsData: Date | null;
 
-  @Column("datetime", { name: "FCHS_DATA", nullable: true })
-  public fchsData: LocalDateTime | null;
-
-  @Column("varchar", { name: "FCHS_EVENTO", nullable: true, length: 20 })
+  @Column("nvarchar", { name: "FCHS_EVENTO", nullable: true, length: 20 })
   public fchsEvento: string | null;
 
-  @Column("varchar", { name: "FCHS_DESCRICAO", nullable: true, length: 500 })
+  @Column("nvarchar", { name: "FCHS_DESCRICAO", nullable: true, length: 500 })
   public fchsDescricao: string | null;
 
-  @Column("datetime", { name: "FCHS_LASTUPDATE", nullable: true })
-  public fchsLastupdate: LocalDateTime | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
+
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
+
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
   @ManyToOne(
     () => RchmFuncionario,
     (rchmFuncionario) => rchmFuncionario.rchmFuncionarioHistoricos
   )
-  @JoinColumn([{ name: "FCHS_FCNR_ID", referencedColumnName: "fcnrId" }])
+  @JoinColumn([{ name: "FCHS_FCNR_ID", referencedColumnName: "id" }])
   public fchsFcnr: RchmFuncionario;
-
-  @RelationId(
-    (rchmFuncionarioHistorico: RchmFuncionarioHistorico) =>
-      rchmFuncionarioHistorico.fchsFcnr
-  )
-  public fchsFcnrId2: string | null;
-
-  public constructor(init?: Partial<RchmFuncionarioHistorico>) {
-    super();
-    Object.assign(this, init);
-  }
 }

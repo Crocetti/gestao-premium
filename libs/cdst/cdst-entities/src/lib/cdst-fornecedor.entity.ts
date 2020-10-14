@@ -1,56 +1,53 @@
-import {BaseEntity,Column,Entity,Index,JoinColumn,ManyToOne,OneToMany,RelationId} from "typeorm";
-import {CmnsPessoa} from './cmns-pessoa'
-import {EstqCapaMovimento} from './estq-capa-movimento'
-import {FncrTitulo} from './fncr-titulo'
-import {FsclDocumento} from './fscl-documento'
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+} from "typeorm";
+import { CmnsPessoa } from "./cmns-pessoa";
+import { EstqCapaMovimento } from "./estq-capa-movimento";
+import { FncrTitulo } from "./fncr-titulo";
+import { FsclDocumento } from "./fscl-documento";
 
-
-@Index("FK_PESS_RS_FRNC",["frncPessId",],{  })
-@Index("PK_CDST_FORNECEDOR",["frncId",],{ unique:true })
+@Index("PK_CDST_FORNECEDOR", ["id"], { unique: true })
 @Entity("CDST_FORNECEDOR")
-export  class CdstFornecedor extends BaseEntity {
+export class CdstFornecedor {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-@Column("varchar",{ primary:true,name:"FRNC_ID",length:27 })
-public frncId:string;
+  @Column("nvarchar", { name: "FRNC_OBS", nullable: true })
+  public frncObs: string | null;
 
-@Column("varchar",{ name:"FRNC_PESS_ID",nullable:true,length:27 })
-public frncPessId:string | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-@Column("smallint",{ name:"FRNC_ATIVO",default: () => "0", })
-public frncAtivo:number;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-@Column("varchar",{ name:"FRNC_OBS",nullable:true,length:5000 })
-public frncObs:string | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
-@Column("datetime",{ name:"FRNC_LASTUPDATE",nullable:true })
-public frncLastupdate:LocalDateTime | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
 
-@ManyToOne(()=>CmnsPessoa,cmnsPessoa=>cmnsPessoa.cdstFornecedors)
-@JoinColumn([{ name: "FRNC_PESS_ID", referencedColumnName: "pessId" },
-])
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
-public frncPess:CmnsPessoa;
+  @ManyToOne(() => CmnsPessoa, (cmnsPessoa) => cmnsPessoa.cdstFornecedors)
+  @JoinColumn([{ name: "FRNC_PESS_ID", referencedColumnName: "id" }])
+  public frncPess: CmnsPessoa;
 
-@OneToMany(()=>EstqCapaMovimento,estqCapaMovimento=>estqCapaMovimento.cpmvFrnc)
+  @OneToMany(
+    () => EstqCapaMovimento,
+    (estqCapaMovimento) => estqCapaMovimento.cpmvFrnc
+  )
+  public estqCapaMovimentos: EstqCapaMovimento[];
 
+  @OneToMany(() => FncrTitulo, (fncrTitulo) => fncrTitulo.ttlsFrnc)
+  public fncrTitulos: FncrTitulo[];
 
-public estqCapaMovimentos:EstqCapaMovimento[];
-
-@OneToMany(()=>FncrTitulo,fncrTitulo=>fncrTitulo.ttlsFrnc)
-
-
-public fncrTitulos:FncrTitulo[];
-
-@OneToMany(()=>FsclDocumento,fsclDocumento=>fsclDocumento.dcmtFrnc)
-
-
-public fsclDocumentos:FsclDocumento[];
-
-@RelationId((cdstFornecedor:CdstFornecedor)=>cdstFornecedor.frncPess)
-public frncPessId2:string | null;
-
-public constructor(init?: Partial<CdstFornecedor>) {
-    super();
-    Object.assign(this, init);
-}
+  @OneToMany(() => FsclDocumento, (fsclDocumento) => fsclDocumento.dcmtFrnc)
+  public fsclDocumentos: FsclDocumento[];
 }

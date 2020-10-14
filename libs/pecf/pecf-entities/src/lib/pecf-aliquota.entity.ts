@@ -1,16 +1,23 @@
-import { BaseEntity, Column, Entity, Index } from "typeorm";
+import { Column, Entity, Index } from "typeorm";
 
-@Index("PK_PECF_ALIQUOTA", ["alqtId"], { unique: true })
+@Index("PK_PECF_ALIQUOTA", ["id"], { unique: true })
 @Entity("PECF_ALIQUOTA")
-export class PecfAliquota extends BaseEntity {
-  @Column("varchar", { primary: true, name: "ALQT_ID", length: 27 })
-  public alqtId: string;
+export class PecfAliquota {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-  @Column("datetime", { name: "ALQT_LASTUPDATE", nullable: true })
-  public alqtLastupdate: LocalDateTime | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-  public constructor(init?: Partial<PecfAliquota>) {
-    super();
-    Object.assign(this, init);
-  }
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
+
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 }

@@ -1,144 +1,114 @@
-import {BaseEntity,Column,Entity,Index,JoinColumn,ManyToOne,OneToMany,RelationId} from "typeorm";
-import {EstqLoteValidade} from './estq-lote-validade'
-import {EstqGrupo} from './estq-grupo'
-import {EstqMarca} from './estq-marca'
-import {EstqModelo} from './estq-modelo'
-import {FsclNcms} from './fscl-ncms'
-import {CdstProduto} from './cdst-produto'
-import {EstqSubgrupo} from './estq-subgrupo'
-import {SrvcServicoPecas} from './srvc-servico-pecas'
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+} from "typeorm";
+import { EstqLoteValidade } from "./estq-lote-validade";
+import { FsclNcms } from "./fscl-ncms";
+import { CdstProduto } from "./cdst-produto";
+import { EstqMarca } from "./estq-marca";
+import { EstqGrupo } from "./estq-grupo";
+import { EstqSubgrupo } from "./estq-subgrupo";
+import { EstqModelo } from "./estq-modelo";
+import { SrvcServicoPecas } from "./srvc-servico-pecas";
 
-
-@Index("FK_GRPS_RS_MRCD",["mrcdGrpsId",],{  })
-@Index("FK_MARC_RS_MRCD",["mrcdMarcId",],{  })
-@Index("FK_MODE_RS_MRCD",["mrcdModeId",],{  })
-@Index("FK_NCMS_RS_MRCD",["mrcdNcmsId",],{  })
-@Index("FK_PRDT_RS_MRCD",["mrcdPrdtId",],{  })
-@Index("FK_SBGP_RS_MRCD",["mrcdSbgpId",],{  })
-@Index("PK_ESTQ_MERCADORIA",["mrcdId",],{ unique:true })
+@Index("PK_ESTQ_MERCADORIA", ["id"], { unique: true })
 @Entity("ESTQ_MERCADORIA")
-export  class EstqMercadoria extends BaseEntity {
+export class EstqMercadoria {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-@Column("varchar",{ primary:true,name:"MRCD_ID",length:27 })
-public mrcdId:string;
+  @Column("nvarchar", { name: "MRCD_CODIGO", nullable: true, length: 15 })
+  public mrcdCodigo: string | null;
 
-@Column("varchar",{ name:"MRCD_NCMS_ID",nullable:true,length:27 })
-public mrcdNcmsId:string | null;
+  @Column("nvarchar", {
+    name: "MRCD_NOME_REDUZIDO",
+    nullable: true,
+    length: 40,
+  })
+  public mrcdNomeReduzido: string | null;
 
-@Column("varchar",{ name:"MRCD_PRDT_ID",nullable:true,length:27 })
-public mrcdPrdtId:string | null;
+  @Column("nvarchar", { name: "MRCD_REFERENCIA", nullable: true, length: 40 })
+  public mrcdReferencia: string | null;
 
-@Column("varchar",{ name:"MRCD_MARC_ID",nullable:true,length:27 })
-public mrcdMarcId:string | null;
+  @Column("nvarchar", {
+    name: "MRCD_REFERENCIA_AUX",
+    nullable: true,
+    length: 40,
+  })
+  public mrcdReferenciaAux: string | null;
 
-@Column("varchar",{ name:"MRCD_GRPS_ID",nullable:true,length:27 })
-public mrcdGrpsId:string | null;
+  @Column("money", { name: "MRCD_PRECO_ULT_COMPRA", nullable: true })
+  public mrcdPrecoUltCompra: number | null;
 
-@Column("varchar",{ name:"MRCD_SBGP_ID",nullable:true,length:27 })
-public mrcdSbgpId:string | null;
+  @Column("money", { name: "MRCD_PRECO_CUSTO", nullable: true })
+  public mrcdPrecoCusto: number | null;
 
-@Column("varchar",{ name:"MRCD_MODE_ID",nullable:true,length:27 })
-public mrcdModeId:string | null;
+  @Column("numeric", {
+    name: "MRCD_ESTOQUE_MINIMO",
+    nullable: true,
+    precision: 18,
+    scale: 4,
+  })
+  public mrcdEstoqueMinimo: number | null;
 
-@Column("varchar",{ name:"MRCD_CODIGO",nullable:true,length:15 })
-public mrcdCodigo:string | null;
+  @Column("smallint", { name: "MRCD_ESTOQUE_NEGATIVO", nullable: true })
+  public mrcdEstoqueNegativo: number | null;
 
-@Column("varchar",{ name:"MRCD_NOME_REDUZIDO",nullable:true,length:40 })
-public mrcdNomeReduzido:string | null;
+  @Column("smallint", { name: "MRCD_CONTROLA_LOTE", nullable: true })
+  public mrcdControlaLote: number | null;
 
-@Column("varchar",{ name:"MRCD_REFERENCIA",nullable:true,length:40 })
-public mrcdReferencia:string | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-@Column("varchar",{ name:"MRCD_REFERENCIA_AUX",nullable:true,length:40 })
-public mrcdReferenciaAux:string | null;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-@Column("money",{ name:"MRCD_PRECO_ULT_COMPRA",nullable:true,default: () => "0", })
-public mrcdPrecoUltCompra:number | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
-@Column("money",{ name:"MRCD_PRECO_CUSTO",nullable:true,default: () => "0", })
-public mrcdPrecoCusto:number | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
 
-@Column("numeric",{ name:"MRCD_ESTOQUE_MINIMO",nullable:true,precision:18,scale:4,default: () => "0", })
-public mrcdEstoqueMinimo:number | null;
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
-@Column("smallint",{ name:"MRCD_ESTOQUE_NEGATIVO",nullable:true,default: () => "0", })
-public mrcdEstoqueNegativo:number | null;
+  @OneToMany(
+    () => EstqLoteValidade,
+    (estqLoteValidade) => estqLoteValidade.ltvlMrcd
+  )
+  public estqLoteValidades: EstqLoteValidade[];
 
-@Column("smallint",{ name:"MRCD_ATIVO",nullable:true,default: () => "0", })
-public mrcdAtivo:number | null;
+  @ManyToOne(() => FsclNcms, (fsclNcms) => fsclNcms.estqMercadorias)
+  @JoinColumn([{ name: "MRCD_NCMS_ID", referencedColumnName: "id" }])
+  public mrcdNcms: FsclNcms;
 
-@Column("smallint",{ name:"MRCD_CONTROLA_LOTE",nullable:true,default: () => "0", })
-public mrcdControlaLote:number | null;
+  @ManyToOne(() => CdstProduto, (cdstProduto) => cdstProduto.estqMercadorias)
+  @JoinColumn([{ name: "MRCD_PRDT_ID", referencedColumnName: "id" }])
+  public mrcdPrdt: CdstProduto;
 
-@Column("datetime",{ name:"MRCD_LASTUPDATE",nullable:true })
-public mrcdLastupdate:LocalDateTime | null;
+  @ManyToOne(() => EstqMarca, (estqMarca) => estqMarca.estqMercadorias)
+  @JoinColumn([{ name: "MRCD_MARC_ID", referencedColumnName: "id" }])
+  public mrcdMarc: EstqMarca;
 
-@OneToMany(()=>EstqLoteValidade,estqLoteValidade=>estqLoteValidade.ltvlMrcd)
+  @ManyToOne(() => EstqGrupo, (estqGrupo) => estqGrupo.estqMercadorias)
+  @JoinColumn([{ name: "MRCD_GRPS_ID", referencedColumnName: "id" }])
+  public mrcdGrps: EstqGrupo;
 
+  @ManyToOne(() => EstqSubgrupo, (estqSubgrupo) => estqSubgrupo.estqMercadorias)
+  @JoinColumn([{ name: "MRCD_SBGP_ID", referencedColumnName: "id" }])
+  public mrcdSbgp: EstqSubgrupo;
 
-public estqLoteValidades:EstqLoteValidade[];
+  @ManyToOne(() => EstqModelo, (estqModelo) => estqModelo.estqMercadorias)
+  @JoinColumn([{ name: "MRCD_MODE_ID", referencedColumnName: "id" }])
+  public mrcdMode: EstqModelo;
 
-@ManyToOne(()=>EstqGrupo,estqGrupo=>estqGrupo.estqMercadorias)
-@JoinColumn([{ name: "MRCD_GRPS_ID", referencedColumnName: "grpsId" },
-])
-
-public mrcdGrps:EstqGrupo;
-
-@ManyToOne(()=>EstqMarca,estqMarca=>estqMarca.estqMercadorias)
-@JoinColumn([{ name: "MRCD_MARC_ID", referencedColumnName: "marcId" },
-])
-
-public mrcdMarc:EstqMarca;
-
-@ManyToOne(()=>EstqModelo,estqModelo=>estqModelo.estqMercadorias)
-@JoinColumn([{ name: "MRCD_MODE_ID", referencedColumnName: "modeId" },
-])
-
-public mrcdMode:EstqModelo;
-
-@ManyToOne(()=>FsclNcms,fsclNcms=>fsclNcms.estqMercadorias)
-@JoinColumn([{ name: "MRCD_NCMS_ID", referencedColumnName: "ncmsId" },
-])
-
-public mrcdNcms:FsclNcms;
-
-@ManyToOne(()=>CdstProduto,cdstProduto=>cdstProduto.estqMercadorias)
-@JoinColumn([{ name: "MRCD_PRDT_ID", referencedColumnName: "prdtId" },
-])
-
-public mrcdPrdt:CdstProduto;
-
-@ManyToOne(()=>EstqSubgrupo,estqSubgrupo=>estqSubgrupo.estqMercadorias)
-@JoinColumn([{ name: "MRCD_SBGP_ID", referencedColumnName: "sbgpId" },
-])
-
-public mrcdSbgp:EstqSubgrupo;
-
-@OneToMany(()=>SrvcServicoPecas,srvcServicoPecas=>srvcServicoPecas.srpcMrcd)
-
-
-public srvcServicoPecas:SrvcServicoPecas[];
-
-@RelationId((estqMercadoria:EstqMercadoria)=>estqMercadoria.mrcdGrps)
-public mrcdGrpsId2:string | null;
-
-@RelationId((estqMercadoria:EstqMercadoria)=>estqMercadoria.mrcdMarc)
-public mrcdMarcId2:string | null;
-
-@RelationId((estqMercadoria:EstqMercadoria)=>estqMercadoria.mrcdMode)
-public mrcdModeId2:string | null;
-
-@RelationId((estqMercadoria:EstqMercadoria)=>estqMercadoria.mrcdNcms)
-public mrcdNcmsId2:string | null;
-
-@RelationId((estqMercadoria:EstqMercadoria)=>estqMercadoria.mrcdPrdt)
-public mrcdPrdtId2:string | null;
-
-@RelationId((estqMercadoria:EstqMercadoria)=>estqMercadoria.mrcdSbgp)
-public mrcdSbgpId2:string | null;
-
-public constructor(init?: Partial<EstqMercadoria>) {
-    super();
-    Object.assign(this, init);
-}
+  @OneToMany(
+    () => SrvcServicoPecas,
+    (srvcServicoPecas) => srvcServicoPecas.srpcMrcd
+  )
+  public srvcServicoPecas: SrvcServicoPecas[];
 }

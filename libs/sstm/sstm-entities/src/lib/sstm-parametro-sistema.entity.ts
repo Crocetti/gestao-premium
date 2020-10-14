@@ -1,55 +1,48 @@
-import {BaseEntity,Column,Entity,Index,JoinColumn,ManyToOne,RelationId} from "typeorm";
-import {SstmParametro} from './sstm-parametro'
-import {SstmSistema} from './sstm-sistema'
+import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
+import { SstmSistema } from "./sstm-sistema";
+import { SstmParametro } from "./sstm-parametro";
 
-
-@Index("FK_PRMT_RS_PRSS",["prssPrmtId",],{  })
-@Index("FK_SSTM_RS_PRSS",["prssSstmId",],{  })
-@Index("PK_SSTM_PARAMETRO_SISTEMA",["prssId",],{ unique:true })
+@Index("PK_SSTM_PARAMETRO_SISTEMA", ["id"], { unique: true })
 @Entity("SSTM_PARAMETRO_SISTEMA")
-export  class SstmParametroSistema extends BaseEntity {
+export class SstmParametroSistema {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-@Column("varchar",{ primary:true,name:"PRSS_ID",length:27 })
-public prssId:string;
+  @Column("nvarchar", { name: "PRSS_DEFAULT", nullable: true, length: 128 })
+  public prssDefault: string | null;
 
-@Column("varchar",{ name:"PRSS_SSTM_ID",nullable:true,length:27 })
-public prssSstmId:string | null;
+  @Column("nvarchar", { name: "PRSS_VALUE", nullable: true, length: 128 })
+  public prssValue: string | null;
 
-@Column("varchar",{ name:"PRSS_PRMT_ID",nullable:true,length:27 })
-public prssPrmtId:string | null;
+  @Column("smallint", { name: "PRSS_HABILITADO", nullable: true })
+  public prssHabilitado: number | null;
 
-@Column("varchar",{ name:"PRSS_DEFAULT",nullable:true,length:128 })
-public prssDefault:string | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-@Column("varchar",{ name:"PRSS_VALUE",nullable:true,length:128 })
-public prssValue:string | null;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-@Column("smallint",{ name:"PRSS_HABILITADO",nullable:true,default: () => "0", })
-public prssHabilitado:number | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
-@Column("datetime",{ name:"PRSS_LASTUPDATE",nullable:true })
-public prssLastupdate:LocalDateTime | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
 
-@ManyToOne(()=>SstmParametro,sstmParametro=>sstmParametro.sstmParametroSistemas)
-@JoinColumn([{ name: "PRSS_PRMT_ID", referencedColumnName: "prmtId" },
-])
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
-public prssPrmt:SstmParametro;
+  @ManyToOne(
+    () => SstmSistema,
+    (sstmSistema) => sstmSistema.sstmParametroSistemas
+  )
+  @JoinColumn([{ name: "PRSS_SSTM_ID", referencedColumnName: "id" }])
+  public prssSstm: SstmSistema;
 
-@ManyToOne(()=>SstmSistema,sstmSistema=>sstmSistema.sstmParametroSistemas)
-@JoinColumn([{ name: "PRSS_SSTM_ID", referencedColumnName: "sstmId" },
-])
-
-public prssSstm:SstmSistema;
-
-@RelationId((sstmParametroSistema:SstmParametroSistema)=>sstmParametroSistema.prssPrmt)
-public prssPrmtId2:string | null;
-
-@RelationId((sstmParametroSistema:SstmParametroSistema)=>sstmParametroSistema.prssSstm)
-public prssSstmId2:string | null;
-
-public constructor(init?: Partial<SstmParametroSistema>) {
-    super();
-    Object.assign(this, init);
-}
+  @ManyToOne(
+    () => SstmParametro,
+    (sstmParametro) => sstmParametro.sstmParametroSistemas
+  )
+  @JoinColumn([{ name: "PRSS_PRMT_ID", referencedColumnName: "id" }])
+  public prssPrmt: SstmParametro;
 }

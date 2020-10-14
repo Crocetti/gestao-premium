@@ -1,56 +1,83 @@
-import {BaseEntity,Column,Entity,Index,JoinColumn,ManyToOne,OneToMany,RelationId} from "typeorm";
-import {CdstPropriedadeRural} from './cdst-propriedade-rural'
-import {PecrUnidadeCriacao} from './pecr-unidade-criacao'
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+} from "typeorm";
+import { CdstPropriedadeRural } from "./cdst-propriedade-rural";
+import { PecrUnidadeCriacao } from "./pecr-unidade-criacao";
 
-
-@Index("FK_PPRR_RS_MDCR",["mdcrPprrId",],{  })
-@Index("PK_PECR_MODULO_CRIACAO",["mdcrId",],{ unique:true })
+@Index("PK_PECR_MODULO_CRIACAO", ["id"], { unique: true })
 @Entity("PECR_MODULO_CRIACAO")
-export  class PecrModuloCriacao extends BaseEntity {
+export class PecrModuloCriacao {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-@Column("varchar",{ primary:true,name:"MDCR_ID",length:27 })
-public mdcrId:string;
+  @Column("nvarchar", { name: "MDCR_CODIGO", nullable: true, length: 10 })
+  public mdcrCodigo: string | null;
 
-@Column("varchar",{ name:"MDCR_PPRR_ID",nullable:true,length:27 })
-public mdcrPprrId:string | null;
+  @Column("nvarchar", { name: "MDCR_NOME", nullable: true, length: 64 })
+  public mdcrNome: string | null;
 
-@Column("varchar",{ name:"MDCR_CODIGO",nullable:true,length:10 })
-public mdcrCodigo:string | null;
+  @Column("numeric", {
+    name: "MDCR_AREA_TOTAL",
+    nullable: true,
+    precision: 18,
+    scale: 4,
+  })
+  public mdcrAreaTotal: number | null;
 
-@Column("varchar",{ name:"MDCR_NOME",nullable:true,length:64 })
-public mdcrNome:string | null;
+  @Column("numeric", {
+    name: "MDCR_AREA_RESERVA",
+    nullable: true,
+    precision: 18,
+    scale: 4,
+  })
+  public mdcrAreaReserva: number | null;
 
-@Column("numeric",{ name:"MDCR_AREA_TOTAL",nullable:true,precision:18,scale:4,default: () => "0", })
-public mdcrAreaTotal:number | null;
+  @Column("numeric", {
+    name: "MDCR_LATITUDE",
+    nullable: true,
+    precision: 18,
+    scale: 6,
+  })
+  public mdcrLatitude: number | null;
 
-@Column("numeric",{ name:"MDCR_AREA_RESERVA",nullable:true,precision:18,scale:4,default: () => "0", })
-public mdcrAreaReserva:number | null;
+  @Column("numeric", {
+    name: "MDCR_LONGITUDE",
+    nullable: true,
+    precision: 18,
+    scale: 6,
+  })
+  public mdcrLongitude: number | null;
 
-@Column("numeric",{ name:"MDCR_LATITUDE",nullable:true,precision:18,scale:6 })
-public mdcrLatitude:number | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-@Column("numeric",{ name:"MDCR_LONGITUDE",nullable:true,precision:18,scale:6 })
-public mdcrLongitude:number | null;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-@Column("datetime",{ name:"MDCR_LASTUPDATE",nullable:true })
-public mdcrLastupdate:LocalDateTime | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
-@ManyToOne(()=>CdstPropriedadeRural,cdstPropriedadeRural=>cdstPropriedadeRural.pecrModuloCriacaos)
-@JoinColumn([{ name: "MDCR_PPRR_ID", referencedColumnName: "pprrId" },
-])
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
 
-public mdcrPprr:CdstPropriedadeRural;
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
-@OneToMany(()=>PecrUnidadeCriacao,pecrUnidadeCriacao=>pecrUnidadeCriacao.uncrMdcr)
+  @ManyToOne(
+    () => CdstPropriedadeRural,
+    (cdstPropriedadeRural) => cdstPropriedadeRural.pecrModuloCriacaos
+  )
+  @JoinColumn([{ name: "MDCR_PPRR_ID", referencedColumnName: "id" }])
+  public mdcrPprr: CdstPropriedadeRural;
 
-
-public pecrUnidadeCriacaos:PecrUnidadeCriacao[];
-
-@RelationId((pecrModuloCriacao:PecrModuloCriacao)=>pecrModuloCriacao.mdcrPprr)
-public mdcrPprrId2:string | null;
-
-public constructor(init?: Partial<PecrModuloCriacao>) {
-    super();
-    Object.assign(this, init);
-}
+  @OneToMany(
+    () => PecrUnidadeCriacao,
+    (pecrUnidadeCriacao) => pecrUnidadeCriacao.uncrMdcr
+  )
+  public pecrUnidadeCriacaos: PecrUnidadeCriacao[];
 }

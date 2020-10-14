@@ -1,29 +1,39 @@
-import { BaseEntity, Column, Entity, Index, OneToMany } from "typeorm";
+import { Column, Entity, Index, OneToMany } from "typeorm";
 import { PecrEventoSanitario } from "./pecr-evento-sanitario";
 
-@Index("PK_PECR_TIPO_EVENTO_SANITARIO", ["tpesId"], { unique: true })
+@Index("PK_PECR_TIPO_EVENTO_SANITARIO", ["id"], { unique: true })
 @Entity("PECR_TIPO_EVENTO_SANITARIO")
-export class PecrTipoEventoSanitario extends BaseEntity {
-  @Column("varchar", { primary: true, name: "TPES_ID", length: 27 })
-  public tpesId: string;
+export class PecrTipoEventoSanitario {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-  @Column("varchar", { name: "TPES_CODIGO", nullable: true, length: 3 })
+  @Column("nvarchar", { name: "TPES_CODIGO", nullable: true, length: 3 })
   public tpesCodigo: string | null;
 
-  @Column("varchar", { name: "TPES_TIPO", nullable: true, length: 20 })
+  @Column("nvarchar", { name: "TPES_TIPO", nullable: true, length: 20 })
   public tpesTipo: string | null;
 
-  @Column("varchar", { name: "TPES_NOME", nullable: true, length: 40 })
+  @Column("nvarchar", { name: "TPES_NOME", nullable: true, length: 40 })
   public tpesNome: string | null;
+
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
+
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
+
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
   @OneToMany(
     () => PecrEventoSanitario,
     (pecrEventoSanitario) => pecrEventoSanitario.evsnTpes
   )
   public pecrEventoSanitarios: PecrEventoSanitario[];
-
-  public constructor(init?: Partial<PecrTipoEventoSanitario>) {
-    super();
-    Object.assign(this, init);
-  }
 }

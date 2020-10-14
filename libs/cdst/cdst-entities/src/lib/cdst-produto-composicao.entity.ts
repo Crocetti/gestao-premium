@@ -1,68 +1,60 @@
-import {BaseEntity,Column,Entity,Index,JoinColumn,ManyToOne,RelationId} from "typeorm";
-import {CdstProduto} from './cdst-produto'
-import {CdstUnidadeMedida} from './cdst-unidade-medida'
+import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
+import { CdstProduto } from "./cdst-produto";
+import { CdstUnidadeMedida } from "./cdst-unidade-medida";
 
-
-@Index("FK_COMP_RS_PRCP",["prcpCompId",],{  })
-@Index("FK_PRDT_RS_PRCP",["prcpPrdtId",],{  })
-@Index("FK_UNID_RS_PRCP",["prcpUnidId",],{  })
-@Index("PK_CDST_PRODUTO_COMPOSICAO",["pdcpId",],{ unique:true })
+@Index("PK_CDST_PRODUTO_COMPOSICAO", ["id"], { unique: true })
 @Entity("CDST_PRODUTO_COMPOSICAO")
-export  class CdstProdutoComposicao extends BaseEntity {
+export class CdstProdutoComposicao {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-@Column("varchar",{ primary:true,name:"PDCP_ID",length:27 })
-public pdcpId:string;
+  @Column("numeric", {
+    name: "PDCP_QUANTIDADE",
+    nullable: true,
+    precision: 18,
+    scale: 4,
+  })
+  public pdcpQuantidade: number | null;
 
-@Column("varchar",{ name:"PRCP_PRDT_ID",nullable:true,length:27 })
-public prcpPrdtId:string | null;
+  @Column("smallint", { name: "PDCP_VER_NA_OS", nullable: true })
+  public pdcpVerNaOs: number | null;
 
-@Column("varchar",{ name:"PRCP_COMP_ID",nullable:true,length:27 })
-public prcpCompId:string | null;
+  @Column("smallint", { name: "PDCP_COMPOE_PRECO", nullable: true })
+  public pdcpCompoePreco: number | null;
 
-@Column("varchar",{ name:"PRCP_UNID_ID",nullable:true,length:27 })
-public prcpUnidId:string | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-@Column("numeric",{ name:"PDCP_QUANTIDADE",nullable:true,precision:18,scale:4,default: () => "0", })
-public pdcpQuantidade:number | null;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-@Column("smallint",{ name:"PDCP_VER_NA_OS",nullable:true,default: () => "0", })
-public pdcpVerNaOs:number | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
-@Column("smallint",{ name:"PDCP_COMPOE_PRECO",nullable:true,default: () => "0", })
-public pdcpCompoePreco:number | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
 
-@Column("datetime",{ name:"PDCP_LASTUPDATE",nullable:true })
-public pdcpLastupdate:LocalDateTime | null;
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
-@ManyToOne(()=>CdstProduto,cdstProduto=>cdstProduto.cdstProdutoComposicaos)
-@JoinColumn([{ name: "PRCP_COMP_ID", referencedColumnName: "prdtId" },
-])
+  @ManyToOne(
+    () => CdstProduto,
+    (cdstProduto) => cdstProduto.cdstProdutoComposicaos
+  )
+  @JoinColumn([{ name: "PRCP_PRDT_ID", referencedColumnName: "id" }])
+  public prcpPrdt: CdstProduto;
 
-public prcpComp:CdstProduto;
+  @ManyToOne(
+    () => CdstProduto,
+    (cdstProduto) => cdstProduto.cdstProdutoComposicaos2
+  )
+  @JoinColumn([{ name: "PRCP_COMP_ID", referencedColumnName: "id" }])
+  public prcpComp: CdstProduto;
 
-@ManyToOne(()=>CdstProduto,cdstProduto=>cdstProduto.cdstProdutoComposicaos2)
-@JoinColumn([{ name: "PRCP_PRDT_ID", referencedColumnName: "prdtId" },
-])
-
-public prcpPrdt:CdstProduto;
-
-@ManyToOne(()=>CdstUnidadeMedida,cdstUnidadeMedida=>cdstUnidadeMedida.cdstProdutoComposicaos)
-@JoinColumn([{ name: "PRCP_UNID_ID", referencedColumnName: "unidId" },
-])
-
-public prcpUnid:CdstUnidadeMedida;
-
-@RelationId((cdstProdutoComposicao:CdstProdutoComposicao)=>cdstProdutoComposicao.prcpComp)
-public prcpCompId2:string | null;
-
-@RelationId((cdstProdutoComposicao:CdstProdutoComposicao)=>cdstProdutoComposicao.prcpPrdt)
-public prcpPrdtId2:string | null;
-
-@RelationId((cdstProdutoComposicao:CdstProdutoComposicao)=>cdstProdutoComposicao.prcpUnid)
-public prcpUnidId2:string | null;
-
-public constructor(init?: Partial<CdstProdutoComposicao>) {
-    super();
-    Object.assign(this, init);
-}
+  @ManyToOne(
+    () => CdstUnidadeMedida,
+    (cdstUnidadeMedida) => cdstUnidadeMedida.cdstProdutoComposicaos
+  )
+  @JoinColumn([{ name: "PRCP_UNID_ID", referencedColumnName: "id" }])
+  public prcpUnid: CdstUnidadeMedida;
 }

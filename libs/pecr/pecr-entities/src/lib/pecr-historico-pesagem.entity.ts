@@ -1,38 +1,42 @@
-import {BaseEntity,Column,Entity,Index,JoinColumn,ManyToOne,RelationId} from "typeorm";
-import {PecrProdutoBovino} from './pecr-produto-bovino'
+import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
+import { PecrProdutoBovino } from "./pecr-produto-bovino";
 
-
-@Index("FK_PRBV_RS_HSPS",["hspsPrbvId",],{  })
-@Index("PK_PECR_HISTORICO_PESAGEM",["hspsId",],{ unique:true })
+@Index("PK_PECR_HISTORICO_PESAGEM", ["id"], { unique: true })
 @Entity("PECR_HISTORICO_PESAGEM")
-export  class PecrHistoricoPesagem extends BaseEntity {
+export class PecrHistoricoPesagem {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-@Column("varchar",{ primary:true,name:"HSPS_ID",length:27 })
-public hspsId:string;
+  @Column("datetime2", { name: "HSPS_DT_PESAGEM", nullable: true })
+  public hspsDtPesagem: Date | null;
 
-@Column("varchar",{ name:"HSPS_PRBV_ID",nullable:true,length:27 })
-public hspsPrbvId:string | null;
+  @Column("numeric", {
+    name: "HSPS_PESO",
+    nullable: true,
+    precision: 18,
+    scale: 4,
+  })
+  public hspsPeso: number | null;
 
-@Column("datetime",{ name:"HSPS_DT_PESAGEM",nullable:true })
-public hspsDtPesagem:LocalDateTime | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-@Column("numeric",{ name:"HSPS_PESO",nullable:true,precision:18,scale:4,default: () => "0", })
-public hspsPeso:number | null;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-@Column("datetime",{ name:"HSPS_LASTUPDATE",nullable:true })
-public hspsLastupdate:LocalDateTime | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
-@ManyToOne(()=>PecrProdutoBovino,pecrProdutoBovino=>pecrProdutoBovino.pecrHistoricoPesagems)
-@JoinColumn([{ name: "HSPS_PRBV_ID", referencedColumnName: "prbvId" },
-])
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
 
-public hspsPrbv:PecrProdutoBovino;
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
-@RelationId((pecrHistoricoPesagem:PecrHistoricoPesagem)=>pecrHistoricoPesagem.hspsPrbv)
-public hspsPrbvId2:string | null;
-
-public constructor(init?: Partial<PecrHistoricoPesagem>) {
-    super();
-    Object.assign(this, init);
-}
+  @ManyToOne(
+    () => PecrProdutoBovino,
+    (pecrProdutoBovino) => pecrProdutoBovino.pecrHistoricoPesagems
+  )
+  @JoinColumn([{ name: "HSPS_PRBV_ID", referencedColumnName: "id" }])
+  public hspsPrbv: PecrProdutoBovino;
 }

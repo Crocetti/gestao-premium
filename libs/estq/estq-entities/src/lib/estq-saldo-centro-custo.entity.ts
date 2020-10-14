@@ -1,67 +1,90 @@
-import {BaseEntity,Column,Entity,Index,JoinColumn,ManyToOne,RelationId} from "typeorm";
-import {FncrPlanoConta} from './fncr-plano-conta'
-import {EstqProdutoSaldo} from './estq-produto-saldo'
+import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
+import { EstqProdutoSaldo } from "./estq-produto-saldo";
+import { FncrPlanoConta } from "./fncr-plano-conta";
 
-
-@Index("FK_CTCT_RS_SDCC",["sdccCtctId",],{  })
-@Index("FK_PRSD_RS_SDCC",["sdccPrsdId",],{  })
-@Index("PK_ESTQ_SALDO_CENTRO_CUSTO",["sdccId",],{ unique:true })
+@Index("PK_ESTQ_SALDO_CENTRO_CUSTO", ["id"], { unique: true })
 @Entity("ESTQ_SALDO_CENTRO_CUSTO")
-export  class EstqSaldoCentroCusto extends BaseEntity {
+export class EstqSaldoCentroCusto {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-@Column("varchar",{ primary:true,name:"SDCC_ID",length:27 })
-public sdccId:string;
+  @Column("datetime2", { name: "SDCC_MES_REFERENCIA", nullable: true })
+  public sdccMesReferencia: Date | null;
 
-@Column("varchar",{ name:"SDCC_PRSD_ID",nullable:true,length:27 })
-public sdccPrsdId:string | null;
+  @Column("numeric", {
+    name: "SDCC_INICIAL",
+    nullable: true,
+    precision: 18,
+    scale: 4,
+  })
+  public sdccInicial: number | null;
 
-@Column("varchar",{ name:"SDCC_CTCT_ID",nullable:true,length:27 })
-public sdccCtctId:string | null;
+  @Column("numeric", {
+    name: "SDCC_ENTRADAS",
+    nullable: true,
+    precision: 18,
+    scale: 4,
+  })
+  public sdccEntradas: number | null;
 
-@Column("datetime",{ name:"SDCC_MES_REFERENCIA",nullable:true })
-public sdccMesReferencia:LocalDateTime | null;
+  @Column("numeric", {
+    name: "SDCC_SAIDAS",
+    nullable: true,
+    precision: 18,
+    scale: 4,
+  })
+  public sdccSaidas: number | null;
 
-@Column("numeric",{ name:"SDCC_INICIAL",nullable:true,precision:18,scale:4,default: () => "0", })
-public sdccInicial:number | null;
+  @Column("numeric", {
+    name: "SDCC_CAUTELA",
+    nullable: true,
+    precision: 18,
+    scale: 4,
+  })
+  public sdccCautela: number | null;
 
-@Column("numeric",{ name:"SDCC_ENTRADAS",nullable:true,precision:18,scale:4,default: () => "0", })
-public sdccEntradas:number | null;
+  @Column("numeric", {
+    name: "SDCC_RESERVA",
+    nullable: true,
+    precision: 18,
+    scale: 4,
+  })
+  public sdccReserva: number | null;
 
-@Column("numeric",{ name:"SDCC_SAIDAS",nullable:true,precision:18,scale:4,default: () => "0", })
-public sdccSaidas:number | null;
+  @Column("numeric", {
+    name: "SDCC_FINAL",
+    nullable: true,
+    precision: 18,
+    scale: 4,
+  })
+  public sdccFinal: number | null;
 
-@Column("numeric",{ name:"SDCC_CAUTELA",nullable:true,precision:18,scale:4,default: () => "0", })
-public sdccCautela:number | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-@Column("numeric",{ name:"SDCC_RESERVA",nullable:true,precision:18,scale:4,default: () => "0", })
-public sdccReserva:number | null;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-@Column("numeric",{ name:"SDCC_FINAL",nullable:true,precision:18,scale:4,default: () => "0", })
-public sdccFinal:number | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
-@Column("datetime",{ name:"SDCC_LASTUPDATE",nullable:true })
-public sdccLastupdate:LocalDateTime | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
 
-@ManyToOne(()=>FncrPlanoConta,fncrPlanoConta=>fncrPlanoConta.estqSaldoCentroCustos)
-@JoinColumn([{ name: "SDCC_CTCT_ID", referencedColumnName: "plctId" },
-])
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
-public sdccCtct:FncrPlanoConta;
+  @ManyToOne(
+    () => EstqProdutoSaldo,
+    (estqProdutoSaldo) => estqProdutoSaldo.estqSaldoCentroCustos
+  )
+  @JoinColumn([{ name: "SDCC_PRSD_ID", referencedColumnName: "id" }])
+  public sdccPrsd: EstqProdutoSaldo;
 
-@ManyToOne(()=>EstqProdutoSaldo,estqProdutoSaldo=>estqProdutoSaldo.estqSaldoCentroCustos)
-@JoinColumn([{ name: "SDCC_PRSD_ID", referencedColumnName: "prsdId" },
-])
-
-public sdccPrsd:EstqProdutoSaldo;
-
-@RelationId((estqSaldoCentroCusto:EstqSaldoCentroCusto)=>estqSaldoCentroCusto.sdccCtct)
-public sdccCtctId2:string | null;
-
-@RelationId((estqSaldoCentroCusto:EstqSaldoCentroCusto)=>estqSaldoCentroCusto.sdccPrsd)
-public sdccPrsdId2:string | null;
-
-public constructor(init?: Partial<EstqSaldoCentroCusto>) {
-    super();
-    Object.assign(this, init);
-}
+  @ManyToOne(
+    () => FncrPlanoConta,
+    (fncrPlanoConta) => fncrPlanoConta.estqSaldoCentroCustos
+  )
+  @JoinColumn([{ name: "SDCC_CTCT_ID", referencedColumnName: "id" }])
+  public sdccCtct: FncrPlanoConta;
 }

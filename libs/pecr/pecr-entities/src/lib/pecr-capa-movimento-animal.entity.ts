@@ -1,56 +1,65 @@
-import {BaseEntity,Column,Entity,Index,JoinColumn,ManyToOne,OneToMany,RelationId} from "typeorm";
-import {PecrLote} from './pecr-lote'
-import {PecrItemMovimentoAnimal} from './pecr-item-movimento-animal'
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+} from "typeorm";
+import { PecrLote } from "./pecr-lote";
+import { PecrItemMovimentoAnimal } from "./pecr-item-movimento-animal";
 
-
-@Index("FK_LOTE_RS_CMAN",["cmanLoteId",],{  })
-@Index("PK_PECR_CAPA_MOVIMENTO_ANIMAL",["cmanId",],{ unique:true })
+@Index("PK_PECR_CAPA_MOVIMENTO_ANIMAL", ["id"], { unique: true })
 @Entity("PECR_CAPA_MOVIMENTO_ANIMAL")
-export  class PecrCapaMovimentoAnimal extends BaseEntity {
+export class PecrCapaMovimentoAnimal {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-@Column("varchar",{ primary:true,name:"CMAN_ID",length:27 })
-public cmanId:string;
+  @Column("datetime2", { name: "CMAN_DT_LANCAMENTO", nullable: true })
+  public cmanDtLancamento: Date | null;
 
-@Column("varchar",{ name:"CMAN_LOTE_ID",nullable:true,length:27 })
-public cmanLoteId:string | null;
+  @Column("datetime2", { name: "CMAN_DT_MOVIMENTO", nullable: true })
+  public cmanDtMovimento: Date | null;
 
-@Column("datetime",{ name:"CMAN_DT_LANCAMENTO",nullable:true })
-public cmanDtLancamento:LocalDateTime | null;
+  @Column("nvarchar", { name: "CMAN_TP_DOCUMENTO", nullable: true, length: 25 })
+  public cmanTpDocumento: string | null;
 
-@Column("datetime",{ name:"CMAN_DT_MOVIMENTO",nullable:true })
-public cmanDtMovimento:LocalDateTime | null;
+  @Column("nvarchar", { name: "CMAN_TP_MOVIMENTO", nullable: true, length: 10 })
+  public cmanTpMovimento: string | null;
 
-@Column("varchar",{ name:"CMAN_TP_DOCUMENTO",nullable:true,length:25 })
-public cmanTpDocumento:string | null;
+  @Column("nvarchar", { name: "CMAN_TP_TRANSACAO", nullable: true, length: 25 })
+  public cmanTpTransacao: string | null;
 
-@Column("varchar",{ name:"CMAN_TP_MOVIMENTO",nullable:true,length:10 })
-public cmanTpMovimento:string | null;
+  @Column("numeric", {
+    name: "CMAN_QTD_ITENS",
+    nullable: true,
+    precision: 18,
+    scale: 4,
+  })
+  public cmanQtdItens: number | null;
 
-@Column("varchar",{ name:"CMAN_TP_TRANSACAO",nullable:true,length:25 })
-public cmanTpTransacao:string | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-@Column("numeric",{ name:"CMAN_QTD_ITENS",nullable:true,precision:18,scale:4,default: () => "0", })
-public cmanQtdItens:number | null;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-@Column("datetime",{ name:"CMAN_LASTUPDATE",nullable:true })
-public cmanLastupdate:LocalDateTime | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
-@ManyToOne(()=>PecrLote,pecrLote=>pecrLote.pecrCapaMovimentoAnimals)
-@JoinColumn([{ name: "CMAN_LOTE_ID", referencedColumnName: "loteId" },
-])
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
 
-public cmanLote:PecrLote;
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
-@OneToMany(()=>PecrItemMovimentoAnimal,pecrItemMovimentoAnimal=>pecrItemMovimentoAnimal.imanCman)
+  @ManyToOne(() => PecrLote, (pecrLote) => pecrLote.pecrCapaMovimentoAnimals)
+  @JoinColumn([{ name: "CMAN_LOTE_ID", referencedColumnName: "id" }])
+  public cmanLote: PecrLote;
 
-
-public pecrItemMovimentoAnimals:PecrItemMovimentoAnimal[];
-
-@RelationId((pecrCapaMovimentoAnimal:PecrCapaMovimentoAnimal)=>pecrCapaMovimentoAnimal.cmanLote)
-public cmanLoteId2:string | null;
-
-public constructor(init?: Partial<PecrCapaMovimentoAnimal>) {
-    super();
-    Object.assign(this, init);
-}
+  @OneToMany(
+    () => PecrItemMovimentoAnimal,
+    (pecrItemMovimentoAnimal) => pecrItemMovimentoAnimal.imanCman
+  )
+  public pecrItemMovimentoAnimals: PecrItemMovimentoAnimal[];
 }

@@ -1,58 +1,60 @@
-import {BaseEntity,Column,Entity,Index,JoinColumn,ManyToOne,RelationId} from "typeorm";
-import {CdstProduto} from './cdst-produto'
-import {PecrLote} from './pecr-lote'
+import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
+import { CdstProduto } from "./cdst-produto";
+import { PecrLote } from "./pecr-lote";
 
-
-@Index("FK_LOTE_RS_LTSD",["ltsdLoteId",],{  })
-@Index("FK_PRDT_RS_LTSD",["ltsdPrdtId",],{  })
-@Index("PK_PECR_LOTE_SALDO",["ltsdId",],{ unique:true })
+@Index("PK_PECR_LOTE_SALDO", ["id"], { unique: true })
 @Entity("PECR_LOTE_SALDO")
-export  class PecrLoteSaldo extends BaseEntity {
+export class PecrLoteSaldo {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-@Column("varchar",{ primary:true,name:"LTSD_ID",length:27 })
-public ltsdId:string;
+  @Column("datetime2", { name: "LTSD_DT_REFERENCIA" })
+  public ltsdDtReferencia: Date;
 
-@Column("varchar",{ name:"LTSD_PRDT_ID",nullable:true,length:27 })
-public ltsdPrdtId:string | null;
+  @Column("numeric", {
+    name: "LTSD_QTD_ENTRADA",
+    nullable: true,
+    precision: 18,
+    scale: 4,
+  })
+  public ltsdQtdEntrada: number | null;
 
-@Column("varchar",{ name:"LTSD_LOTE_ID",nullable:true,length:27 })
-public ltsdLoteId:string | null;
+  @Column("numeric", {
+    name: "LTSD_QTD_SAIDA",
+    nullable: true,
+    precision: 18,
+    scale: 4,
+  })
+  public ltsdQtdSaida: number | null;
 
-@Column("datetime",{ name:"LTSD_DT_REFERENCIA" })
-public ltsdDtReferencia:LocalDateTime;
+  @Column("numeric", {
+    name: "LTSD_QTD_RESERVA",
+    nullable: true,
+    precision: 18,
+    scale: 4,
+  })
+  public ltsdQtdReserva: number | null;
 
-@Column("numeric",{ name:"LTSD_QTD_ENTRADA",nullable:true,precision:18,scale:4,default: () => "0", })
-public ltsdQtdEntrada:number | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-@Column("numeric",{ name:"LTSD_QTD_SAIDA",nullable:true,precision:18,scale:4,default: () => "0", })
-public ltsdQtdSaida:number | null;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-@Column("numeric",{ name:"LTSD_QTD_RESERVA",nullable:true,precision:18,scale:4,default: () => "0", })
-public ltsdQtdReserva:number | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
-@Column("datetime",{ name:"LTSD_LASTUPDATE",nullable:true })
-public ltsdLastupdate:LocalDateTime | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
 
-@ManyToOne(()=>CdstProduto,cdstProduto=>cdstProduto.pecrLoteSaldos)
-@JoinColumn([{ name: "LTSD_PRDT_ID", referencedColumnName: "prdtId" },
-])
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
-public ltsdPrdt:CdstProduto;
+  @ManyToOne(() => CdstProduto, (cdstProduto) => cdstProduto.pecrLoteSaldos)
+  @JoinColumn([{ name: "LTSD_PRDT_ID", referencedColumnName: "id" }])
+  public ltsdPrdt: CdstProduto;
 
-@ManyToOne(()=>PecrLote,pecrLote=>pecrLote.pecrLoteSaldos)
-@JoinColumn([{ name: "LTSD_LOTE_ID", referencedColumnName: "loteId" },
-])
-
-public ltsdLote:PecrLote;
-
-@RelationId((pecrLoteSaldo:PecrLoteSaldo)=>pecrLoteSaldo.ltsdPrdt)
-public ltsdPrdtId2:string | null;
-
-@RelationId((pecrLoteSaldo:PecrLoteSaldo)=>pecrLoteSaldo.ltsdLote)
-public ltsdLoteId2:string | null;
-
-public constructor(init?: Partial<PecrLoteSaldo>) {
-    super();
-    Object.assign(this, init);
-}
+  @ManyToOne(() => PecrLote, (pecrLote) => pecrLote.pecrLoteSaldos)
+  @JoinColumn([{ name: "LTSD_LOTE_ID", referencedColumnName: "id" }])
+  public ltsdLote: PecrLote;
 }

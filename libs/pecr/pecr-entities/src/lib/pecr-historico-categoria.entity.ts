@@ -1,66 +1,45 @@
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  RelationId,
-} from "typeorm";
-import { PecrCategoria } from "./pecr-categoria";
+import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
 import { PecrProdutoBovino } from "./pecr-produto-bovino";
+import { PecrCategoria } from "./pecr-categoria";
 
-@Index("FK_CTGR_RS_HSCT", ["hsctCtgrId"], {})
-@Index("FK_PRBV_RS_HSCT", ["hsctPrbvId"], {})
-@Index("PK_PECR_HISTORICO_CATEGORIA", ["hsctId"], { unique: true })
+@Index("PK_PECR_HISTORICO_CATEGORIA", ["id"], { unique: true })
 @Entity("PECR_HISTORICO_CATEGORIA")
-export class PecrHistoricoCategoria extends BaseEntity {
-  @Column("varchar", { primary: true, name: "HSCT_ID", length: 27 })
-  public hsctId: string;
+export class PecrHistoricoCategoria {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-  @Column("varchar", { name: "HSCT_PRBV_ID", nullable: true, length: 27 })
-  public hsctPrbvId: string | null;
+  @Column("datetime2", { name: "HSCT_DT_ENTRADA", nullable: true })
+  public hsctDtEntrada: Date | null;
 
-  @Column("varchar", { name: "HSCT_CTGR_ID", nullable: true, length: 27 })
-  public hsctCtgrId: string | null;
+  @Column("datetime2", { name: "HSCT_DT_SAIDA", nullable: true })
+  public hsctDtSaida: Date | null;
 
-  @Column("datetime", { name: "HSCT_DT_ENTRADA", nullable: true })
-  public hsctDtEntrada: LocalDateTime | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-  @Column("datetime", { name: "HSCT_DT_SAIDA", nullable: true })
-  public hsctDtSaida: LocalDateTime | null;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-  @Column("datetime", { name: "HSCT_LASTUPDATE", nullable: true })
-  public hsctLastupdate: LocalDateTime | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
-  @ManyToOne(
-    () => PecrCategoria,
-    (pecrCategoria) => pecrCategoria.pecrHistoricoCategorias
-  )
-  @JoinColumn([{ name: "HSCT_CTGR_ID", referencedColumnName: "ctgrId" }])
-  public hsctCtgr: PecrCategoria;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
+
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
   @ManyToOne(
     () => PecrProdutoBovino,
     (pecrProdutoBovino) => pecrProdutoBovino.pecrHistoricoCategorias
   )
-  @JoinColumn([{ name: "HSCT_PRBV_ID", referencedColumnName: "prbvId" }])
+  @JoinColumn([{ name: "HSCT_PRBV_ID", referencedColumnName: "id" }])
   public hsctPrbv: PecrProdutoBovino;
 
-  @RelationId(
-    (pecrHistoricoCategoria: PecrHistoricoCategoria) =>
-      pecrHistoricoCategoria.hsctCtgr
+  @ManyToOne(
+    () => PecrCategoria,
+    (pecrCategoria) => pecrCategoria.pecrHistoricoCategorias
   )
-  public hsctCtgrId2: string | null;
-
-  @RelationId(
-    (pecrHistoricoCategoria: PecrHistoricoCategoria) =>
-      pecrHistoricoCategoria.hsctPrbv
-  )
-  public hsctPrbvId2: string | null;
-
-  public constructor(init?: Partial<PecrHistoricoCategoria>) {
-    super();
-    Object.assign(this, init);
-  }
+  @JoinColumn([{ name: "HSCT_CTGR_ID", referencedColumnName: "id" }])
+  public hsctCtgr: PecrCategoria;
 }

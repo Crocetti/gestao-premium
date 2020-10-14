@@ -1244,7 +1244,7 @@
                                 "glob": "**/*",
                                 "input": "./imagens/",
                                 "output": "imagens/"
-                            },
+                            }
 
                         ],
                         "styles": [

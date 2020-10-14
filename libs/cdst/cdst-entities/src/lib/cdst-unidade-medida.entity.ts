@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, Index, OneToMany } from "typeorm";
+import { Column, Entity, Index, OneToMany } from "typeorm";
 import { CdstProduto } from "./cdst-produto";
 import { CdstProdutoComposicao } from "./cdst-produto-composicao";
 import { EstqItemMovimento } from "./estq-item-movimento";
@@ -9,23 +9,35 @@ import { SrvcServicoComposicao } from "./srvc-servico-composicao";
 import { SrvcServicoMaqEquip } from "./srvc-servico-maq-equip";
 import { SrvcServicoPecas } from "./srvc-servico-pecas";
 
-@Index("PK_CDST_UNIDADE_MEDIDA", ["unidId"], { unique: true })
+@Index("PK_CDST_UNIDADE_MEDIDA", ["id"], { unique: true })
 @Entity("CDST_UNIDADE_MEDIDA")
-export class CdstUnidadeMedida extends BaseEntity {
-  @Column("varchar", { primary: true, name: "UNID_ID", length: 27 })
-  public unidId: string;
+export class CdstUnidadeMedida {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-  @Column("varchar", { name: "UNID_SIGLA", nullable: true, length: 5 })
+  @Column("nvarchar", { name: "UNID_SIGLA", nullable: true, length: 5 })
   public unidSigla: string | null;
 
-  @Column("varchar", { name: "UNID_NOME", nullable: true, length: 64 })
+  @Column("nvarchar", { name: "UNID_NOME", nullable: true, length: 64 })
   public unidNome: string | null;
 
-  @Column("varchar", { name: "UNID_GRANDEZA", nullable: true, length: 25 })
+  @Column("nvarchar", { name: "UNID_GRANDEZA", nullable: true, length: 25 })
   public unidGrandeza: string | null;
 
-  @Column("datetime", { name: "UNID_LASTUPDATE", nullable: true })
-  public unidLastupdate: LocalDateTime | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
+
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
+
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
   @OneToMany(() => CdstProduto, (cdstProduto) => cdstProduto.prdtUnid)
   public cdstProdutos: CdstProduto[];
@@ -42,10 +54,10 @@ export class CdstUnidadeMedida extends BaseEntity {
   )
   public estqItemMovimentos: EstqItemMovimento[];
 
-  @OneToMany(() => PecrCategoria, (pecrCategoria) => pecrCategoria.ctgrIdad)
+  @OneToMany(() => PecrCategoria, (pecrCategoria) => pecrCategoria.ctgrPeso)
   public pecrCategorias: PecrCategoria[];
 
-  @OneToMany(() => PecrCategoria, (pecrCategoria) => pecrCategoria.ctgrPeso)
+  @OneToMany(() => PecrCategoria, (pecrCategoria) => pecrCategoria.ctgrIdad)
   public pecrCategorias2: PecrCategoria[];
 
   @OneToMany(
@@ -77,9 +89,4 @@ export class CdstUnidadeMedida extends BaseEntity {
     (srvcServicoPecas) => srvcServicoPecas.srpcUnid
   )
   public srvcServicoPecas: SrvcServicoPecas[];
-
-  public constructor(init?: Partial<CdstUnidadeMedida>) {
-    super();
-    Object.assign(this, init);
-  }
 }

@@ -1,12 +1,10 @@
 import {
-  BaseEntity,
   Column,
   Entity,
   Index,
   JoinColumn,
   ManyToOne,
   OneToMany,
-  RelationId,
 } from "typeorm";
 import { CmnsPessoa } from "./cmns-pessoa";
 import { PecrRaca } from "./pecr-raca";
@@ -17,44 +15,48 @@ import { VeteInternacao } from "./vete-internacao";
 import { VeteOrdemDeServico } from "./vete-ordem-de-servico";
 import { VeteRetorno } from "./vete-retorno";
 
-@Index("FK_PESS_RS_ANML", ["anmlPessId"], {})
-@Index("FK_RACA_RS_ANML", ["anmlRacaId"], {})
-@Index("PK_VETE_ANIMAL", ["anmlId"], { unique: true })
+@Index("PK_VETE_ANIMAL", ["id"], { unique: true })
 @Entity("VETE_ANIMAL")
-export class VeteAnimal extends BaseEntity {
-  @Column("varchar", { primary: true, name: "ANML_ID", length: 27 })
-  public anmlId: string;
+export class VeteAnimal {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-  @Column("varchar", { name: "ANML_PESS_ID", nullable: true, length: 27 })
-  public anmlPessId: string | null;
-
-  @Column("varchar", { name: "ANML_RACA_ID", nullable: true, length: 27 })
-  public anmlRacaId: string | null;
-
-  @Column("varchar", { name: "ANML_CODIGO", nullable: true, length: 15 })
+  @Column("nvarchar", { name: "ANML_CODIGO", nullable: true, length: 15 })
   public anmlCodigo: string | null;
 
-  @Column("varchar", { name: "ANML_NOME", nullable: true, length: 40 })
+  @Column("nvarchar", { name: "ANML_NOME", nullable: true, length: 40 })
   public anmlNome: string | null;
 
-  @Column("datetime", { name: "ANML_DT_NASCIMENTO", nullable: true })
-  public anmlDtNascimento: LocalDateTime | null;
+  @Column("datetime2", { name: "ANML_DT_NASCIMENTO", nullable: true })
+  public anmlDtNascimento: Date | null;
 
-  @Column("varchar", { name: "ANML_COR_PELAGEM", nullable: true, length: 24 })
+  @Column("nvarchar", { name: "ANML_COR_PELAGEM", nullable: true, length: 24 })
   public anmlCorPelagem: string | null;
 
-  @Column("varchar", { name: "ANML_SEXO", nullable: true, length: 10 })
+  @Column("nvarchar", { name: "ANML_SEXO", nullable: true, length: 10 })
   public anmlSexo: string | null;
 
-  @Column("datetime", { name: "ANML_LASTUPDATE", nullable: true })
-  public anmlLastupdate: LocalDateTime | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
+
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
+
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
   @ManyToOne(() => CmnsPessoa, (cmnsPessoa) => cmnsPessoa.veteAnimals)
-  @JoinColumn([{ name: "ANML_PESS_ID", referencedColumnName: "pessId" }])
+  @JoinColumn([{ name: "ANML_PESS_ID", referencedColumnName: "id" }])
   public anmlPess: CmnsPessoa;
 
   @ManyToOne(() => PecrRaca, (pecrRaca) => pecrRaca.veteAnimals)
-  @JoinColumn([{ name: "ANML_RACA_ID", referencedColumnName: "racaId" }])
+  @JoinColumn([{ name: "ANML_RACA_ID", referencedColumnName: "id" }])
   public anmlRaca: PecrRaca;
 
   @OneToMany(() => VeteAnimalFoto, (veteAnimalFoto) => veteAnimalFoto.anftAnml)
@@ -77,15 +79,4 @@ export class VeteAnimal extends BaseEntity {
 
   @OneToMany(() => VeteRetorno, (veteRetorno) => veteRetorno.rtrnAnml)
   public veteRetornos: VeteRetorno[];
-
-  @RelationId((veteAnimal: VeteAnimal) => veteAnimal.anmlPess)
-  public anmlPessId2: string | null;
-
-  @RelationId((veteAnimal: VeteAnimal) => veteAnimal.anmlRaca)
-  public anmlRacaId2: string | null;
-
-  public constructor(init?: Partial<VeteAnimal>) {
-    super();
-    Object.assign(this, init);
-  }
 }

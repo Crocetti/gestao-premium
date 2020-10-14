@@ -1,41 +1,43 @@
-import {BaseEntity,Column,Entity,Index,OneToMany} from "typeorm";
-import {CdstProduto} from './cdst-produto'
-import {PecrAfixos} from './pecr-afixos'
+import { Column, Entity, Index, OneToMany } from "typeorm";
+import { CdstProduto } from "./cdst-produto";
+import { PecrAfixos } from "./pecr-afixos";
 
-
-@Index("PK_CDST_CLASSE_PRODUTO",["clprId",],{ unique:true })
+@Index("PK_CDST_CLASSE_PRODUTO", ["id"], { unique: true })
 @Entity("CDST_CLASSE_PRODUTO")
-export  class CdstClasseProduto extends BaseEntity {
+export class CdstClasseProduto  {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-@Column("varchar",{ primary:true,name:"CLPR_ID",length:27 })
-public clprId:string;
+  @Column("nvarchar", { name: "CLPR_CODIGO", length: 10 })
+  public clprCodigo: string;
 
-@Column("varchar",{ name:"CLPR_CODIGO",length:10 })
-public clprCodigo:string;
+  @Column("nvarchar", { name: "CLPR_NOME", length: 64 })
+  public clprNome: string;
 
-@Column("varchar",{ name:"CLPR_NOME",length:64 })
-public clprNome:string;
+  @Column("smallint", { name: "CLPR_PATRIMONIO", nullable: true })
+  public clprPatrimonio: number | null;
 
-@Column("smallint",{ name:"CLPR_PATRIMONIO",nullable:true,default: () => "0", })
-public clprPatrimonio:number | null;
+  @Column("nvarchar", { name: "CLPR_TIPO", nullable: true, length: 20 })
+  public clprTipo: string | null;
 
-@Column("smallint",{ name:"CLPR_ATIVO",nullable:true,default: () => "0", })
-public clprAtivo:number | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-@Column("varchar",{ name:"CLPR_TIPO",nullable:true,length:20 })
-public clprTipo:string | null;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-@Column("datetime",{ name:"CLPR_LASTUPDATE",nullable:true })
-public clprLastupdate:LocalDateTime | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
-@OneToMany(()=>CdstProduto,cdstProduto=>cdstProduto.prdtClpr)
-public cdstProdutos:CdstProduto[];
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
 
-@OneToMany(()=>PecrAfixos,pecrAfixos=>pecrAfixos.afxsClpr)
-public pecrAfixos:PecrAfixos[];
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
-public constructor(init?: Partial<CdstClasseProduto>) {
-    super();
-    Object.assign(this, init);
-}
+  @OneToMany(() => CdstProduto, (cdstProduto) => cdstProduto.prdtClpr)
+  public cdstProdutos: CdstProduto[];
+
+  @OneToMany(() => PecrAfixos, (pecrAfixos) => pecrAfixos.afxsClpr)
+  public pecrAfixos: PecrAfixos[];
 }

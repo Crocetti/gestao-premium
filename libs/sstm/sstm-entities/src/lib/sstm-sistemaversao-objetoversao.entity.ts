@@ -1,60 +1,39 @@
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  RelationId,
-} from "typeorm";
-import { SstmSistemaVersao } from "./sstm-sistema-versao";
+import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
 import { SstmObjetoVersao } from "./sstm-objeto-versao";
+import { SstmSistemaVersao } from "./sstm-sistema-versao";
 
-@Index("FK_OBVS_RS_SVOV", ["svovObvsId"], {})
-@Index("FK_SSVS_RS_SVOV", ["svovSsvsId"], {})
-@Index("PK_SSTM_SISTEMAVERSAO_OBJETOVE", ["svovId"], { unique: true })
+@Index("PK_SSTM_SISTEMAVERSAO_OBJETOVE", ["id"], { unique: true })
 @Entity("SSTM_SISTEMAVERSAO_OBJETOVERSAO")
-export class SstmSistemaversaoObjetoversao extends BaseEntity {
-  @Column("varchar", { primary: true, name: "SVOV_ID", length: 27 })
-  public svovId: string;
+export class SstmSistemaversaoObjetoversao {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-  @Column("varchar", { name: "SVOV_OBVS_ID", nullable: true, length: 27 })
-  public svovObvsId: string | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-  @Column("varchar", { name: "SVOV_SSVS_ID", nullable: true, length: 27 })
-  public svovSsvsId: string | null;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-  @Column("datetime", { name: "SVOV_LASTUPDATE", nullable: true })
-  public svovLastupdate: LocalDateTime | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
-  @ManyToOne(
-    () => SstmSistemaVersao,
-    (sstmSistemaVersao) => sstmSistemaVersao.sstmSistemaversaoObjetoversaos
-  )
-  @JoinColumn([{ name: "SVOV_SSVS_ID", referencedColumnName: "ssvsId" }])
-  public svovSsvs: SstmSistemaVersao;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
+
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
   @ManyToOne(
     () => SstmObjetoVersao,
     (sstmObjetoVersao) => sstmObjetoVersao.sstmSistemaversaoObjetoversaos
   )
-  @JoinColumn([{ name: "SVOV_OBVS_ID", referencedColumnName: "obvsId" }])
+  @JoinColumn([{ name: "SVOV_OBVS_ID", referencedColumnName: "id" }])
   public svovObvs: SstmObjetoVersao;
 
-  @RelationId(
-    (sstmSistemaversaoObjetoversao: SstmSistemaversaoObjetoversao) =>
-      sstmSistemaversaoObjetoversao.svovSsvs
+  @ManyToOne(
+    () => SstmSistemaVersao,
+    (sstmSistemaVersao) => sstmSistemaVersao.sstmSistemaversaoObjetoversaos
   )
-  public svovSsvsId2: string | null;
-
-  @RelationId(
-    (sstmSistemaversaoObjetoversao: SstmSistemaversaoObjetoversao) =>
-      sstmSistemaversaoObjetoversao.svovObvs
-  )
-  public svovObvsId2: string | null;
-
-  public constructor(init?: Partial<SstmSistemaversaoObjetoversao>) {
-    super();
-    Object.assign(this, init);
-  }
+  @JoinColumn([{ name: "SVOV_SSVS_ID", referencedColumnName: "id" }])
+  public svovSsvs: SstmSistemaVersao;
 }

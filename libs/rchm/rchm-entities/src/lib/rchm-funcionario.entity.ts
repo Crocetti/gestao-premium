@@ -1,105 +1,98 @@
-import {BaseEntity,Column,Entity,Index,JoinColumn,ManyToOne,OneToMany,RelationId} from "typeorm";
-import {EstqCapaMovimento} from './estq-capa-movimento'
-import {CmnsPessoa} from './cmns-pessoa'
-import {RchmFuncionarioHistorico} from './rchm-funcionario-historico'
-import {VeteCirurgias} from './vete-cirurgias'
-import {VeteConsulta} from './vete-consulta'
-import {VeteInternacao} from './vete-internacao'
-import {VeteRetorno} from './vete-retorno'
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+} from "typeorm";
+import { EstqCapaMovimento } from "./estq-capa-movimento";
+import { CmnsPessoa } from "./cmns-pessoa";
+import { RchmFuncionarioHistorico } from "./rchm-funcionario-historico";
+import { VeteCirurgias } from "./vete-cirurgias";
+import { VeteConsulta } from "./vete-consulta";
+import { VeteInternacao } from "./vete-internacao";
+import { VeteRetorno } from "./vete-retorno";
 
-
-@Index("FK_PESS_RS_FCNR",["fcnrPessId",],{  })
-@Index("PK_RCHM_FUNCIONARIO",["fcnrId",],{ unique:true })
+@Index("PK_RCHM_FUNCIONARIO", ["id"], { unique: true })
 @Entity("RCHM_FUNCIONARIO")
-export  class RchmFuncionario extends BaseEntity {
+export class RchmFuncionario {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-@Column("varchar",{ primary:true,name:"FCNR_ID",length:27 })
-public fcnrId:string;
+  @Column("nvarchar", { name: "FCNR_MATRICULA", nullable: true, length: 20 })
+  public fcnrMatricula: string | null;
 
-@Column("varchar",{ name:"FCNR_PESS_ID",nullable:true,length:27 })
-public fcnrPessId:string | null;
+  @Column("datetime2", { name: "FCNR_DT_ADMISSAO", nullable: true })
+  public fcnrDtAdmissao: Date | null;
 
-@Column("varchar",{ name:"FCNR_MATRICULA",nullable:true,length:20 })
-public fcnrMatricula:string | null;
+  @Column("datetime2", { name: "FCNR_DT_DEMISSAO", nullable: true })
+  public fcnrDtDemissao: Date | null;
 
-@Column("datetime",{ name:"FCNR_DT_ADMISSAO",nullable:true })
-public fcnrDtAdmissao:LocalDateTime | null;
+  @Column("smallint", { name: "FCNR_PRIMEIRO_EMPREGO", nullable: true })
+  public fcnrPrimeiroEmprego: number | null;
 
-@Column("datetime",{ name:"FCNR_DT_DEMISSAO",nullable:true })
-public fcnrDtDemissao:LocalDateTime | null;
+  @Column("nvarchar", { name: "FCNR_NR_PIS", nullable: true, length: 25 })
+  public fcnrNrPis: string | null;
 
-@Column("smallint",{ name:"FCNR_PRIMEIRO_EMPREGO",nullable:true,default: () => "0", })
-public fcnrPrimeiroEmprego:number | null;
+  @Column("datetime2", { name: "FCNR_DT_PIS", nullable: true })
+  public fcnrDtPis: Date | null;
 
-@Column("varchar",{ name:"FCNR_NR_PIS",nullable:true,length:25 })
-public fcnrNrPis:string | null;
+  @Column("smallint", { name: "FCNR_CONTRATO_EXPERIENCIA", nullable: true })
+  public fcnrContratoExperiencia: number | null;
 
-@Column("datetime",{ name:"FCNR_DT_PIS",nullable:true })
-public fcnrDtPis:LocalDateTime | null;
+  @Column("int", { name: "FCNR_CONTRATO_DIAS", nullable: true })
+  public fcnrContratoDias: number | null;
 
-@Column("smallint",{ name:"FCNR_CONTRATO_EXPERIENCIA",nullable:true,default: () => "0", })
-public fcnrContratoExperiencia:number | null;
+  @Column("nvarchar", { name: "FCNR_TIPO", nullable: true, length: 15 })
+  public fcnrTipo: string | null;
 
-@Column("int",{ name:"FCNR_CONTRATO_DIAS",nullable:true })
-public fcnrContratoDias:number | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-@Column("varchar",{ name:"FCNR_TIPO",nullable:true,length:15 })
-public fcnrTipo:string | null;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-@Column("datetime",{ name:"FCNR_LASTUPDATE",nullable:true })
-public fcnrLastupdate:LocalDateTime | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
-@OneToMany(()=>EstqCapaMovimento,estqCapaMovimento=>estqCapaMovimento.cpmvVend)
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
 
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
-public estqCapaMovimentos:EstqCapaMovimento[];
+  @OneToMany(
+    () => EstqCapaMovimento,
+    (estqCapaMovimento) => estqCapaMovimento.cpmvVend
+  )
+  public estqCapaMovimentos: EstqCapaMovimento[];
 
-@ManyToOne(()=>CmnsPessoa,cmnsPessoa=>cmnsPessoa.rchmFuncionarios)
-@JoinColumn([{ name: "FCNR_PESS_ID", referencedColumnName: "pessId" },
-])
+  @ManyToOne(() => CmnsPessoa, (cmnsPessoa) => cmnsPessoa.rchmFuncionarios)
+  @JoinColumn([{ name: "FCNR_PESS_ID", referencedColumnName: "id" }])
+  public fcnrPess: CmnsPessoa;
 
-public fcnrPess:CmnsPessoa;
+  @OneToMany(
+    () => RchmFuncionarioHistorico,
+    (rchmFuncionarioHistorico) => rchmFuncionarioHistorico.fchsFcnr
+  )
+  public rchmFuncionarioHistoricos: RchmFuncionarioHistorico[];
 
-@OneToMany(()=>RchmFuncionarioHistorico,rchmFuncionarioHistorico=>rchmFuncionarioHistorico.fchsFcnr)
+  @OneToMany(() => VeteCirurgias, (veteCirurgias) => veteCirurgias.cgiaVete)
+  public veteCirurgias: VeteCirurgias[];
 
+  @OneToMany(() => VeteCirurgias, (veteCirurgias) => veteCirurgias.cgiaAnst)
+  public veteCirurgias2: VeteCirurgias[];
 
-public rchmFuncionarioHistoricos:RchmFuncionarioHistorico[];
+  @OneToMany(() => VeteConsulta, (veteConsulta) => veteConsulta.consFcnr)
+  public veteConsultas: VeteConsulta[];
 
-@OneToMany(()=>VeteCirurgias,veteCirurgias=>veteCirurgias.cgiaAnst)
+  @OneToMany(() => VeteInternacao, (veteInternacao) => veteInternacao.intrVete)
+  public veteInternacaos: VeteInternacao[];
 
+  @OneToMany(() => VeteRetorno, (veteRetorno) => veteRetorno.rtrnVtat)
+  public veteRetornos: VeteRetorno[];
 
-public veteCirurgias:VeteCirurgias[];
-
-@OneToMany(()=>VeteCirurgias,veteCirurgias=>veteCirurgias.cgiaVete)
-
-
-public veteCirurgias2:VeteCirurgias[];
-
-@OneToMany(()=>VeteConsulta,veteConsulta=>veteConsulta.consFcnr)
-
-
-public veteConsultas:VeteConsulta[];
-
-@OneToMany(()=>VeteInternacao,veteInternacao=>veteInternacao.intrVete)
-
-
-public veteInternacaos:VeteInternacao[];
-
-@OneToMany(()=>VeteRetorno,veteRetorno=>veteRetorno.rtrnVtag)
-
-
-public veteRetornos:VeteRetorno[];
-
-@OneToMany(()=>VeteRetorno,veteRetorno=>veteRetorno.rtrnVtat)
-
-
-public veteRetornos2:VeteRetorno[];
-
-@RelationId((rchmFuncionario:RchmFuncionario)=>rchmFuncionario.fcnrPess)
-public fcnrPessId2:string | null;
-
-public constructor(init?: Partial<RchmFuncionario>) {
-    super();
-    Object.assign(this, init);
-}
+  @OneToMany(() => VeteRetorno, (veteRetorno) => veteRetorno.rtrnVtag)
+  public veteRetornos2: VeteRetorno[];
 }

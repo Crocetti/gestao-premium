@@ -1,34 +1,40 @@
 import {
-  BaseEntity,
   Column,
   Entity,
   Index,
   JoinColumn,
   ManyToOne,
   OneToMany,
-  RelationId,
 } from "typeorm";
 import { CdstFabricante } from "./cdst-fabricante";
 import { EstqMaquinaEquipamento } from "./estq-maquina-equipamento";
 
-@Index("FK_FBCT_RS_FBMT", ["fbmtFbctId"], {})
-@Index("PK_ESTQ_FABRICANTE_MOTOR", ["fbmtId"], { unique: true })
+@Index("PK_ESTQ_FABRICANTE_MOTOR", ["id"], { unique: true })
 @Entity("ESTQ_FABRICANTE_MOTOR")
-export class EstqFabricanteMotor extends BaseEntity {
-  @Column("varchar", { primary: true, name: "FBMT_ID", length: 27 })
-  public fbmtId: string;
+export class EstqFabricanteMotor {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-  @Column("varchar", { name: "FBMT_FBCT_ID", nullable: true, length: 27 })
-  public fbmtFbctId: string | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-  @Column("datetime", { name: "FBMT_LASTUPDATE", nullable: true })
-  public fbmtLastupdate: LocalDateTime | null;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
+
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
   @ManyToOne(
     () => CdstFabricante,
     (cdstFabricante) => cdstFabricante.estqFabricanteMotors
   )
-  @JoinColumn([{ name: "FBMT_FBCT_ID", referencedColumnName: "fbctId" }])
+  @JoinColumn([{ name: "FBMT_FBCT_ID", referencedColumnName: "id" }])
   public fbmtFbct: CdstFabricante;
 
   @OneToMany(
@@ -36,14 +42,4 @@ export class EstqFabricanteMotor extends BaseEntity {
     (estqMaquinaEquipamento) => estqMaquinaEquipamento.mqeqMoto
   )
   public estqMaquinaEquipamentos: EstqMaquinaEquipamento[];
-
-  @RelationId(
-    (estqFabricanteMotor: EstqFabricanteMotor) => estqFabricanteMotor.fbmtFbct
-  )
-  public fbmtFbctId2: string | null;
-
-  public constructor(init?: Partial<EstqFabricanteMotor>) {
-    super();
-    Object.assign(this, init);
-  }
 }

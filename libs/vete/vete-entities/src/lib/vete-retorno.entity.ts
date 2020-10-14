@@ -1,106 +1,79 @@
 import {
-  BaseEntity,
   Column,
   Entity,
   Index,
   JoinColumn,
   ManyToOne,
   OneToMany,
-  RelationId,
 } from "typeorm";
 import { RchmFuncionario } from "./rchm-funcionario";
 import { VeteServico } from "./vete-servico";
-import { VeteOrdemDeServico } from "./vete-ordem-de-servico";
 import { VeteAnimal } from "./vete-animal";
+import { VeteOrdemDeServico } from "./vete-ordem-de-servico";
 import { VeteRetornoProcedimento } from "./vete-retorno-procedimento";
 
-@Index("FK_ANML_RS_RTRN", ["rtrnAnmlId"], {})
-@Index("FK_OSVT_RS_RTRN", ["rtrnOsvtId"], {})
-@Index("FK_SERV_RS_RTRN", ["rtrnServId"], {})
-@Index("FK_VTAG_RS_RTRN", ["rtrnVtagId"], {})
-@Index("FK_VTAT_RS_RTRN", ["rtrnVtatId"], {})
-@Index("PK_VETE_RETORNO", ["rtrnId"], { unique: true })
+@Index("PK_VETE_RETORNO", ["id"], { unique: true })
 @Entity("VETE_RETORNO")
-export class VeteRetorno extends BaseEntity {
-  @Column("varchar", { primary: true, name: "RTRN_ID", length: 27 })
-  public rtrnId: string;
+export class VeteRetorno {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-  @Column("varchar", { name: "RTRN_VTAT_ID", nullable: true, length: 27 })
-  public rtrnVtatId: string | null;
+  @Column("datetime2", { name: "RTRN_DT_AGENDADA", nullable: true })
+  public rtrnDtAgendada: Date | null;
 
-  @Column("varchar", { name: "RTRN_SERV_ID", nullable: true, length: 27 })
-  public rtrnServId: string | null;
+  @Column("datetime2", { name: "RTRN_DT_EFETIVADA", nullable: true })
+  public rtrnDtEfetivada: Date | null;
 
-  @Column("varchar", { name: "RTRN_ANML_ID", nullable: true, length: 27 })
-  public rtrnAnmlId: string | null;
-
-  @Column("varchar", { name: "RTRN_OSVT_ID", nullable: true, length: 27 })
-  public rtrnOsvtId: string | null;
-
-  @Column("varchar", { name: "RTRN_VTAG_ID", nullable: true, length: 27 })
-  public rtrnVtagId: string | null;
-
-  @Column("datetime", { name: "RTRN_DT_AGENDADA", nullable: true })
-  public rtrnDtAgendada: LocalDateTime | null;
-
-  @Column("datetime", { name: "RTRN_DT_EFETIVADA", nullable: true })
-  public rtrnDtEfetivada: LocalDateTime | null;
-
-  @Column("varchar", { name: "RTRN_MOTIVOS", nullable: true, length: 5000 })
+  @Column("nvarchar", { name: "RTRN_MOTIVOS", nullable: true })
   public rtrnMotivos: string | null;
+
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
+
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
+
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
   @ManyToOne(
     () => RchmFuncionario,
     (rchmFuncionario) => rchmFuncionario.veteRetornos
   )
-  @JoinColumn([{ name: "RTRN_VTAG_ID", referencedColumnName: "fcnrId" }])
-  public rtrnVtag: RchmFuncionario;
+  @JoinColumn([{ name: "RTRN_VTAT_ID", referencedColumnName: "id" }])
+  public rtrnVtat: RchmFuncionario;
 
   @ManyToOne(() => VeteServico, (veteServico) => veteServico.veteRetornos)
-  @JoinColumn([{ name: "RTRN_SERV_ID", referencedColumnName: "servId" }])
+  @JoinColumn([{ name: "RTRN_SERV_ID", referencedColumnName: "id" }])
   public rtrnServ: VeteServico;
+
+  @ManyToOne(() => VeteAnimal, (veteAnimal) => veteAnimal.veteRetornos)
+  @JoinColumn([{ name: "RTRN_ANML_ID", referencedColumnName: "id" }])
+  public rtrnAnml: VeteAnimal;
 
   @ManyToOne(
     () => VeteOrdemDeServico,
     (veteOrdemDeServico) => veteOrdemDeServico.veteRetornos
   )
-  @JoinColumn([{ name: "RTRN_OSVT_ID", referencedColumnName: "osvtId" }])
+  @JoinColumn([{ name: "RTRN_OSVT_ID", referencedColumnName: "id" }])
   public rtrnOsvt: VeteOrdemDeServico;
-
-  @ManyToOne(() => VeteAnimal, (veteAnimal) => veteAnimal.veteRetornos)
-  @JoinColumn([{ name: "RTRN_ANML_ID", referencedColumnName: "anmlId" }])
-  public rtrnAnml: VeteAnimal;
 
   @ManyToOne(
     () => RchmFuncionario,
     (rchmFuncionario) => rchmFuncionario.veteRetornos2
   )
-  @JoinColumn([{ name: "RTRN_VTAT_ID", referencedColumnName: "fcnrId" }])
-  public rtrnVtat: RchmFuncionario;
+  @JoinColumn([{ name: "RTRN_VTAG_ID", referencedColumnName: "id" }])
+  public rtrnVtag: RchmFuncionario;
 
   @OneToMany(
     () => VeteRetornoProcedimento,
     (veteRetornoProcedimento) => veteRetornoProcedimento.rtsvRtrn
   )
   public veteRetornoProcedimentos: VeteRetornoProcedimento[];
-
-  @RelationId((veteRetorno: VeteRetorno) => veteRetorno.rtrnVtag)
-  public rtrnVtagId2: string | null;
-
-  @RelationId((veteRetorno: VeteRetorno) => veteRetorno.rtrnServ)
-  public rtrnServId2: string | null;
-
-  @RelationId((veteRetorno: VeteRetorno) => veteRetorno.rtrnOsvt)
-  public rtrnOsvtId2: string | null;
-
-  @RelationId((veteRetorno: VeteRetorno) => veteRetorno.rtrnAnml)
-  public rtrnAnmlId2: string | null;
-
-  @RelationId((veteRetorno: VeteRetorno) => veteRetorno.rtrnVtat)
-  public rtrnVtatId2: string | null;
-
-  public constructor(init?: Partial<VeteRetorno>) {
-    super();
-    Object.assign(this, init);
-  }
 }

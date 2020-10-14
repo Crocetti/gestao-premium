@@ -1,76 +1,73 @@
-import {BaseEntity,Column,Entity,Index,JoinColumn,ManyToOne,OneToMany,RelationId} from "typeorm";
-import {FncrBanco} from './fncr-banco'
-import {FncrCaixa} from './fncr-caixa'
-import {FncrBancoContaSaldo} from './fncr-banco-conta-saldo'
-import {FncrBancoMovimento} from './fncr-banco-movimento'
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+} from "typeorm";
+import { FncrCaixa } from "./fncr-caixa";
+import { FncrBanco } from "./fncr-banco";
+import { FncrBancoContaSaldo } from "./fncr-banco-conta-saldo";
+import { FncrBancoMovimento } from "./fncr-banco-movimento";
 
-
-@Index("FK_BANC_RS_BCCT",["bcctBancId",],{  })
-@Index("FK_CAIX_RS_BANC",["bancCaixId",],{  })
-@Index("PK_FNCR_BANCO_CONTA",["bcctId",],{ unique:true })
+@Index("PK_FNCR_BANCO_CONTA", ["id"], { unique: true })
 @Entity("FNCR_BANCO_CONTA")
-export  class FncrBancoConta extends BaseEntity {
+export class FncrBancoConta {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-@Column("varchar",{ primary:true,name:"BCCT_ID",length:27 })
-public bcctId:string;
+  @Column("nvarchar", { name: "BCCT_NR_AGENCIA", nullable: true, length: 10 })
+  public bcctNrAgencia: string | null;
 
-@Column("varchar",{ name:"BANC_CAIX_ID",nullable:true,length:27 })
-public bancCaixId:string | null;
+  @Column("nvarchar", { name: "BCCT_NR_CONTA", nullable: true, length: 10 })
+  public bcctNrConta: string | null;
 
-@Column("varchar",{ name:"BCCT_BANC_ID",nullable:true,length:27 })
-public bcctBancId:string | null;
+  @Column("datetime2", { name: "BCCT_DT_ABERTURA", nullable: true })
+  public bcctDtAbertura: Date | null;
 
-@Column("varchar",{ name:"BCCT_NR_AGENCIA",nullable:true,length:10 })
-public bcctNrAgencia:string | null;
+  @Column("nvarchar", {
+    name: "BCCT_CLASSIFICACAO",
+    nullable: true,
+    length: 25,
+  })
+  public bcctClassificacao: string | null;
 
-@Column("varchar",{ name:"BCCT_NR_CONTA",nullable:true,length:10 })
-public bcctNrConta:string | null;
+  @Column("money", { name: "BCCT_LIMITE_ESPECIAL", nullable: true })
+  public bcctLimiteEspecial: number | null;
 
-@Column("datetime",{ name:"BCCT_DT_ABERTURA",nullable:true })
-public bcctDtAbertura:LocalDateTime | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-@Column("varchar",{ name:"BCCT_CLASSIFICACAO",nullable:true,length:25 })
-public bcctClassificacao:string | null;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-@Column("money",{ name:"BCCT_LIMITE_ESPECIAL",nullable:true,default: () => "0", })
-public bcctLimiteEspecial:number | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
-@Column("smallint",{ name:"BCCT_ATIVO",nullable:true,default: () => "0", })
-public bcctAtivo:number | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
 
-@Column("datetime",{ name:"BCCT_LASTUPDATE",nullable:true })
-public bcctLastupdate:LocalDateTime | null;
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
-@ManyToOne(()=>FncrBanco,fncrBanco=>fncrBanco.fncrBancoContas)
-@JoinColumn([{ name: "BCCT_BANC_ID", referencedColumnName: "bancId" },
-])
+  @ManyToOne(() => FncrCaixa, (fncrCaixa) => fncrCaixa.fncrBancoContas)
+  @JoinColumn([{ name: "BANC_CAIX_ID", referencedColumnName: "id" }])
+  public bancCaix: FncrCaixa;
 
-public bcctBanc:FncrBanco;
+  @ManyToOne(() => FncrBanco, (fncrBanco) => fncrBanco.fncrBancoContas)
+  @JoinColumn([{ name: "BCCT_BANC_ID", referencedColumnName: "id" }])
+  public bcctBanc: FncrBanco;
 
-@ManyToOne(()=>FncrCaixa,fncrCaixa=>fncrCaixa.fncrBancoContas)
-@JoinColumn([{ name: "BANC_CAIX_ID", referencedColumnName: "caixId" },
-])
+  @OneToMany(
+    () => FncrBancoContaSaldo,
+    (fncrBancoContaSaldo) => fncrBancoContaSaldo.bccsBcct
+  )
+  public fncrBancoContaSaldos: FncrBancoContaSaldo[];
 
-public bancCaix:FncrCaixa;
-
-@OneToMany(()=>FncrBancoContaSaldo,fncrBancoContaSaldo=>fncrBancoContaSaldo.bccsBcct)
-
-
-public fncrBancoContaSaldos:FncrBancoContaSaldo[];
-
-@OneToMany(()=>FncrBancoMovimento,fncrBancoMovimento=>fncrBancoMovimento.bcmvBcct)
-
-
-public fncrBancoMovimentos:FncrBancoMovimento[];
-
-@RelationId((fncrBancoConta:FncrBancoConta)=>fncrBancoConta.bcctBanc)
-public bcctBancId2:string | null;
-
-@RelationId((fncrBancoConta:FncrBancoConta)=>fncrBancoConta.bancCaix)
-public bancCaixId2:string | null;
-
-public constructor(init?: Partial<FncrBancoConta>) {
-    super();
-    Object.assign(this, init);
-}
+  @OneToMany(
+    () => FncrBancoMovimento,
+    (fncrBancoMovimento) => fncrBancoMovimento.bcmvBcct
+  )
+  public fncrBancoMovimentos: FncrBancoMovimento[];
 }

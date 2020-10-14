@@ -1,0 +1,33 @@
+[
+  {
+    "resultsPath": ".\\tmp\\systems",
+    "pluralizeNames": true,
+    "noConfigs": false,
+    "convertCaseFile": "param",
+    "convertCaseEntity": "pascal",
+    "convertCaseProperty": "camel",
+    "convertEol": "CRLF",
+    "propertyVisibility": "public",
+    "lazy": false,
+    "activeRecord": false,
+    "generateConstructor": false,
+    "customNamingStrategyPath": "",
+    "relationIds": false,
+    "strictMode": "none",
+    "skipSchema": true,
+    "indexFile": false,
+    "exportType": "named"
+  },
+  {
+    "host": "ALEX-LT",
+    "port": 1433,
+    "databaseName": "NEW_SYSTEMS",
+    "user": "sa",
+    "password": "@aac663#",
+    "databaseType": "mssql",
+    "schemaName": "dbo",
+    "ssl": false,
+    "skipTables": [],
+    "onlyTables": []
+  }
+]

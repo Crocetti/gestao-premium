@@ -1,42 +1,43 @@
-import {BaseEntity,Column,Entity,Index,OneToMany} from "typeorm";
-import {FncrBancoConta} from './fncr-banco-conta'
-import {FncrBancoModeloBoleto} from './fncr-banco-modelo-boleto'
+import { Column, Entity, Index, OneToMany } from "typeorm";
+import { FncrBancoConta } from "./fncr-banco-conta";
+import { FncrBancoModeloBoleto } from "./fncr-banco-modelo-boleto";
 
-
-@Index("PK_FNCR_BANCO",["bancId",],{ unique:true })
+@Index("PK_FNCR_BANCO", ["id"], { unique: true })
 @Entity("FNCR_BANCO")
-export  class FncrBanco extends BaseEntity {
+export class FncrBanco {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-@Column("varchar",{ primary:true,name:"BANC_ID",length:27 })
-public bancId:string;
+  @Column("nvarchar", { name: "BANC_CODIGO", nullable: true, length: 3 })
+  public bancCodigo: string | null;
 
-@Column("varchar",{ name:"BANC_CODIGO",nullable:true,length:3 })
-public bancCodigo:string | null;
+  @Column("nvarchar", { name: "BANC_NOME", nullable: true, length: 128 })
+  public bancNome: string | null;
 
-@Column("varchar",{ name:"BANC_NOME",nullable:true,length:128 })
-public bancNome:string | null;
+  @Column("nvarchar", { name: "BANC_APELIDO", nullable: true, length: 25 })
+  public bancApelido: string | null;
 
-@Column("varchar",{ name:"BANC_APELIDO",nullable:true,length:25 })
-public bancApelido:string | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-@Column("smallint",{ name:"BANC_ATIVO",nullable:true,default: () => "0", })
-public bancAtivo:number | null;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-@Column("datetime",{ name:"BANC_LASTUPDATE",nullable:true })
-public bancLastupdate:LocalDateTime | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
-@OneToMany(()=>FncrBancoConta,fncrBancoConta=>fncrBancoConta.bcctBanc)
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
 
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
-public fncrBancoContas:FncrBancoConta[];
+  @OneToMany(() => FncrBancoConta, (fncrBancoConta) => fncrBancoConta.bcctBanc)
+  public fncrBancoContas: FncrBancoConta[];
 
-@OneToMany(()=>FncrBancoModeloBoleto,fncrBancoModeloBoleto=>fncrBancoModeloBoleto.bcmbBanc)
-
-
-public fncrBancoModeloBoletos:FncrBancoModeloBoleto[];
-
-public constructor(init?: Partial<FncrBanco>) {
-    super();
-    Object.assign(this, init);
-}
+  @OneToMany(
+    () => FncrBancoModeloBoleto,
+    (fncrBancoModeloBoleto) => fncrBancoModeloBoleto.bcmbBanc
+  )
+  public fncrBancoModeloBoletos: FncrBancoModeloBoleto[];
 }

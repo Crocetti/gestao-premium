@@ -1,58 +1,56 @@
-import {BaseEntity,Column,Entity,Index,JoinColumn,ManyToOne,RelationId} from "typeorm";
-import {VeteServico} from './vete-servico'
-import {CdstProduto} from './cdst-produto'
+import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
+import { VeteServico } from "./vete-servico";
+import { CdstProduto } from "./cdst-produto";
 
-
-@Index("FK_PRDT_RS_SVCP",["svcpPrdtId",],{  })
-@Index("FK_SERV_RS_SVCP",["svcpServId",],{  })
-@Index("PK_VETE_SERVICO_COMPOSICAO",["svcpId",],{ unique:true })
+@Index("PK_VETE_SERVICO_COMPOSICAO", ["id"], { unique: true })
 @Entity("VETE_SERVICO_COMPOSICAO")
-export  class VeteServicoComposicao extends BaseEntity {
+export class VeteServicoComposicao {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-@Column("varchar",{ primary:true,name:"SVCP_ID",length:27 })
-public svcpId:string;
+  @Column("nvarchar", { name: "SVCP_TIPO", nullable: true, length: 15 })
+  public svcpTipo: string | null;
 
-@Column("varchar",{ name:"SVCP_SERV_ID",nullable:true,length:27 })
-public svcpServId:string | null;
+  @Column("numeric", {
+    name: "SVCP_QUANTIDADE",
+    nullable: true,
+    precision: 18,
+    scale: 4,
+  })
+  public svcpQuantidade: number | null;
 
-@Column("varchar",{ name:"SVCP_PRDT_ID",nullable:true,length:27 })
-public svcpPrdtId:string | null;
+  @Column("money", { name: "SVCP_CUSTO_UNITARIO", nullable: true })
+  public svcpCustoUnitario: number | null;
 
-@Column("varchar",{ name:"SVCP_TIPO",nullable:true,length:15 })
-public svcpTipo:string | null;
+  @Column("money", { name: "SVCP_CUSTO_TOTAL", nullable: true })
+  public svcpCustoTotal: number | null;
 
-@Column("numeric",{ name:"SVCP_QUANTIDADE",nullable:true,precision:18,scale:4,default: () => "0", })
-public svcpQuantidade:number | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-@Column("money",{ name:"SVCP_CUSTO_UNITARIO",nullable:true,default: () => "0", })
-public svcpCustoUnitario:number | null;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-@Column("money",{ name:"SVCP_CUSTO_TOTAL",nullable:true,default: () => "0", })
-public svcpCustoTotal:number | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
-@Column("datetime",{ name:"SVCP_LASTUPDATE",nullable:true })
-public svcpLastupdate:LocalDateTime | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
 
-@ManyToOne(()=>VeteServico,veteServico=>veteServico.veteServicoComposicaos)
-@JoinColumn([{ name: "SVCP_SERV_ID", referencedColumnName: "servId" },
-])
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
-public svcpServ:VeteServico;
+  @ManyToOne(
+    () => VeteServico,
+    (veteServico) => veteServico.veteServicoComposicaos
+  )
+  @JoinColumn([{ name: "SVCP_SERV_ID", referencedColumnName: "id" }])
+  public svcpServ: VeteServico;
 
-@ManyToOne(()=>CdstProduto,cdstProduto=>cdstProduto.veteServicoComposicaos)
-@JoinColumn([{ name: "SVCP_PRDT_ID", referencedColumnName: "prdtId" },
-])
-
-public svcpPrdt:CdstProduto;
-
-@RelationId((veteServicoComposicao:VeteServicoComposicao)=>veteServicoComposicao.svcpServ)
-public svcpServId2:string | null;
-
-@RelationId((veteServicoComposicao:VeteServicoComposicao)=>veteServicoComposicao.svcpPrdt)
-public svcpPrdtId2:string | null;
-
-public constructor(init?: Partial<VeteServicoComposicao>) {
-    super();
-    Object.assign(this, init);
-}
+  @ManyToOne(
+    () => CdstProduto,
+    (cdstProduto) => cdstProduto.veteServicoComposicaos
+  )
+  @JoinColumn([{ name: "SVCP_PRDT_ID", referencedColumnName: "id" }])
+  public svcpPrdt: CdstProduto;
 }

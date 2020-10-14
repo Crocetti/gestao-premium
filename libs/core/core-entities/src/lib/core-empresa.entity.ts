@@ -1,44 +1,50 @@
 import {
-  BaseEntity,
   Column,
   Entity,
   Index,
   JoinColumn,
   ManyToOne,
   OneToMany,
-  RelationId,
 } from "typeorm";
 import { CoreCorporacao } from "./core-corporacao";
 import { CoreUnidadeEmpresarial } from "./core-unidade-empresarial";
 import { SstmParametroEmpresa } from "./sstm-parametro-empresa";
 
-@Index("FK_CPRC_RS_EMPR", ["emprCprcId"], {})
-@Index("PK_CORE_EMPRESA", ["emprId"], { unique: true })
+@Index("PK_CORE_EMPRESA", ["id"], { unique: true })
 @Entity("CORE_EMPRESA")
-export class CoreEmpresa extends BaseEntity {
-  @Column("varchar", { primary: true, name: "EMPR_ID", length: 27 })
-  public emprId: string;
+export class CoreEmpresa {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-  @Column("varchar", { name: "EMPR_CPRC_ID", nullable: true, length: 27 })
-  public emprCprcId: string | null;
-
-  @Column("varchar", { name: "EMPR_NOME", nullable: true, length: 64 })
+  @Column("nvarchar", { name: "EMPR_NOME", nullable: true, length: 64 })
   public emprNome: string | null;
 
-  @Column("varchar", { name: "EMPR_SENHA", nullable: true, length: 256 })
+  @Column("nvarchar", { name: "EMPR_SENHA", nullable: true, length: 256 })
   public emprSenha: string | null;
 
-  @Column("image", { name: "EMPR_LOGOMARCA", nullable: true })
-  public emprLogomarca: Buffer | null;
+  @Column("nvarchar", { name: "EMPR_LOGOMARCA", nullable: true })
+  public emprLogomarca: string | null;
 
-  @Column("datetime", { name: "EMPR_LASTUPDATE", nullable: true })
-  public emprLastupdate: LocalDateTime | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
+
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
+
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
   @ManyToOne(
     () => CoreCorporacao,
     (coreCorporacao) => coreCorporacao.coreEmpresas
   )
-  @JoinColumn([{ name: "EMPR_CPRC_ID", referencedColumnName: "cprcId" }])
+  @JoinColumn([{ name: "EMPR_CPRC_ID", referencedColumnName: "id" }])
   public emprCprc: CoreCorporacao;
 
   @OneToMany(
@@ -52,12 +58,4 @@ export class CoreEmpresa extends BaseEntity {
     (sstmParametroEmpresa) => sstmParametroEmpresa.premEmpr
   )
   public sstmParametroEmpresas: SstmParametroEmpresa[];
-
-  @RelationId((coreEmpresa: CoreEmpresa) => coreEmpresa.emprCprc)
-  public emprCprcId2: string | null;
-
-  public constructor(init?: Partial<CoreEmpresa>) {
-    super();
-    Object.assign(this, init);
-  }
 }

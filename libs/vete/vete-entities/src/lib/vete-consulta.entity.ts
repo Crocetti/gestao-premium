@@ -1,94 +1,64 @@
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  RelationId,
-} from "typeorm";
-import { VeteAnimal } from "./vete-animal";
-import { VeteServico } from "./vete-servico";
+import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
 import { VeteOrdemDeServico } from "./vete-ordem-de-servico";
+import { VeteServico } from "./vete-servico";
+import { VeteAnimal } from "./vete-animal";
 import { RchmFuncionario } from "./rchm-funcionario";
 
-@Index("FK_ANML_RS_CONS", ["consAnmlId"], {})
-@Index("FK_FCNR_RS_CONS", ["consFcnrId"], {})
-@Index("FK_OSVT_RS_CONS", ["consOsvtId"], {})
-@Index("FK_SERV_RS_CONS", ["consServId"], {})
-@Index("PK_VETE_CONSULTA", ["consId"], { unique: true })
+@Index("PK_VETE_CONSULTA", ["id"], { unique: true })
 @Entity("VETE_CONSULTA")
-export class VeteConsulta extends BaseEntity {
-  @Column("varchar", { primary: true, name: "CONS_ID", length: 27 })
-  public consId: string;
+export class VeteConsulta {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-  @Column("varchar", { name: "CONS_OSVT_ID", nullable: true, length: 27 })
-  public consOsvtId: string | null;
-
-  @Column("varchar", { name: "CONS_SERV_ID", nullable: true, length: 27 })
-  public consServId: string | null;
-
-  @Column("varchar", { name: "CONS_ANML_ID", nullable: true, length: 27 })
-  public consAnmlId: string | null;
-
-  @Column("varchar", { name: "CONS_FCNR_ID", nullable: true, length: 27 })
-  public consFcnrId: string | null;
-
-  @Column("varchar", { name: "CONS_ANAMNESIA", nullable: true, length: 5000 })
+  @Column("nvarchar", { name: "CONS_ANAMNESIA", nullable: true })
   public consAnamnesia: string | null;
 
-  @Column("varchar", {
-    name: "CONS_EXAME_FISICO",
-    nullable: true,
-    length: 5000,
-  })
+  @Column("nvarchar", { name: "CONS_EXAME_FISICO", nullable: true })
   public consExameFisico: string | null;
 
-  @Column("varchar", { name: "CONS_RECEITUARIO", nullable: true, length: 5000 })
+  @Column("nvarchar", { name: "CONS_RECEITUARIO", nullable: true })
   public consReceituario: string | null;
 
-  @Column("datetime", { name: "CONS_DT_AGENDADA", nullable: true })
-  public consDtAgendada: LocalDateTime | null;
+  @Column("datetime2", { name: "CONS_DT_AGENDADA", nullable: true })
+  public consDtAgendada: Date | null;
 
-  @Column("datetime", { name: "CONS_DT_EVENTO", nullable: true })
-  public consDtEvento: LocalDateTime | null;
+  @Column("datetime2", { name: "CONS_DT_EVENTO", nullable: true })
+  public consDtEvento: Date | null;
 
-  @ManyToOne(() => VeteAnimal, (veteAnimal) => veteAnimal.veteConsultas)
-  @JoinColumn([{ name: "CONS_ANML_ID", referencedColumnName: "anmlId" }])
-  public consAnml: VeteAnimal;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-  @ManyToOne(() => VeteServico, (veteServico) => veteServico.veteConsultas)
-  @JoinColumn([{ name: "CONS_SERV_ID", referencedColumnName: "servId" }])
-  public consServ: VeteServico;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
+
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
   @ManyToOne(
     () => VeteOrdemDeServico,
     (veteOrdemDeServico) => veteOrdemDeServico.veteConsultas
   )
-  @JoinColumn([{ name: "CONS_OSVT_ID", referencedColumnName: "osvtId" }])
+  @JoinColumn([{ name: "CONS_OSVT_ID", referencedColumnName: "id" }])
   public consOsvt: VeteOrdemDeServico;
+
+  @ManyToOne(() => VeteServico, (veteServico) => veteServico.veteConsultas)
+  @JoinColumn([{ name: "CONS_SERV_ID", referencedColumnName: "id" }])
+  public consServ: VeteServico;
+
+  @ManyToOne(() => VeteAnimal, (veteAnimal) => veteAnimal.veteConsultas)
+  @JoinColumn([{ name: "CONS_ANML_ID", referencedColumnName: "id" }])
+  public consAnml: VeteAnimal;
 
   @ManyToOne(
     () => RchmFuncionario,
     (rchmFuncionario) => rchmFuncionario.veteConsultas
   )
-  @JoinColumn([{ name: "CONS_FCNR_ID", referencedColumnName: "fcnrId" }])
+  @JoinColumn([{ name: "CONS_FCNR_ID", referencedColumnName: "id" }])
   public consFcnr: RchmFuncionario;
-
-  @RelationId((veteConsulta: VeteConsulta) => veteConsulta.consAnml)
-  public consAnmlId2: string | null;
-
-  @RelationId((veteConsulta: VeteConsulta) => veteConsulta.consServ)
-  public consServId2: string | null;
-
-  @RelationId((veteConsulta: VeteConsulta) => veteConsulta.consOsvt)
-  public consOsvtId2: string | null;
-
-  @RelationId((veteConsulta: VeteConsulta) => veteConsulta.consFcnr)
-  public consFcnrId2: string | null;
-
-  public constructor(init?: Partial<VeteConsulta>) {
-    super();
-    Object.assign(this, init);
-  }
 }

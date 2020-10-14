@@ -1,81 +1,53 @@
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  RelationId,
-} from "typeorm";
-import { PecrProdutoBovino } from "./pecr-produto-bovino";
-import { PecrTipoEventoSanitario } from "./pecr-tipo-evento-sanitario";
+import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
 import { CdstProduto } from "./cdst-produto";
+import { PecrTipoEventoSanitario } from "./pecr-tipo-evento-sanitario";
+import { PecrProdutoBovino } from "./pecr-produto-bovino";
 
-@Index("FK_PRBV_RS_EVSN", ["evsnPrbvId"], {})
-@Index("FK_PRDT_RS_EVSN", ["evsnPrdtId"], {})
-@Index("FK_TPES_RS_EVSN", ["evsnTpesId"], {})
-@Index("PK_PECR_EVENTO_SANITARIO", ["evsnId"], { unique: true })
+@Index("PK_PECR_EVENTO_SANITARIO", ["id"], { unique: true })
 @Entity("PECR_EVENTO_SANITARIO")
-export class PecrEventoSanitario extends BaseEntity {
-  @Column("varchar", { primary: true, name: "EVSN_ID", length: 27 })
-  public evsnId: string;
+export class PecrEventoSanitario {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-  @Column("varchar", { name: "EVSN_PRDT_ID", nullable: true, length: 27 })
-  public evsnPrdtId: string | null;
+  @Column("datetime2", { name: "EVSN_DT_EVENTO", nullable: true })
+  public evsnDtEvento: Date | null;
 
-  @Column("varchar", { name: "EVSN_TPES_ID", nullable: true, length: 27 })
-  public evsnTpesId: string | null;
-
-  @Column("varchar", { name: "EVSN_PRBV_ID", nullable: true, length: 27 })
-  public evsnPrbvId: string | null;
-
-  @Column("datetime", { name: "EVSN_DT_EVENTO", nullable: true })
-  public evsnDtEvento: LocalDateTime | null;
-
-  @Column("varchar", { name: "EVSN_OBSERVACAO", nullable: true, length: 500 })
+  @Column("nvarchar", { name: "EVSN_OBSERVACAO", nullable: true, length: 500 })
   public evsnObservacao: string | null;
 
-  @Column("datetime", { name: "EVSN_LASTUPDATE", nullable: true })
-  public evsnLastupdate: LocalDateTime | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-  @ManyToOne(
-    () => PecrProdutoBovino,
-    (pecrProdutoBovino) => pecrProdutoBovino.pecrEventoSanitarios
-  )
-  @JoinColumn([{ name: "EVSN_PRBV_ID", referencedColumnName: "prbvId" }])
-  public evsnPrbv: PecrProdutoBovino;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-  @ManyToOne(
-    () => PecrTipoEventoSanitario,
-    (pecrTipoEventoSanitario) => pecrTipoEventoSanitario.pecrEventoSanitarios
-  )
-  @JoinColumn([{ name: "EVSN_TPES_ID", referencedColumnName: "tpesId" }])
-  public evsnTpes: PecrTipoEventoSanitario;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
+
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
   @ManyToOne(
     () => CdstProduto,
     (cdstProduto) => cdstProduto.pecrEventoSanitarios
   )
-  @JoinColumn([{ name: "EVSN_PRDT_ID", referencedColumnName: "prdtId" }])
+  @JoinColumn([{ name: "EVSN_PRDT_ID", referencedColumnName: "id" }])
   public evsnPrdt: CdstProduto;
 
-  @RelationId(
-    (pecrEventoSanitario: PecrEventoSanitario) => pecrEventoSanitario.evsnPrbv
+  @ManyToOne(
+    () => PecrTipoEventoSanitario,
+    (pecrTipoEventoSanitario) => pecrTipoEventoSanitario.pecrEventoSanitarios
   )
-  public evsnPrbvId2: string | null;
+  @JoinColumn([{ name: "EVSN_TPES_ID", referencedColumnName: "id" }])
+  public evsnTpes: PecrTipoEventoSanitario;
 
-  @RelationId(
-    (pecrEventoSanitario: PecrEventoSanitario) => pecrEventoSanitario.evsnTpes
+  @ManyToOne(
+    () => PecrProdutoBovino,
+    (pecrProdutoBovino) => pecrProdutoBovino.pecrEventoSanitarios
   )
-  public evsnTpesId2: string | null;
-
-  @RelationId(
-    (pecrEventoSanitario: PecrEventoSanitario) => pecrEventoSanitario.evsnPrdt
-  )
-  public evsnPrdtId2: string | null;
-
-  public constructor(init?: Partial<PecrEventoSanitario>) {
-    super();
-    Object.assign(this, init);
-  }
+  @JoinColumn([{ name: "EVSN_PRBV_ID", referencedColumnName: "id" }])
+  public evsnPrbv: PecrProdutoBovino;
 }

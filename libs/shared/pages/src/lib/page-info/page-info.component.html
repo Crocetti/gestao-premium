@@ -87,18 +87,25 @@
     <p-footer>
     </p-footer>
 </p-card>
-<p-card header="Site criado com" [style]="{width: '100%'}" >
+<p-card header="Desenvolvido com: " [style]="{width: '100%'}" >
     <ul>
         <li>
-            <div class="p-grid">
-                <div class="p-col-1">
-                    <img src="" alt="">
-                </div>
-            </div>
+            <img src="./imagens/angular/angular.png" alt="Angular" width="40px"> {{"Angular 10"}}
         </li>
-        <li></li>
-        <li></li>
+        <li>
+            <img src="./imagens/nestjs/nestjs.png" alt="Nestjs" width="40px"> {{"Nest JS"}}
+        </li>
+        <li>
+            <img src="./imagens/nestjs/typeorm.png" alt="TypeOrm" width="40px"> {{"Typeorm"}}
+        </li>
         <li></li>
         <li></li>
     </ul>
 </p-card>
+
+
+    [AUDT_DT_CREATE] [dbo].[DATE_AND_TIME] NOT NULL,
+    [AUDT_DT_UPDATE] [dbo].[DATE_AND_TIME] NULL,
+    [AUDT_USRS_CREATE] [dbo].[IDENTIFY] NOT NULL,
+    [AUDT_USRS_UPDATE] [dbo].[IDENTIFY] NULL,
+    [AUDT_ACTIVE] [dbo].[DECISION] NOT NULL,

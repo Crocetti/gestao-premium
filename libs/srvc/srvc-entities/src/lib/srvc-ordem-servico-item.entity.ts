@@ -1,55 +1,53 @@
-import {BaseEntity,Column,Entity,Index,JoinColumn,ManyToOne,RelationId} from "typeorm";
-import {SrvcServico} from './srvc-servico'
-import {SrvcOrdemServico} from './srvc-ordem-servico'
+import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
+import { SrvcServico } from "./srvc-servico";
+import { SrvcOrdemServico } from "./srvc-ordem-servico";
 
-
-@Index("FK_ODSV_RS_OSIT",["ositOdsvId",],{  })
-@Index("FK_SRVC_RS_OSIT",["ositSrvcId",],{  })
-@Index("PK_SRVC_ORDEM_SERVICO_ITEM",["ositId",],{ unique:true })
+@Index("PK_SRVC_ORDEM_SERVICO_ITEM", ["id"], { unique: true })
 @Entity("SRVC_ORDEM_SERVICO_ITEM")
-export  class SrvcOrdemServicoItem extends BaseEntity {
+export class SrvcOrdemServicoItem {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-@Column("varchar",{ primary:true,name:"OSIT_ID",length:27 })
-public ositId:string;
+  @Column("nvarchar", { name: "OSIT_NUMERO", length: 3 })
+  public ositNumero: string;
 
-@Column("varchar",{ name:"OSIT_SRVC_ID",nullable:true,length:27 })
-public ositSrvcId:string | null;
+  @Column("numeric", {
+    name: "OSIT_QUANTIDADE",
+    nullable: true,
+    precision: 18,
+    scale: 4,
+  })
+  public ositQuantidade: number | null;
 
-@Column("varchar",{ name:"OSIT_ODSV_ID",nullable:true,length:27 })
-public ositOdsvId:string | null;
+  @Column("money", { name: "OSIT_VALOR_UNITARIO", nullable: true })
+  public ositValorUnitario: number | null;
 
-@Column("varchar",{ name:"OSIT_NUMERO",length:3 })
-public ositNumero:string;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-@Column("numeric",{ name:"OSIT_QUANTIDADE",nullable:true,precision:18,scale:4,default: () => "0", })
-public ositQuantidade:number | null;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-@Column("money",{ name:"OSIT_VALOR_UNITARIO",nullable:true,default: () => "0", })
-public ositValorUnitario:number | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
-@Column("datetime",{ name:"OSIT_LASTUPDATE",nullable:true })
-public ositLastupdate:LocalDateTime | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
 
-@ManyToOne(()=>SrvcServico,srvcServico=>srvcServico.srvcOrdemServicoItems)
-@JoinColumn([{ name: "OSIT_SRVC_ID", referencedColumnName: "srvcId" },
-])
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
-public ositSrvc:SrvcServico;
+  @ManyToOne(
+    () => SrvcServico,
+    (srvcServico) => srvcServico.srvcOrdemServicoItems
+  )
+  @JoinColumn([{ name: "OSIT_SRVC_ID", referencedColumnName: "id" }])
+  public ositSrvc: SrvcServico;
 
-@ManyToOne(()=>SrvcOrdemServico,srvcOrdemServico=>srvcOrdemServico.srvcOrdemServicoItems)
-@JoinColumn([{ name: "OSIT_ODSV_ID", referencedColumnName: "odsvId" },
-])
-
-public ositOdsv:SrvcOrdemServico;
-
-@RelationId((srvcOrdemServicoItem:SrvcOrdemServicoItem)=>srvcOrdemServicoItem.ositSrvc)
-public ositSrvcId2:string | null;
-
-@RelationId((srvcOrdemServicoItem:SrvcOrdemServicoItem)=>srvcOrdemServicoItem.ositOdsv)
-public ositOdsvId2:string | null;
-
-public constructor(init?: Partial<SrvcOrdemServicoItem>) {
-    super();
-    Object.assign(this, init);
-}
+  @ManyToOne(
+    () => SrvcOrdemServico,
+    (srvcOrdemServico) => srvcOrdemServico.srvcOrdemServicoItems
+  )
+  @JoinColumn([{ name: "OSIT_ODSV_ID", referencedColumnName: "id" }])
+  public ositOdsv: SrvcOrdemServico;
 }

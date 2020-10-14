@@ -1,67 +1,52 @@
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  RelationId,
-} from "typeorm";
+import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
 import { SstmDatabase } from "./sstm-database";
 import { SstmTabela } from "./sstm-tabela";
 
-@Index("FK_DTBS_RS_TBSC", ["tbscDtbsId"], {})
-@Index("FK_TBLS_RS_TBSC", ["tbscTblsId"], {})
-@Index("PK_SSTM_TABELA_SCRIPT", ["tbscId"], { unique: true })
+@Index("PK_SSTM_TABELA_SCRIPT", ["id"], { unique: true })
 @Entity("SSTM_TABELA_SCRIPT")
-export class SstmTabelaScript extends BaseEntity {
-  @Column("varchar", { primary: true, name: "TBSC_ID", length: 27 })
-  public tbscId: string;
+export class SstmTabelaScript {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-  @Column("varchar", { name: "TBSC_DTBS_ID", nullable: true, length: 27 })
-  public tbscDtbsId: string | null;
-
-  @Column("varchar", { name: "TBSC_TBLS_ID", nullable: true, length: 27 })
-  public tbscTblsId: string | null;
-
-  @Column("varchar", { name: "TBSC_NOME", nullable: true, length: 40 })
+  @Column("nvarchar", { name: "TBSC_NOME", nullable: true, length: 40 })
   public tbscNome: string | null;
 
-  @Column("varchar", { name: "TBSC_VERSAO", nullable: true, length: 20 })
+  @Column("nvarchar", { name: "TBSC_VERSAO", nullable: true, length: 20 })
   public tbscVersao: string | null;
 
-  @Column("varchar", {
+  @Column("nvarchar", {
     name: "TBSC_TP_SCRIPT_TABLE",
     nullable: true,
     length: 40,
   })
   public tbscTpScriptTable: string | null;
 
-  @Column("text", { name: "TBSC_SCRIPT", nullable: true })
+  @Column("nvarchar", { name: "TBSC_SCRIPT", nullable: true })
   public tbscScript: string | null;
 
-  @Column("datetime", { name: "TBSC_LASTUPDATE", nullable: true })
-  public tbscLastupdate: LocalDateTime | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
+
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
+
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
   @ManyToOne(
     () => SstmDatabase,
     (sstmDatabase) => sstmDatabase.sstmTabelaScripts
   )
-  @JoinColumn([{ name: "TBSC_DTBS_ID", referencedColumnName: "dtbsId" }])
+  @JoinColumn([{ name: "TBSC_DTBS_ID", referencedColumnName: "id" }])
   public tbscDtbs: SstmDatabase;
 
   @ManyToOne(() => SstmTabela, (sstmTabela) => sstmTabela.sstmTabelaScripts)
-  @JoinColumn([{ name: "TBSC_TBLS_ID", referencedColumnName: "tblsId" }])
+  @JoinColumn([{ name: "TBSC_TBLS_ID", referencedColumnName: "id" }])
   public tbscTbls: SstmTabela;
-
-  @RelationId((sstmTabelaScript: SstmTabelaScript) => sstmTabelaScript.tbscDtbs)
-  public tbscDtbsId2: string | null;
-
-  @RelationId((sstmTabelaScript: SstmTabelaScript) => sstmTabelaScript.tbscTbls)
-  public tbscTblsId2: string | null;
-
-  public constructor(init?: Partial<SstmTabelaScript>) {
-    super();
-    Object.assign(this, init);
-  }
 }

@@ -1,40 +1,47 @@
-import { BaseEntity, Column, Entity, Index } from "typeorm";
+import { Column, Entity, Index } from "typeorm";
 
-@Index("PK_MAIL_SMTP", ["smtpId"], { unique: true })
+@Index("PK_MAIL_SMTP", ["id"], { unique: true })
 @Entity("MAIL_SMTP")
-export class MailSmtp extends BaseEntity {
-  @Column("varchar", { primary: true, name: "SMTP_ID", length: 27 })
-  public smtpId: string;
+export class MailSmtp {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-  @Column("varchar", { name: "SMTP_CODIGO", nullable: true, length: 5 })
+  @Column("nvarchar", { name: "SMTP_CODIGO", nullable: true, length: 5 })
   public smtpCodigo: string | null;
 
-  @Column("varchar", { name: "SMTP_NOME", nullable: true, length: 128 })
+  @Column("nvarchar", { name: "SMTP_NOME", nullable: true, length: 128 })
   public smtpNome: string | null;
 
-  @Column("varchar", { name: "SMTP_HOST", nullable: true, length: 128 })
+  @Column("nvarchar", { name: "SMTP_HOST", nullable: true, length: 128 })
   public smtpHost: string | null;
 
   @Column("int", { name: "SMTP_PORT", nullable: true })
   public smtpPort: number | null;
 
-  @Column("varchar", { name: "SMTP_USER", nullable: true, length: 128 })
+  @Column("nvarchar", { name: "SMTP_USER", nullable: true, length: 128 })
   public smtpUser: string | null;
 
-  @Column("varchar", { name: "SMTP_PASSWORD", nullable: true, length: 128 })
+  @Column("nvarchar", { name: "SMTP_PASSWORD", nullable: true, length: 128 })
   public smtpPassword: string | null;
 
-  @Column("varchar", { name: "SMTP_AUTHTYPE", nullable: true, length: 10 })
+  @Column("nvarchar", { name: "SMTP_AUTHTYPE", nullable: true, length: 10 })
   public smtpAuthtype: string | null;
 
-  @Column("varchar", { name: "SMTP_USETLS", nullable: true, length: 20 })
+  @Column("nvarchar", { name: "SMTP_USETLS", nullable: true, length: 20 })
   public smtpUsetls: string | null;
 
-  @Column("datetime", { name: "SMTP_LASTUPDATE", nullable: true })
-  public smtpLastupdate: LocalDateTime | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-  public constructor(init?: Partial<MailSmtp>) {
-    super();
-    Object.assign(this, init);
-  }
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
+
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 }

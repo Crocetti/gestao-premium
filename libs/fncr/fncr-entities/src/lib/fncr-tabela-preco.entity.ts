@@ -1,24 +1,24 @@
-import { BaseEntity, Column, Entity, Index, OneToMany } from "typeorm";
+import { Column, Entity, Index, OneToMany } from "typeorm";
 import { FncrTabelaPrecoItem } from "./fncr-tabela-preco-item";
 import { VeteOrdemDeServico } from "./vete-ordem-de-servico";
 
-@Index("PK_FNCR_TABELA_PRECO", ["tbpcId"], { unique: true })
+@Index("PK_FNCR_TABELA_PRECO", ["id"], { unique: true })
 @Entity("FNCR_TABELA_PRECO")
-export class FncrTabelaPreco extends BaseEntity {
-  @Column("varchar", { primary: true, name: "TBPC_ID", length: 27 })
-  public tbpcId: string;
+export class FncrTabelaPreco {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-  @Column("varchar", { name: "TBPC_CODIGO", nullable: true, length: 5 })
+  @Column("nvarchar", { name: "TBPC_CODIGO", nullable: true, length: 5 })
   public tbpcCodigo: string | null;
 
-  @Column("varchar", { name: "TBPC_NOME", nullable: true, length: 40 })
+  @Column("nvarchar", { name: "TBPC_NOME", nullable: true, length: 40 })
   public tbpcNome: string | null;
 
-  @Column("datetime", { name: "TBPC_DT_INICIAL", nullable: true })
-  public tbpcDtInicial: LocalDateTime | null;
+  @Column("datetime2", { name: "TBPC_DT_INICIAL", nullable: true })
+  public tbpcDtInicial: Date | null;
 
-  @Column("datetime", { name: "TBPC_DT_FINAL", nullable: true })
-  public tbpcDtFinal: LocalDateTime | null;
+  @Column("datetime2", { name: "TBPC_DT_FINAL", nullable: true })
+  public tbpcDtFinal: Date | null;
 
   @Column("numeric", {
     name: "TBPC_MARKUP",
@@ -28,8 +28,20 @@ export class FncrTabelaPreco extends BaseEntity {
   })
   public tbpcMarkup: number | null;
 
-  @Column("datetime", { name: "TBPC_LASTUPDATE", nullable: true })
-  public tbpcLastupdate: LocalDateTime | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
+
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
+
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
   @OneToMany(
     () => FncrTabelaPrecoItem,
@@ -42,9 +54,4 @@ export class FncrTabelaPreco extends BaseEntity {
     (veteOrdemDeServico) => veteOrdemDeServico.osvtTbpc
   )
   public veteOrdemDeServicos: VeteOrdemDeServico[];
-
-  public constructor(init?: Partial<FncrTabelaPreco>) {
-    super();
-    Object.assign(this, init);
-  }
 }

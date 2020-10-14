@@ -1,36 +1,38 @@
 import {
-  BaseEntity,
   Column,
   Entity,
   Index,
   JoinColumn,
   ManyToOne,
   OneToMany,
-  RelationId,
 } from "typeorm";
 import { MenuRecursoGrupoUsuario } from "./menu-recurso-grupo-usuario";
-import { MenuRecurso } from "./menu-recurso";
 import { MenuSistemaPasta } from "./menu-sistema-pasta";
+import { MenuRecurso } from "./menu-recurso";
 
-@Index("FK_RCRS_RS_SSRC", ["ssrcRcrsId"], {})
-@Index("FK_SSPS_RS_SSRC", ["ssrcSspsId"], {})
-@Index("PK_MENU_SISTEMA_RECURSO", ["ssrcId"], { unique: true })
+@Index("PK_MENU_SISTEMA_RECURSO", ["id"], { unique: true })
 @Entity("MENU_SISTEMA_RECURSO")
-export class MenuSistemaRecurso extends BaseEntity {
-  @Column("varchar", { primary: true, name: "SSRC_ID", length: 27 })
-  public ssrcId: string;
-
-  @Column("varchar", { name: "SSRC_SSPS_ID", nullable: true, length: 27 })
-  public ssrcSspsId: string | null;
-
-  @Column("varchar", { name: "SSRC_RCRS_ID", nullable: true, length: 27 })
-  public ssrcRcrsId: string | null;
+export class MenuSistemaRecurso {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
   @Column("int", { name: "SSRC_NIVEL_ACESSO", nullable: true })
   public ssrcNivelAcesso: number | null;
 
-  @Column("datetime", { name: "SSRC_LASTUPDATE", nullable: true })
-  public ssrcLastupdate: LocalDateTime | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
+
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
+
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
   @OneToMany(
     () => MenuRecursoGrupoUsuario,
@@ -39,31 +41,16 @@ export class MenuSistemaRecurso extends BaseEntity {
   public menuRecursoGrupoUsuarios: MenuRecursoGrupoUsuario[];
 
   @ManyToOne(
-    () => MenuRecurso,
-    (menuRecurso) => menuRecurso.menuSistemaRecursos
-  )
-  @JoinColumn([{ name: "SSRC_RCRS_ID", referencedColumnName: "rcrsId" }])
-  public ssrcRcrs: MenuRecurso;
-
-  @ManyToOne(
     () => MenuSistemaPasta,
     (menuSistemaPasta) => menuSistemaPasta.menuSistemaRecursos
   )
-  @JoinColumn([{ name: "SSRC_SSPS_ID", referencedColumnName: "sspsId" }])
+  @JoinColumn([{ name: "SSRC_SSPS_ID", referencedColumnName: "id" }])
   public ssrcSsps: MenuSistemaPasta;
 
-  @RelationId(
-    (menuSistemaRecurso: MenuSistemaRecurso) => menuSistemaRecurso.ssrcRcrs
+  @ManyToOne(
+    () => MenuRecurso,
+    (menuRecurso) => menuRecurso.menuSistemaRecursos
   )
-  public ssrcRcrsId2: string | null;
-
-  @RelationId(
-    (menuSistemaRecurso: MenuSistemaRecurso) => menuSistemaRecurso.ssrcSsps
-  )
-  public ssrcSspsId2: string | null;
-
-  public constructor(init?: Partial<MenuSistemaRecurso>) {
-    super();
-    Object.assign(this, init);
-  }
+  @JoinColumn([{ name: "SSRC_RCRS_ID", referencedColumnName: "id" }])
+  public ssrcRcrs: MenuRecurso;
 }

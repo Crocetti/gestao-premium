@@ -1,45 +1,37 @@
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  RelationId,
-} from "typeorm";
+import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
 import { VeteAnimal } from "./vete-animal";
 
-@Index("FK_ANML_RS_ANFT", ["anftAnmlId"], {})
-@Index("PK_VETE_ANIMAL_FOTO", ["anftId"], { unique: true })
+@Index("PK_VETE_ANIMAL_FOTO", ["id"], { unique: true })
 @Entity("VETE_ANIMAL_FOTO")
-export class VeteAnimalFoto extends BaseEntity {
-  @Column("varchar", { primary: true, name: "ANFT_ID", length: 27 })
-  public anftId: string;
+export class VeteAnimalFoto {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-  @Column("varchar", { name: "ANFT_ANML_ID", nullable: true, length: 27 })
-  public anftAnmlId: string | null;
-
-  @Column("varchar", { name: "ANFT_CODE", nullable: true, length: 5 })
+  @Column("nvarchar", { name: "ANFT_CODE", nullable: true, length: 5 })
   public anftCode: string | null;
 
-  @Column("datetime", { name: "ANFT_DATA", nullable: true })
-  public anftData: LocalDateTime | null;
+  @Column("datetime2", { name: "ANFT_DATA", nullable: true })
+  public anftData: Date | null;
 
-  @Column("image", { name: "ANFT_FOTO", nullable: true })
-  public anftFoto: Buffer | null;
+  @Column("nvarchar", { name: "ANFT_FOTO", nullable: true })
+  public anftFoto: string | null;
 
-  @Column("datetime", { name: "ANFT_LASTUPDATE", nullable: true })
-  public anftLastupdate: LocalDateTime | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
+
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
+
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
   @ManyToOne(() => VeteAnimal, (veteAnimal) => veteAnimal.veteAnimalFotos)
-  @JoinColumn([{ name: "ANFT_ANML_ID", referencedColumnName: "anmlId" }])
+  @JoinColumn([{ name: "ANFT_ANML_ID", referencedColumnName: "id" }])
   public anftAnml: VeteAnimal;
-
-  @RelationId((veteAnimalFoto: VeteAnimalFoto) => veteAnimalFoto.anftAnml)
-  public anftAnmlId2: string | null;
-
-  public constructor(init?: Partial<VeteAnimalFoto>) {
-    super();
-    Object.assign(this, init);
-  }
 }

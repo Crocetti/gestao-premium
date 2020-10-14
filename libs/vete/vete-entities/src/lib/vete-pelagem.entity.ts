@@ -1,21 +1,33 @@
-import { BaseEntity, Column, Entity, Index, OneToMany } from "typeorm";
+import { Column, Entity, Index, OneToMany } from "typeorm";
 import { PecrProdutoBovino } from "./pecr-produto-bovino";
 import { PecrRaca } from "./pecr-raca";
 
-@Index("PK_VETE_PELAGEM", ["plgmId"], { unique: true })
+@Index("PK_VETE_PELAGEM", ["id"], { unique: true })
 @Entity("VETE_PELAGEM")
-export class VetePelagem extends BaseEntity {
-  @Column("varchar", { primary: true, name: "PLGM_ID", length: 27 })
-  public plgmId: string;
+export class VetePelagem {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-  @Column("varchar", { name: "PLGM_CODIGO", nullable: true, length: 10 })
+  @Column("nvarchar", { name: "PLGM_CODIGO", nullable: true, length: 10 })
   public plgmCodigo: string | null;
 
-  @Column("varchar", { name: "PLGM_NOME", nullable: true, length: 24 })
+  @Column("nvarchar", { name: "PLGM_NOME", nullable: true, length: 24 })
   public plgmNome: string | null;
 
-  @Column("datetime", { name: "PLGM_LASTUPDATE", nullable: true })
-  public plgmLastupdate: LocalDateTime | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
+
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
+
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
   @OneToMany(
     () => PecrProdutoBovino,
@@ -25,9 +37,4 @@ export class VetePelagem extends BaseEntity {
 
   @OneToMany(() => PecrRaca, (pecrRaca) => pecrRaca.racaPlgm)
   public pecrRacas: PecrRaca[];
-
-  public constructor(init?: Partial<VetePelagem>) {
-    super();
-    Object.assign(this, init);
-  }
 }

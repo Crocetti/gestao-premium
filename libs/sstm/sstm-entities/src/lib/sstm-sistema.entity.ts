@@ -1,30 +1,42 @@
-import { BaseEntity, Column, Entity, Index, OneToMany } from "typeorm";
+import { Column, Entity, Index, OneToMany } from "typeorm";
 import { MenuSistemaModulo } from "./menu-sistema-modulo";
 import { SstmParametroSistema } from "./sstm-parametro-sistema";
 import { SstmSistemaCorporacao } from "./sstm-sistema-corporacao";
 import { SstmSistemaTabela } from "./sstm-sistema-tabela";
 import { SstmSistemaVersao } from "./sstm-sistema-versao";
 
-@Index("PK_SSTM_SISTEMA", ["sstmId"], { unique: true })
+@Index("PK_SSTM_SISTEMA", ["id"], { unique: true })
 @Entity("SSTM_SISTEMA")
-export class SstmSistema extends BaseEntity {
-  @Column("varchar", { primary: true, name: "SSTM_ID", length: 27 })
-  public sstmId: string;
+export class SstmSistema {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-  @Column("varchar", { name: "SSTM_NAME", nullable: true, length: 64 })
+  @Column("nvarchar", { name: "SSTM_NAME", nullable: true, length: 64 })
   public sstmName: string | null;
 
-  @Column("image", { name: "SSTM_ICONE", nullable: true })
-  public sstmIcone: Buffer | null;
+  @Column("nvarchar", { name: "SSTM_ICONE", nullable: true })
+  public sstmIcone: string | null;
 
-  @Column("image", { name: "SSTM_LOGO", nullable: true })
-  public sstmLogo: Buffer | null;
+  @Column("nvarchar", { name: "SSTM_LOGO", nullable: true })
+  public sstmLogo: string | null;
 
-  @Column("varchar", { name: "SSTM_SKIN", nullable: true, length: 64 })
+  @Column("nvarchar", { name: "SSTM_SKIN", nullable: true, length: 64 })
   public sstmSkin: string | null;
 
-  @Column("datetime", { name: "SSTM_LASTUPDATE", nullable: true })
-  public sstmLastupdate: LocalDateTime | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
+
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
+
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
   @OneToMany(
     () => MenuSistemaModulo,
@@ -55,9 +67,4 @@ export class SstmSistema extends BaseEntity {
     (sstmSistemaVersao) => sstmSistemaVersao.ssvsSstm
   )
   public sstmSistemaVersaos: SstmSistemaVersao[];
-
-  public constructor(init?: Partial<SstmSistema>) {
-    super();
-    Object.assign(this, init);
-  }
 }

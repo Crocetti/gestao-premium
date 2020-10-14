@@ -1,60 +1,47 @@
 import {
-  BaseEntity,
   Column,
   Entity,
   Index,
   JoinColumn,
   ManyToOne,
   OneToMany,
-  RelationId,
 } from "typeorm";
-import { MenuModulo } from "./menu-modulo";
 import { SstmSistema } from "./sstm-sistema";
+import { MenuModulo } from "./menu-modulo";
 import { MenuSistemaPasta } from "./menu-sistema-pasta";
 
-@Index("FK_MODL_RS_SSMD", ["ssmdModlId"], {})
-@Index("FK_SSTM_RS_SSMD", ["ssmdSstmId"], {})
-@Index("PK_MENU_SISTEMA_MODULO", ["ssmdId"], { unique: true })
+@Index("PK_MENU_SISTEMA_MODULO", ["id"], { unique: true })
 @Entity("MENU_SISTEMA_MODULO")
-export class MenuSistemaModulo extends BaseEntity {
-  @Column("varchar", { primary: true, name: "SSMD_ID", length: 27 })
-  public ssmdId: string;
+export class MenuSistemaModulo {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-  @Column("varchar", { name: "SSMD_SSTM_ID", nullable: true, length: 27 })
-  public ssmdSstmId: string | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-  @Column("varchar", { name: "SSMD_MODL_ID", nullable: true, length: 27 })
-  public ssmdModlId: string | null;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-  @Column("datetime", { name: "SSMD_LASTUPDATE", nullable: true })
-  public ssmdLastupdate: LocalDateTime | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
-  @ManyToOne(() => MenuModulo, (menuModulo) => menuModulo.menuSistemaModulos)
-  @JoinColumn([{ name: "SSMD_MODL_ID", referencedColumnName: "modlId" }])
-  public ssmdModl: MenuModulo;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
+
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
   @ManyToOne(() => SstmSistema, (sstmSistema) => sstmSistema.menuSistemaModulos)
-  @JoinColumn([{ name: "SSMD_SSTM_ID", referencedColumnName: "sstmId" }])
+  @JoinColumn([{ name: "SSMD_SSTM_ID", referencedColumnName: "id" }])
   public ssmdSstm: SstmSistema;
+
+  @ManyToOne(() => MenuModulo, (menuModulo) => menuModulo.menuSistemaModulos)
+  @JoinColumn([{ name: "SSMD_MODL_ID", referencedColumnName: "id" }])
+  public ssmdModl: MenuModulo;
 
   @OneToMany(
     () => MenuSistemaPasta,
     (menuSistemaPasta) => menuSistemaPasta.sspsSsmd
   )
   public menuSistemaPastas: MenuSistemaPasta[];
-
-  @RelationId(
-    (menuSistemaModulo: MenuSistemaModulo) => menuSistemaModulo.ssmdModl
-  )
-  public ssmdModlId2: string | null;
-
-  @RelationId(
-    (menuSistemaModulo: MenuSistemaModulo) => menuSistemaModulo.ssmdSstm
-  )
-  public ssmdSstmId2: string | null;
-
-  public constructor(init?: Partial<MenuSistemaModulo>) {
-    super();
-    Object.assign(this, init);
-  }
 }

@@ -1,51 +1,64 @@
-import { LocalDateTime } from '@js-joda/core';
-import { ICmnsLocalidade, ICmnsPais, ICmnsUnidadeFederativa } from '@gpremium/cmns-interfaces';
 import {
-  BaseEntity,
   Column,
   Entity,
   Index,
   JoinColumn,
   ManyToOne,
   OneToMany,
-  RelationId,
 } from "typeorm";
-import { CmnsPais } from "./cmns-pais.entity";
-import { CmnsLocalidade } from './cmns-localidade.entity';
+import { CmnsLocalidade } from "./cmns-localidade";
+import { CmnsPais } from "./cmns-pais";
+import { FsclRegimeTributario } from "./fscl-regime-tributario";
 
-@Index("FK_PAIS_RS_UNFD", ["unfdPaisId"], {})
-@Index("PK_CMNS_UNIDADE_FEDERATIVA", ["unfdId"], { unique: true })
+@Index("PK_CMNS_UNIDADE_FEDERATIVA", ["id"], { unique: true })
 @Entity("CMNS_UNIDADE_FEDERATIVA")
-export class CmnsUnidadeFederativa implements ICmnsUnidadeFederativa {
-  @Column("varchar", { primary: true, name: "UNFD_ID", length: 27 })
-  public unfdId: string;
+export class CmnsUnidadeFederativa {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-  @Column("varchar", { name: "UNFD_NOME", nullable: true, length: 64 })
+  @Column("nvarchar", { name: "UNFD_NOME", nullable: true, length: 64 })
   public unfdNome: string | null;
 
-  @Column("varchar", { name: "UNFD_SIGLA", nullable: true, length: 3 })
+  @Column("nvarchar", { name: "UNFD_SIGLA", nullable: true, length: 3 })
   public unfdSigla: string | null;
 
-  @Column("varchar", { name: "UNFD_PREPOSICAO", nullable: true, length: 3 })
+  @Column("nvarchar", { name: "UNFD_PREPOSICAO", nullable: true, length: 3 })
   public unfdPreposicao: string | null;
 
-  @Column("varchar", { name: "UNFD_NR_IBGE", nullable: true, length: 12 })
+  @Column("nvarchar", { name: "UNFD_NR_IBGE", nullable: true, length: 12 })
   public unfdNrIbge: string | null;
 
-  @Column("varchar", { name: "UNFD_CEP_INICIAL", nullable: true, length: 9 })
+  @Column("nvarchar", { name: "UNFD_CEP_INICIAL", nullable: true, length: 9 })
   public unfdCepInicial: string | null;
 
-  @Column("varchar", { name: "UNFD_CEP_FINAL", nullable: true, length: 9 })
+  @Column("nvarchar", { name: "UNFD_CEP_FINAL", nullable: true, length: 9 })
   public unfdCepFinal: string | null;
 
-  @Column("datetime", { name: "UNFD_LASTUPDATE", nullable: true })
-  public unfdLastupdate: LocalDateTime | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-  @ManyToOne(() => CmnsPais)
-  @JoinColumn([{ name: "UNFD_PAIS_ID", referencedColumnName: "paisId" }])
-  public cmnsPais: ICmnsPais;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-  @OneToMany(() => CmnsLocalidade, (cmnsLocalidade) => cmnsLocalidade.cmnsUnFd)
-  public cmnsLocalidades?: ICmnsLocalidade[];
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
+
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
+
+  @OneToMany(() => CmnsLocalidade, (cmnsLocalidade) => cmnsLocalidade.lcldUnfd)
+  public cmnsLocalidades: CmnsLocalidade[];
+
+  @ManyToOne(() => CmnsPais, (cmnsPais) => cmnsPais.cmnsUnidadeFederativas)
+  @JoinColumn([{ name: "UNFD_PAIS_ID", referencedColumnName: "id" }])
+  public unfdPais: CmnsPais;
+
+  @OneToMany(
+    () => FsclRegimeTributario,
+    (fsclRegimeTributario) => fsclRegimeTributario.rgtbUnfd
+  )
+  public fsclRegimeTributarios: FsclRegimeTributario[];
 }

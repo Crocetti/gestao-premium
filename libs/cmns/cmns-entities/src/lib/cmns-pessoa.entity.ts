@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, Index, OneToMany } from "typeorm";
+import { Column, Entity, Index, OneToMany } from "typeorm";
 import { CdstCliente } from "./cdst-cliente";
 import { CdstFabricante } from "./cdst-fabricante";
 import { CdstFornecedor } from "./cdst-fornecedor";
@@ -21,43 +21,55 @@ import { PecfContador } from "./pecf-contador";
 import { RchmFuncionario } from "./rchm-funcionario";
 import { VeteAnimal } from "./vete-animal";
 
-@Index("PK_CMNS_PESSOA", ["pessId"], { unique: true })
+@Index("PK_CMNS_PESSOA", ["id"], { unique: true })
 @Entity("CMNS_PESSOA")
-export class CmnsPessoa extends BaseEntity {
-  @Column("varchar", { primary: true, name: "PESS_ID", length: 27 })
-  public pessId: string;
+export class CmnsPessoa {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-  @Column("varchar", { name: "PESS_CODIGO", nullable: true, length: 10 })
+  @Column("nvarchar", { name: "PESS_CODIGO", nullable: true, length: 10 })
   public pessCodigo: string | null;
 
-  @Column("varchar", { name: "PESS_CPF_CNPJ", nullable: true, length: 18 })
+  @Column("nvarchar", { name: "PESS_CPF_CNPJ", nullable: true, length: 18 })
   public pessCpfCnpj: string | null;
 
-  @Column("varchar", { name: "PESS_NOME", nullable: true, length: 128 })
+  @Column("nvarchar", { name: "PESS_NOME", nullable: true, length: 128 })
   public pessNome: string | null;
 
-  @Column("varchar", {
+  @Column("nvarchar", {
     name: "PESS_FISICA_JURIDICA",
     nullable: true,
     length: 10,
   })
   public pessFisicaJuridica: string | null;
 
-  @Column("varchar", { name: "PESS_OBSERVACAO", nullable: true, length: 5000 })
+  @Column("nvarchar", { name: "PESS_OBSERVACAO", nullable: true })
   public pessObservacao: string | null;
 
-  @Column("varchar", { name: "PESS_URL", nullable: true, length: 256 })
+  @Column("nvarchar", { name: "PESS_URL", nullable: true, length: 256 })
   public pessUrl: string | null;
 
-  @Column("varchar", {
+  @Column("nvarchar", {
     name: "PESS_RELACIONAMENTO",
     nullable: true,
     length: 256,
   })
   public pessRelacionamento: string | null;
 
-  @Column("datetime", { name: "PESS_LASTUPDATE", nullable: true })
-  public pessLastupdate: LocalDateTime | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
+
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
+
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
   @OneToMany(() => CdstCliente, (cdstCliente) => cdstCliente.clntPess)
   public cdstClientes: CdstCliente[];
@@ -157,9 +169,4 @@ export class CmnsPessoa extends BaseEntity {
 
   @OneToMany(() => VeteAnimal, (veteAnimal) => veteAnimal.anmlPess)
   public veteAnimals: VeteAnimal[];
-
-  public constructor(init?: Partial<CmnsPessoa>) {
-    super();
-    Object.assign(this, init);
-  }
 }

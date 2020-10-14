@@ -1,28 +1,12 @@
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  RelationId,
-} from "typeorm";
+import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
 import { FncrPlanoConta } from "./fncr-plano-conta";
 import { FncrTitulo } from "./fncr-titulo";
 
-@Index("FK_CTCT_RS_PRPC", ["prpcCtctId"], {})
-@Index("FK_TTLS_RS_TTCC", ["ttccTtlsId"], {})
-@Index("PK_FNCR_TITULO_CENTRO_CUSTO", ["ttccId"], { unique: true })
+@Index("PK_FNCR_TITULO_CENTRO_CUSTO", ["id"], { unique: true })
 @Entity("FNCR_TITULO_CENTRO_CUSTO")
-export class FncrTituloCentroCusto extends BaseEntity {
-  @Column("varchar", { primary: true, name: "TTCC_ID", length: 27 })
-  public ttccId: string;
-
-  @Column("varchar", { name: "PRPC_CTCT_ID", nullable: true, length: 27 })
-  public prpcCtctId: string | null;
-
-  @Column("varchar", { name: "TTCC_TTLS_ID", nullable: true, length: 27 })
-  public ttccTtlsId: string | null;
+export class FncrTituloCentroCusto {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
   @Column("numeric", {
     name: "TTCC_PERCENTUAL",
@@ -32,37 +16,32 @@ export class FncrTituloCentroCusto extends BaseEntity {
   })
   public ttccPercentual: number | null;
 
-  @Column("datetime", { name: "TTCC_LASTUPDATE", nullable: true })
-  public ttccLastupdate: LocalDateTime | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
+
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
+
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
   @ManyToOne(
     () => FncrPlanoConta,
     (fncrPlanoConta) => fncrPlanoConta.fncrTituloCentroCustos
   )
-  @JoinColumn([{ name: "PRPC_CTCT_ID", referencedColumnName: "plctId" }])
+  @JoinColumn([{ name: "PRPC_CTCT_ID", referencedColumnName: "id" }])
   public prpcCtct: FncrPlanoConta;
 
   @ManyToOne(
     () => FncrTitulo,
     (fncrTitulo) => fncrTitulo.fncrTituloCentroCustos
   )
-  @JoinColumn([{ name: "TTCC_TTLS_ID", referencedColumnName: "ttlsId" }])
+  @JoinColumn([{ name: "TTCC_TTLS_ID", referencedColumnName: "id" }])
   public ttccTtls: FncrTitulo;
-
-  @RelationId(
-    (fncrTituloCentroCusto: FncrTituloCentroCusto) =>
-      fncrTituloCentroCusto.prpcCtct
-  )
-  public prpcCtctId2: string | null;
-
-  @RelationId(
-    (fncrTituloCentroCusto: FncrTituloCentroCusto) =>
-      fncrTituloCentroCusto.ttccTtls
-  )
-  public ttccTtlsId2: string | null;
-
-  public constructor(init?: Partial<FncrTituloCentroCusto>) {
-    super();
-    Object.assign(this, init);
-  }
 }

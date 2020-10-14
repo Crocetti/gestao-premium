@@ -1,47 +1,55 @@
-import {BaseEntity,Column,Entity,Index,JoinColumn,ManyToOne,RelationId} from "typeorm";
-import {FsclDocumentoItem} from './fscl-documento-item'
+import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
+import { FsclDocumentoItem } from "./fscl-documento-item";
 
-
-@Index("FK_DCIT_RS_ITFF",["itffDcitId",],{  })
-@Index("PK_FSCL_ITEM_FATO_FISCAL",["itffId",],{ unique:true })
+@Index("PK_FSCL_ITEM_FATO_FISCAL", ["id"], { unique: true })
 @Entity("FSCL_ITEM_FATO_FISCAL")
-export  class FsclItemFatoFiscal extends BaseEntity {
+export class FsclItemFatoFiscal {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-@Column("varchar",{ primary:true,name:"ITFF_ID",length:27 })
-public itffId:string;
+  @Column("nvarchar", {
+    name: "ITFF_TP_FATO_FISCAL",
+    nullable: true,
+    length: 25,
+  })
+  public itffTpFatoFiscal: string | null;
 
-@Column("varchar",{ name:"ITFF_DCIT_ID",nullable:true,length:27 })
-public itffDcitId:string | null;
+  @Column("money", { name: "ITFF_BASE_CALCULO", nullable: true })
+  public itffBaseCalculo: number | null;
 
-@Column("varchar",{ name:"ITFF_TP_FATO_FISCAL",nullable:true,length:25 })
-public itffTpFatoFiscal:string | null;
+  @Column("numeric", {
+    name: "ITFF_ALIQUOTA",
+    nullable: true,
+    precision: 18,
+    scale: 4,
+  })
+  public itffAliquota: number | null;
 
-@Column("money",{ name:"ITFF_BASE_CALCULO",nullable:true,default: () => "0", })
-public itffBaseCalculo:number | null;
+  @Column("money", { name: "ITFF_VALOR", nullable: true })
+  public itffValor: number | null;
 
-@Column("numeric",{ name:"ITFF_ALIQUOTA",nullable:true,precision:18,scale:4 })
-public itffAliquota:number | null;
+  @Column("nvarchar", { name: "ITFF_CST", nullable: true, length: 3 })
+  public itffCst: string | null;
 
-@Column("money",{ name:"ITFF_VALOR",nullable:true,default: () => "0", })
-public itffValor:number | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-@Column("varchar",{ name:"ITFF_CST",nullable:true,length:3 })
-public itffCst:string | null;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-@Column("datetime",{ name:"ITFF_LASTUPDATE",nullable:true })
-public itffLastupdate:LocalDateTime | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
-@ManyToOne(()=>FsclDocumentoItem,fsclDocumentoItem=>fsclDocumentoItem.fsclItemFatoFiscals)
-@JoinColumn([{ name: "ITFF_DCIT_ID", referencedColumnName: "dcitId" },
-])
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
 
-public itffDcit:FsclDocumentoItem;
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
-@RelationId((fsclItemFatoFiscal:FsclItemFatoFiscal)=>fsclItemFatoFiscal.itffDcit)
-public itffDcitId2:string | null;
-
-public constructor(init?: Partial<FsclItemFatoFiscal>) {
-    super();
-    Object.assign(this, init);
-}
+  @ManyToOne(
+    () => FsclDocumentoItem,
+    (fsclDocumentoItem) => fsclDocumentoItem.fsclItemFatoFiscals
+  )
+  @JoinColumn([{ name: "ITFF_DCIT_ID", referencedColumnName: "id" }])
+  public itffDcit: FsclDocumentoItem;
 }

@@ -1,47 +1,46 @@
-import {BaseEntity,Column,Entity,Index,JoinColumn,ManyToOne,RelationId} from "typeorm";
-import {FncrPlanoConta} from './fncr-plano-conta'
+import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
+import { FncrPlanoConta } from "./fncr-plano-conta";
 
-
-@Index("FK_PLCT_RS_PCSD",["pcsdPlctId",],{  })
-@Index("PK_FNCR_PLANO_CONTA_SALDO",["pcsdId",],{ unique:true })
+@Index("PK_FNCR_PLANO_CONTA_SALDO", ["id"], { unique: true })
 @Entity("FNCR_PLANO_CONTA_SALDO")
-export  class FncrPlanoContaSaldo extends BaseEntity {
+export class FncrPlanoContaSaldo {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-@Column("varchar",{ primary:true,name:"PCSD_ID",length:27 })
-public pcsdId:string;
+  @Column("datetime2", { name: "PCSD_PERIODO", nullable: true })
+  public pcsdPeriodo: Date | null;
 
-@Column("varchar",{ name:"PCSD_PLCT_ID",nullable:true,length:27 })
-public pcsdPlctId:string | null;
+  @Column("money", { name: "PCSD_INICIAL", nullable: true })
+  public pcsdInicial: number | null;
 
-@Column("datetime",{ name:"PCSD_PERIODO",nullable:true })
-public pcsdPeriodo:LocalDateTime | null;
+  @Column("money", { name: "PCSD_ENTRADAS", nullable: true })
+  public pcsdEntradas: number | null;
 
-@Column("money",{ name:"PCSD_INICIAL",nullable:true,default: () => "0", })
-public pcsdInicial:number | null;
+  @Column("money", { name: "PCSD_SAIDAS", nullable: true })
+  public pcsdSaidas: number | null;
 
-@Column("money",{ name:"PCSD_ENTRADAS",nullable:true,default: () => "0", })
-public pcsdEntradas:number | null;
+  @Column("money", { name: "PCSD_FINAL", nullable: true })
+  public pcsdFinal: number | null;
 
-@Column("money",{ name:"PCSD_SAIDAS",nullable:true,default: () => "0", })
-public pcsdSaidas:number | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-@Column("money",{ name:"PCSD_FINAL",nullable:true,default: () => "0", })
-public pcsdFinal:number | null;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-@Column("datetime",{ name:"PCSD_LASTUPDATE",nullable:true })
-public pcsdLastupdate:LocalDateTime | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
-@ManyToOne(()=>FncrPlanoConta,fncrPlanoConta=>fncrPlanoConta.fncrPlanoContaSaldos)
-@JoinColumn([{ name: "PCSD_PLCT_ID", referencedColumnName: "plctId" },
-])
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
 
-public pcsdPlct:FncrPlanoConta;
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
-@RelationId((fncrPlanoContaSaldo:FncrPlanoContaSaldo)=>fncrPlanoContaSaldo.pcsdPlct)
-public pcsdPlctId2:string | null;
-
-public constructor(init?: Partial<FncrPlanoContaSaldo>) {
-    super();
-    Object.assign(this, init);
-}
+  @ManyToOne(
+    () => FncrPlanoConta,
+    (fncrPlanoConta) => fncrPlanoConta.fncrPlanoContaSaldos
+  )
+  @JoinColumn([{ name: "PCSD_PLCT_ID", referencedColumnName: "id" }])
+  public pcsdPlct: FncrPlanoConta;
 }

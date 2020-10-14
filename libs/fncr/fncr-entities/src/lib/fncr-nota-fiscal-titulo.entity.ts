@@ -1,57 +1,36 @@
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  RelationId,
-} from "typeorm";
-import { FsclDocumento } from "./fscl-documento";
+import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
 import { FncrTitulo } from "./fncr-titulo";
+import { FsclDocumento } from "./fscl-documento";
 
-@Index("FK_NTFS_RS_NFTT", ["nfttNtfsId"], {})
-@Index("FK_TTLS_RS_CMTT", ["cmttTtlsId"], {})
-@Index("PK_FNCR_NOTA_FISCAL_TITULO", ["nfttId"], { unique: true })
+@Index("PK_FNCR_NOTA_FISCAL_TITULO", ["id"], { unique: true })
 @Entity("FNCR_NOTA_FISCAL_TITULO")
-export class FncrNotaFiscalTitulo extends BaseEntity {
-  @Column("varchar", { primary: true, name: "NFTT_ID", length: 27 })
-  public nfttId: string;
+export class FncrNotaFiscalTitulo {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-  @Column("varchar", { name: "CMTT_TTLS_ID", nullable: true, length: 27 })
-  public cmttTtlsId: string | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-  @Column("varchar", { name: "NFTT_NTFS_ID", nullable: true, length: 27 })
-  public nfttNtfsId: string | null;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-  @Column("datetime", { name: "NFTT_LASTUPDATE", nullable: true })
-  public nfttLastupdate: LocalDateTime | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
+
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
+
+  @ManyToOne(() => FncrTitulo, (fncrTitulo) => fncrTitulo.fncrNotaFiscalTitulos)
+  @JoinColumn([{ name: "CMTT_TTLS_ID", referencedColumnName: "id" }])
+  public cmttTtls: FncrTitulo;
 
   @ManyToOne(
     () => FsclDocumento,
     (fsclDocumento) => fsclDocumento.fncrNotaFiscalTitulos
   )
-  @JoinColumn([{ name: "NFTT_NTFS_ID", referencedColumnName: "dcmtId" }])
+  @JoinColumn([{ name: "NFTT_NTFS_ID", referencedColumnName: "id" }])
   public nfttNtfs: FsclDocumento;
-
-  @ManyToOne(() => FncrTitulo, (fncrTitulo) => fncrTitulo.fncrNotaFiscalTitulos)
-  @JoinColumn([{ name: "CMTT_TTLS_ID", referencedColumnName: "ttlsId" }])
-  public cmttTtls: FncrTitulo;
-
-  @RelationId(
-    (fncrNotaFiscalTitulo: FncrNotaFiscalTitulo) =>
-      fncrNotaFiscalTitulo.nfttNtfs
-  )
-  public nfttNtfsId2: string | null;
-
-  @RelationId(
-    (fncrNotaFiscalTitulo: FncrNotaFiscalTitulo) =>
-      fncrNotaFiscalTitulo.cmttTtls
-  )
-  public cmttTtlsId2: string | null;
-
-  public constructor(init?: Partial<FncrNotaFiscalTitulo>) {
-    super();
-    Object.assign(this, init);
-  }
 }

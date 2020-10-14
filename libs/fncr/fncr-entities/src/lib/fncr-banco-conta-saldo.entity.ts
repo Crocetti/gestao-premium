@@ -1,38 +1,37 @@
-import {BaseEntity,Column,Entity,Index,JoinColumn,ManyToOne,RelationId} from "typeorm";
-import {FncrBancoConta} from './fncr-banco-conta'
+import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
+import { FncrBancoConta } from "./fncr-banco-conta";
 
-
-@Index("FK_BCCT_RS_BCCS",["bccsBcctId",],{  })
-@Index("PK_FNCR_BANCO_CONTA_SALDO",["bccsId",],{ unique:true })
+@Index("PK_FNCR_BANCO_CONTA_SALDO", ["id"], { unique: true })
 @Entity("FNCR_BANCO_CONTA_SALDO")
-export  class FncrBancoContaSaldo extends BaseEntity {
+export class FncrBancoContaSaldo {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-@Column("varchar",{ primary:true,name:"BCCS_ID",length:27 })
-public bccsId:string;
+  @Column("datetime2", { name: "BCCS_REFERENCIA", nullable: true })
+  public bccsReferencia: Date | null;
 
-@Column("varchar",{ name:"BCCS_BCCT_ID",nullable:true,length:27 })
-public bccsBcctId:string | null;
+  @Column("money", { name: "BCCS_VALOR", nullable: true })
+  public bccsValor: number | null;
 
-@Column("datetime",{ name:"BCCS_REFERENCIA",nullable:true })
-public bccsReferencia:LocalDateTime | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-@Column("money",{ name:"BCCS_VALOR",nullable:true,default: () => "0", })
-public bccsValor:number | null;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-@Column("datetime",{ name:"BCCS_LASTUPDATE",nullable:true })
-public bccsLastupdate:LocalDateTime | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
-@ManyToOne(()=>FncrBancoConta,fncrBancoConta=>fncrBancoConta.fncrBancoContaSaldos)
-@JoinColumn([{ name: "BCCS_BCCT_ID", referencedColumnName: "bcctId" },
-])
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
 
-public bccsBcct:FncrBancoConta;
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
-@RelationId((fncrBancoContaSaldo:FncrBancoContaSaldo)=>fncrBancoContaSaldo.bccsBcct)
-public bccsBcctId2:string | null;
-
-public constructor(init?: Partial<FncrBancoContaSaldo>) {
-    super();
-    Object.assign(this, init);
-}
+  @ManyToOne(
+    () => FncrBancoConta,
+    (fncrBancoConta) => fncrBancoConta.fncrBancoContaSaldos
+  )
+  @JoinColumn([{ name: "BCCS_BCCT_ID", referencedColumnName: "id" }])
+  public bccsBcct: FncrBancoConta;
 }

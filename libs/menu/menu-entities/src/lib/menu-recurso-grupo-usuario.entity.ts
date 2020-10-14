@@ -1,61 +1,54 @@
-import {BaseEntity,Column,Entity,Index,JoinColumn,ManyToOne,RelationId} from "typeorm";
-import {CmnsGrupoUsuario} from './cmns-grupo-usuario'
-import {MenuSistemaRecurso} from './menu-sistema-recurso'
+import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
+import { MenuSistemaRecurso } from "./menu-sistema-recurso";
+import { CmnsGrupoUsuario } from "./cmns-grupo-usuario";
 
-
-@Index("FK_GRUS_RS_RCGU",["rcguGrusId",],{  })
-@Index("FK_SSRC_RS_RCGU",["rcguSsrcId",],{  })
-@Index("PK_MENU_RECURSO_GRUPO_USUARIO",["rcguId",],{ unique:true })
+@Index("PK_MENU_RECURSO_GRUPO_USUARIO", ["id"], { unique: true })
 @Entity("MENU_RECURSO_GRUPO_USUARIO")
-export  class MenuRecursoGrupoUsuario extends BaseEntity {
+export class MenuRecursoGrupoUsuario {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-@Column("varchar",{ primary:true,name:"RCGU_ID",length:27 })
-public rcguId:string;
+  @Column("smallint", { name: "RCGU_INSERT", nullable: true })
+  public rcguInsert: number | null;
 
-@Column("varchar",{ name:"RCGU_SSRC_ID",nullable:true,length:27 })
-public rcguSsrcId:string | null;
+  @Column("smallint", { name: "RCGU_DELETE", nullable: true })
+  public rcguDelete: number | null;
 
-@Column("varchar",{ name:"RCGU_GRUS_ID",nullable:true,length:27 })
-public rcguGrusId:string | null;
+  @Column("smallint", { name: "RCGU_UPDATE", nullable: true })
+  public rcguUpdate: number | null;
 
-@Column("smallint",{ name:"RCGU_INSERT",nullable:true,default: () => "0", })
-public rcguInsert:number | null;
+  @Column("smallint", { name: "RCGU_VISUALIZE", nullable: true })
+  public rcguVisualize: number | null;
 
-@Column("smallint",{ name:"RCGU_DELETE",nullable:true,default: () => "0", })
-public rcguDelete:number | null;
+  @Column("smallint", { name: "RCGU_PRINTER", nullable: true })
+  public rcguPrinter: number | null;
 
-@Column("smallint",{ name:"RCGU_UPDATE",nullable:true,default: () => "0", })
-public rcguUpdate:number | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-@Column("smallint",{ name:"RCGU_VISUALIZE",nullable:true,default: () => "0", })
-public rcguVisualize:number | null;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-@Column("smallint",{ name:"RCGU_PRINTER",nullable:true,default: () => "0", })
-public rcguPrinter:number | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
-@Column("datetime",{ name:"RCGU_LASTUPDATE",nullable:true })
-public rcguLastupdate:LocalDateTime | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
 
-@ManyToOne(()=>CmnsGrupoUsuario,cmnsGrupoUsuario=>cmnsGrupoUsuario.menuRecursoGrupoUsuarios)
-@JoinColumn([{ name: "RCGU_GRUS_ID", referencedColumnName: "grusId" },
-])
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
-public rcguGrus:CmnsGrupoUsuario;
+  @ManyToOne(
+    () => MenuSistemaRecurso,
+    (menuSistemaRecurso) => menuSistemaRecurso.menuRecursoGrupoUsuarios
+  )
+  @JoinColumn([{ name: "RCGU_SSRC_ID", referencedColumnName: "id" }])
+  public rcguSsrc: MenuSistemaRecurso;
 
-@ManyToOne(()=>MenuSistemaRecurso,menuSistemaRecurso=>menuSistemaRecurso.menuRecursoGrupoUsuarios)
-@JoinColumn([{ name: "RCGU_SSRC_ID", referencedColumnName: "ssrcId" },
-])
-
-public rcguSsrc:MenuSistemaRecurso;
-
-@RelationId((menuRecursoGrupoUsuario:MenuRecursoGrupoUsuario)=>menuRecursoGrupoUsuario.rcguGrus)
-public rcguGrusId2:string | null;
-
-@RelationId((menuRecursoGrupoUsuario:MenuRecursoGrupoUsuario)=>menuRecursoGrupoUsuario.rcguSsrc)
-public rcguSsrcId2:string | null;
-
-public constructor(init?: Partial<MenuRecursoGrupoUsuario>) {
-    super();
-    Object.assign(this, init);
-}
+  @ManyToOne(
+    () => CmnsGrupoUsuario,
+    (cmnsGrupoUsuario) => cmnsGrupoUsuario.menuRecursoGrupoUsuarios
+  )
+  @JoinColumn([{ name: "RCGU_GRUS_ID", referencedColumnName: "id" }])
+  public rcguGrus: CmnsGrupoUsuario;
 }

@@ -1,64 +1,78 @@
-import {BaseEntity,Column,Entity,Index,JoinColumn,ManyToOne,RelationId} from "typeorm";
-import {FsclNcms} from './fscl-ncms'
-import {CmnsUnidadeFederativa} from './cmns-unidade-federativa'
+import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
+import { CmnsUnidadeFederativa } from "./cmns-unidade-federativa";
+import { FsclNcms } from "./fscl-ncms";
 
-
-@Index("FK_NCMS_RS_RGTB",["rgtbNcmsId",],{  })
-@Index("FK_UNFD_RS_RGTB",["rgtbUnfdId",],{  })
-@Index("PK_FSCL_REGIME_TRIBUTARIO",["rgtbId",],{ unique:true })
+@Index("PK_FSCL_REGIME_TRIBUTARIO", ["id"], { unique: true })
 @Entity("FSCL_REGIME_TRIBUTARIO")
-export  class FsclRegimeTributario extends BaseEntity {
+export class FsclRegimeTributario {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-@Column("varchar",{ primary:true,name:"RGTB_ID",length:27 })
-public rgtbId:string;
+  @Column("nvarchar", {
+    name: "RGTB_REGIME_FISCAL_TRIBUTARIO",
+    nullable: true,
+    length: 25,
+  })
+  public rgtbRegimeFiscalTributario: string | null;
 
-@Column("varchar",{ name:"RGTB_UNFD_ID",nullable:true,length:27 })
-public rgtbUnfdId:string | null;
+  @Column("numeric", {
+    name: "RGTB_IVA",
+    nullable: true,
+    precision: 18,
+    scale: 4,
+  })
+  public rgtbIva: number | null;
 
-@Column("varchar",{ name:"RGTB_NCMS_ID",nullable:true,length:27 })
-public rgtbNcmsId:string | null;
+  @Column("numeric", {
+    name: "RGTB_ICMS",
+    nullable: true,
+    precision: 18,
+    scale: 4,
+  })
+  public rgtbIcms: number | null;
 
-@Column("varchar",{ name:"RGTB_REGIME_FISCAL_TRIBUTARIO",nullable:true,length:25 })
-public rgtbRegimeFiscalTributario:string | null;
+  @Column("numeric", {
+    name: "RGTB_REDUCAO_ICMS",
+    nullable: true,
+    precision: 18,
+    scale: 4,
+  })
+  public rgtbReducaoIcms: number | null;
 
-@Column("numeric",{ name:"RGTB_IVA",nullable:true,precision:18,scale:4 })
-public rgtbIva:number | null;
+  @Column("numeric", {
+    name: "RGTB_REDUCAO_ICMS_ST",
+    nullable: true,
+    precision: 18,
+    scale: 4,
+  })
+  public rgtbReducaoIcmsSt: number | null;
 
-@Column("numeric",{ name:"RGTB_ICMS",nullable:true,precision:18,scale:4 })
-public rgtbIcms:number | null;
+  @Column("money", { name: "RGTB_PAUTA", nullable: true })
+  public rgtbPauta: number | null;
 
-@Column("numeric",{ name:"RGTB_REDUCAO_ICMS",nullable:true,precision:18,scale:4 })
-public rgtbReducaoIcms:number | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-@Column("numeric",{ name:"RGTB_REDUCAO_ICMS_ST",nullable:true,precision:18,scale:4 })
-public rgtbReducaoIcmsSt:number | null;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-@Column("money",{ name:"RGTB_PAUTA",nullable:true,default: () => "0", })
-public rgtbPauta:number | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
-@Column("datetime",{ name:"RGTB_LASTUPDATE",nullable:true })
-public rgtbLastupdate:LocalDateTime | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
 
-@ManyToOne(()=>FsclNcms,fsclNcms=>fsclNcms.fsclRegimeTributarios)
-@JoinColumn([{ name: "RGTB_NCMS_ID", referencedColumnName: "ncmsId" },
-])
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
-public rgtbNcms:FsclNcms;
+  @ManyToOne(
+    () => CmnsUnidadeFederativa,
+    (cmnsUnidadeFederativa) => cmnsUnidadeFederativa.fsclRegimeTributarios
+  )
+  @JoinColumn([{ name: "RGTB_UNFD_ID", referencedColumnName: "id" }])
+  public rgtbUnfd: CmnsUnidadeFederativa;
 
-@ManyToOne(()=>CmnsUnidadeFederativa,cmnsUnidadeFederativa=>cmnsUnidadeFederativa.fsclRegimeTributarios)
-@JoinColumn([{ name: "RGTB_UNFD_ID", referencedColumnName: "unfdId" },
-])
-
-public rgtbUnfd:CmnsUnidadeFederativa;
-
-@RelationId((fsclRegimeTributario:FsclRegimeTributario)=>fsclRegimeTributario.rgtbNcms)
-public rgtbNcmsId2:string | null;
-
-@RelationId((fsclRegimeTributario:FsclRegimeTributario)=>fsclRegimeTributario.rgtbUnfd)
-public rgtbUnfdId2:string | null;
-
-public constructor(init?: Partial<FsclRegimeTributario>) {
-    super();
-    Object.assign(this, init);
-}
+  @ManyToOne(() => FsclNcms, (fsclNcms) => fsclNcms.fsclRegimeTributarios)
+  @JoinColumn([{ name: "RGTB_NCMS_ID", referencedColumnName: "id" }])
+  public rgtbNcms: FsclNcms;
 }

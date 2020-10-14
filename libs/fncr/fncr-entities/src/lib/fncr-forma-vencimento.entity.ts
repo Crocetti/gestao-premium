@@ -1,72 +1,80 @@
-import {BaseEntity,Column,Entity,Index,OneToMany} from "typeorm";
-import {EstqCapaMovimento} from './estq-capa-movimento'
-import {FncrTitulo} from './fncr-titulo'
-import {FsclDocumento} from './fscl-documento'
-import {VeteOrdemDeServico} from './vete-ordem-de-servico'
+import { Column, Entity, Index, OneToMany } from "typeorm";
+import { EstqCapaMovimento } from "./estq-capa-movimento";
+import { FncrTitulo } from "./fncr-titulo";
+import { FsclDocumento } from "./fscl-documento";
+import { VeteOrdemDeServico } from "./vete-ordem-de-servico";
 
-
-@Index("PK_FNCR_FORMA_VENCIMENTO",["frvnId",],{ unique:true })
+@Index("PK_FNCR_FORMA_VENCIMENTO", ["id"], { unique: true })
 @Entity("FNCR_FORMA_VENCIMENTO")
-export  class FncrFormaVencimento extends BaseEntity {
+export class FncrFormaVencimento {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-@Column("varchar",{ primary:true,name:"FRVN_ID",length:27 })
-public frvnId:string;
+  @Column("nvarchar", { name: "FRVN_TIPO", nullable: true, length: 10 })
+  public frvnTipo: string | null;
 
-@Column("varchar",{ name:"FRVN_TIPO",nullable:true,length:10 })
-public frvnTipo:string | null;
+  @Column("nvarchar", { name: "FRVN_CODIGO", nullable: true, length: 5 })
+  public frvnCodigo: string | null;
 
-@Column("varchar",{ name:"FRVN_CODIGO",nullable:true,length:5 })
-public frvnCodigo:string | null;
+  @Column("nvarchar", { name: "FRVN_NOME", nullable: true, length: 64 })
+  public frvnNome: string | null;
 
-@Column("varchar",{ name:"FRVN_NOME",nullable:true,length:64 })
-public frvnNome:string | null;
+  @Column("smallint", { name: "FRVN_DIA_FIXO", nullable: true })
+  public frvnDiaFixo: number | null;
 
-@Column("smallint",{ name:"FRVN_DIA_FIXO",nullable:true,default: () => "0", })
-public frvnDiaFixo:number | null;
+  @Column("smallint", { name: "FRVN_ENTRADA", nullable: true })
+  public frvnEntrada: number | null;
 
-@Column("smallint",{ name:"FRVN_ENTRADA",nullable:true,default: () => "0", })
-public frvnEntrada:number | null;
+  @Column("smallint", { name: "FRVN_COBRA_JUROS", nullable: true })
+  public frvnCobraJuros: number | null;
 
-@Column("smallint",{ name:"FRVN_COBRA_JUROS",nullable:true,default: () => "0", })
-public frvnCobraJuros:number | null;
+  @Column("int", { name: "FRVN_PARCELAS", nullable: true })
+  public frvnParcelas: number | null;
 
-@Column("int",{ name:"FRVN_PARCELAS",nullable:true })
-public frvnParcelas:number | null;
+  @Column("int", { name: "FRVN_DIA_VENCIMENTO", nullable: true })
+  public frvnDiaVencimento: number | null;
 
-@Column("int",{ name:"FRVN_DIA_VENCIMENTO",nullable:true })
-public frvnDiaVencimento:number | null;
+  @Column("int", { name: "FRVN_INTERVALO", nullable: true })
+  public frvnIntervalo: number | null;
 
-@Column("int",{ name:"FRVN_INTERVALO",nullable:true })
-public frvnIntervalo:number | null;
+  @Column("numeric", {
+    name: "FRVN_TAXA_JUROS",
+    nullable: true,
+    precision: 18,
+    scale: 4,
+  })
+  public frvnTaxaJuros: number | null;
 
-@Column("numeric",{ name:"FRVN_TAXA_JUROS",nullable:true,precision:18,scale:4 })
-public frvnTaxaJuros:number | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-@Column("datetime",{ name:"FRVN_LASTUPDATE",nullable:true })
-public frvnLastupdate:LocalDateTime | null;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-@OneToMany(()=>EstqCapaMovimento,estqCapaMovimento=>estqCapaMovimento.cpmvFrvn)
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
 
-public estqCapaMovimentos:EstqCapaMovimento[];
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
-@OneToMany(()=>FncrTitulo,fncrTitulo=>fncrTitulo.ttlsFrvn)
+  @OneToMany(
+    () => EstqCapaMovimento,
+    (estqCapaMovimento) => estqCapaMovimento.cpmvFrvn
+  )
+  public estqCapaMovimentos: EstqCapaMovimento[];
 
+  @OneToMany(() => FncrTitulo, (fncrTitulo) => fncrTitulo.ttlsFrvn)
+  public fncrTitulos: FncrTitulo[];
 
-public fncrTitulos:FncrTitulo[];
+  @OneToMany(() => FsclDocumento, (fsclDocumento) => fsclDocumento.dcmtFrvn)
+  public fsclDocumentos: FsclDocumento[];
 
-@OneToMany(()=>FsclDocumento,fsclDocumento=>fsclDocumento.dcmtFrvn)
-
-
-public fsclDocumentos:FsclDocumento[];
-
-@OneToMany(()=>VeteOrdemDeServico,veteOrdemDeServico=>veteOrdemDeServico.osvtFrvn)
-
-
-public veteOrdemDeServicos:VeteOrdemDeServico[];
-
-public constructor(init?: Partial<FncrFormaVencimento>) {
-    super();
-    Object.assign(this, init);
-}
+  @OneToMany(
+    () => VeteOrdemDeServico,
+    (veteOrdemDeServico) => veteOrdemDeServico.osvtFrvn
+  )
+  public veteOrdemDeServicos: VeteOrdemDeServico[];
 }

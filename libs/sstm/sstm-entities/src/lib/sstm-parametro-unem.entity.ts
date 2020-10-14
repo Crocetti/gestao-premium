@@ -1,55 +1,48 @@
-import {BaseEntity,Column,Entity,Index,JoinColumn,ManyToOne,RelationId} from "typeorm";
-import {SstmParametro} from './sstm-parametro'
-import {CoreUnidadeEmpresarial} from './core-unidade-empresarial'
+import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
+import { CoreUnidadeEmpresarial } from "./core-unidade-empresarial";
+import { SstmParametro } from "./sstm-parametro";
 
-
-@Index("FK_PRMT_RS_PRUE",["pruePrmtId",],{  })
-@Index("FK_UNEM_RS_PRUE",["prueUnemId",],{  })
-@Index("PK_SSTM_PARAMETRO_UNEM",["prueId",],{ unique:true })
+@Index("PK_SSTM_PARAMETRO_UNEM", ["id"], { unique: true })
 @Entity("SSTM_PARAMETRO_UNEM")
-export  class SstmParametroUnem extends BaseEntity {
+export class SstmParametroUnem {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-@Column("varchar",{ primary:true,name:"PRUE_ID",length:27 })
-public prueId:string;
+  @Column("nvarchar", { name: "PRUE_DEFAULT", nullable: true, length: 128 })
+  public prueDefault: string | null;
 
-@Column("varchar",{ name:"PRUE_UNEM_ID",nullable:true,length:27 })
-public prueUnemId:string | null;
+  @Column("nvarchar", { name: "PRUE_VALUE", nullable: true, length: 128 })
+  public prueValue: string | null;
 
-@Column("varchar",{ name:"PRUE_PRMT_ID",nullable:true,length:27 })
-public pruePrmtId:string | null;
+  @Column("smallint", { name: "PRUE_HABILITADO", nullable: true })
+  public prueHabilitado: number | null;
 
-@Column("varchar",{ name:"PRUE_DEFAULT",nullable:true,length:128 })
-public prueDefault:string | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-@Column("varchar",{ name:"PRUE_VALUE",nullable:true,length:128 })
-public prueValue:string | null;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-@Column("smallint",{ name:"PRUE_HABILITADO",nullable:true,default: () => "0", })
-public prueHabilitado:number | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
-@Column("datetime",{ name:"PRUE_LASTUPDATE",nullable:true })
-public prueLastupdate:LocalDateTime | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
 
-@ManyToOne(()=>SstmParametro,sstmParametro=>sstmParametro.sstmParametroUnems)
-@JoinColumn([{ name: "PRUE_PRMT_ID", referencedColumnName: "prmtId" },
-])
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
-public pruePrmt:SstmParametro;
+  @ManyToOne(
+    () => CoreUnidadeEmpresarial,
+    (coreUnidadeEmpresarial) => coreUnidadeEmpresarial.sstmParametroUnems
+  )
+  @JoinColumn([{ name: "PRUE_UNEM_ID", referencedColumnName: "id" }])
+  public prueUnem: CoreUnidadeEmpresarial;
 
-@ManyToOne(()=>CoreUnidadeEmpresarial,coreUnidadeEmpresarial=>coreUnidadeEmpresarial.sstmParametroUnems)
-@JoinColumn([{ name: "PRUE_UNEM_ID", referencedColumnName: "unemId" },
-])
-
-public prueUnem:CoreUnidadeEmpresarial;
-
-@RelationId((sstmParametroUnem:SstmParametroUnem)=>sstmParametroUnem.pruePrmt)
-public pruePrmtId2:string | null;
-
-@RelationId((sstmParametroUnem:SstmParametroUnem)=>sstmParametroUnem.prueUnem)
-public prueUnemId2:string | null;
-
-public constructor(init?: Partial<SstmParametroUnem>) {
-    super();
-    Object.assign(this, init);
-}
+  @ManyToOne(
+    () => SstmParametro,
+    (sstmParametro) => sstmParametro.sstmParametroUnems
+  )
+  @JoinColumn([{ name: "PRUE_PRMT_ID", referencedColumnName: "id" }])
+  public pruePrmt: SstmParametro;
 }

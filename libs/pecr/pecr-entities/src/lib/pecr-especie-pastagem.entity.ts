@@ -1,36 +1,47 @@
-import {BaseEntity,Column,Entity,Index,OneToMany} from "typeorm";
-import {PecrUnidadeCriacao} from './pecr-unidade-criacao'
+import { Column, Entity, Index, OneToMany } from "typeorm";
+import { PecrUnidadeCriacao } from "./pecr-unidade-criacao";
 
-
-@Index("PK_PECR_ESPECIE_PASTAGEM",["espsId",],{ unique:true })
+@Index("PK_PECR_ESPECIE_PASTAGEM", ["id"], { unique: true })
 @Entity("PECR_ESPECIE_PASTAGEM")
-export  class PecrEspeciePastagem extends BaseEntity {
+export class PecrEspeciePastagem {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-@Column("varchar",{ primary:true,name:"ESPS_ID",length:27 })
-public espsId:string;
+  @Column("nvarchar", { name: "ESPS_FORRAGEIRA", nullable: true, length: 128 })
+  public espsForrageira: string | null;
 
-@Column("varchar",{ name:"ESPS_FORRAGEIRA",nullable:true,length:128 })
-public espsForrageira:string | null;
+  @Column("nvarchar", { name: "ESPS_CULTIVAR", nullable: true, length: 128 })
+  public espsCultivar: string | null;
 
-@Column("varchar",{ name:"ESPS_CULTIVAR",nullable:true,length:128 })
-public espsCultivar:string | null;
+  @Column("int", { name: "ESPS_DESCANSO_MEDIO", nullable: true })
+  public espsDescansoMedio: number | null;
 
-@Column("int",{ name:"ESPS_DESCANSO_MEDIO",nullable:true })
-public espsDescansoMedio:number | null;
+  @Column("numeric", {
+    name: "ESPS_ALTURA_RESIDUAL",
+    nullable: true,
+    precision: 18,
+    scale: 4,
+  })
+  public espsAlturaResidual: number | null;
 
-@Column("numeric",{ name:"ESPS_ALTURA_RESIDUAL",nullable:true,precision:18,scale:4,default: () => "0", })
-public espsAlturaResidual:number | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-@Column("datetime",{ name:"ESPS_LASTUPDATE",nullable:true })
-public espsLastupdate:LocalDateTime | null;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-@OneToMany(()=>PecrUnidadeCriacao,pecrUnidadeCriacao=>pecrUnidadeCriacao.uncrEsps)
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
 
-public pecrUnidadeCriacaos:PecrUnidadeCriacao[];
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
-public constructor(init?: Partial<PecrEspeciePastagem>) {
-    super();
-    Object.assign(this, init);
-}
+  @OneToMany(
+    () => PecrUnidadeCriacao,
+    (pecrUnidadeCriacao) => pecrUnidadeCriacao.uncrEsps
+  )
+  public pecrUnidadeCriacaos: PecrUnidadeCriacao[];
 }

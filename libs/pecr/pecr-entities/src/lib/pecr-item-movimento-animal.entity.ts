@@ -1,86 +1,78 @@
-import {BaseEntity,Column,Entity,Index,JoinColumn,ManyToOne,RelationId} from "typeorm";
-import {CdstUnidadeMedida} from './cdst-unidade-medida'
-import {PecrUnidadeCriacao} from './pecr-unidade-criacao'
-import {CdstProduto} from './cdst-produto'
-import {PecrCapaMovimentoAnimal} from './pecr-capa-movimento-animal'
+import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
+import { PecrCapaMovimentoAnimal } from "./pecr-capa-movimento-animal";
+import { CdstUnidadeMedida } from "./cdst-unidade-medida";
+import { CdstProduto } from "./cdst-produto";
+import { PecrUnidadeCriacao } from "./pecr-unidade-criacao";
 
-
-@Index("FK_CMAN_RS_IMAN",["imanCmanId",],{  })
-@Index("FK_PRDT_RS_IMAN",["imanPrdtId",],{  })
-@Index("FK_UNCR_RS_IMAN",["imanUncrId",],{  })
-@Index("FK_UNID_RS_IMAN",["imanUnidId",],{  })
-@Index("PK_PECR_ITEM_MOVIMENTO_ANIMAL",["imanId",],{ unique:true })
+@Index("PK_PECR_ITEM_MOVIMENTO_ANIMAL", ["id"], { unique: true })
 @Entity("PECR_ITEM_MOVIMENTO_ANIMAL")
-export  class PecrItemMovimentoAnimal extends BaseEntity {
+export class PecrItemMovimentoAnimal {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-@Column("varchar",{ primary:true,name:"IMAN_ID",length:27 })
-public imanId:string;
+  @Column("int", { name: "IMAN_IDADE" })
+  public imanIdade: number;
 
-@Column("varchar",{ name:"IMAN_CMAN_ID",nullable:true,length:27 })
-public imanCmanId:string | null;
+  @Column("numeric", {
+    name: "IMAN_PESO_MEDIO",
+    nullable: true,
+    precision: 18,
+    scale: 4,
+  })
+  public imanPesoMedio: number | null;
 
-@Column("varchar",{ name:"IMAN_UNID_ID",nullable:true,length:27 })
-public imanUnidId:string | null;
+  @Column("numeric", {
+    name: "IMAN_QUANTIDADE",
+    nullable: true,
+    precision: 18,
+    scale: 4,
+  })
+  public imanQuantidade: number | null;
 
-@Column("varchar",{ name:"IMAN_PRDT_ID",nullable:true,length:27 })
-public imanPrdtId:string | null;
+  @Column("nvarchar", { name: "IMAN_MOTIVO", nullable: true, length: 500 })
+  public imanMotivo: string | null;
 
-@Column("varchar",{ name:"IMAN_UNCR_ID",nullable:true,length:27 })
-public imanUncrId:string | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-@Column("int",{ name:"IMAN_IDADE" })
-public imanIdade:number;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-@Column("numeric",{ name:"IMAN_PESO_MEDIO",nullable:true,precision:18,scale:4,default: () => "0", })
-public imanPesoMedio:number | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
-@Column("numeric",{ name:"IMAN_QUANTIDADE",nullable:true,precision:18,scale:4,default: () => "0", })
-public imanQuantidade:number | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
 
-@Column("varchar",{ name:"IMAN_MOTIVO",nullable:true,length:500 })
-public imanMotivo:string | null;
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
-@Column("datetime",{ name:"IMAN_LASTUPDATE",nullable:true })
-public imanLastupdate:LocalDateTime | null;
+  @ManyToOne(
+    () => PecrCapaMovimentoAnimal,
+    (pecrCapaMovimentoAnimal) =>
+      pecrCapaMovimentoAnimal.pecrItemMovimentoAnimals
+  )
+  @JoinColumn([{ name: "IMAN_CMAN_ID", referencedColumnName: "id" }])
+  public imanCman: PecrCapaMovimentoAnimal;
 
-@ManyToOne(()=>CdstUnidadeMedida,cdstUnidadeMedida=>cdstUnidadeMedida.pecrItemMovimentoAnimals)
-@JoinColumn([{ name: "IMAN_UNID_ID", referencedColumnName: "unidId" },
-])
+  @ManyToOne(
+    () => CdstUnidadeMedida,
+    (cdstUnidadeMedida) => cdstUnidadeMedida.pecrItemMovimentoAnimals
+  )
+  @JoinColumn([{ name: "IMAN_UNID_ID", referencedColumnName: "id" }])
+  public imanUnid: CdstUnidadeMedida;
 
-public imanUnid:CdstUnidadeMedida;
+  @ManyToOne(
+    () => CdstProduto,
+    (cdstProduto) => cdstProduto.pecrItemMovimentoAnimals
+  )
+  @JoinColumn([{ name: "IMAN_PRDT_ID", referencedColumnName: "id" }])
+  public imanPrdt: CdstProduto;
 
-@ManyToOne(()=>PecrUnidadeCriacao,pecrUnidadeCriacao=>pecrUnidadeCriacao.pecrItemMovimentoAnimals)
-@JoinColumn([{ name: "IMAN_UNCR_ID", referencedColumnName: "uncrId" },
-])
-
-public imanUncr:PecrUnidadeCriacao;
-
-@ManyToOne(()=>CdstProduto,cdstProduto=>cdstProduto.pecrItemMovimentoAnimals)
-@JoinColumn([{ name: "IMAN_PRDT_ID", referencedColumnName: "prdtId" },
-])
-
-public imanPrdt:CdstProduto;
-
-@ManyToOne(()=>PecrCapaMovimentoAnimal,pecrCapaMovimentoAnimal=>pecrCapaMovimentoAnimal.pecrItemMovimentoAnimals)
-@JoinColumn([{ name: "IMAN_CMAN_ID", referencedColumnName: "cmanId" },
-])
-
-public imanCman:PecrCapaMovimentoAnimal;
-
-@RelationId((pecrItemMovimentoAnimal:PecrItemMovimentoAnimal)=>pecrItemMovimentoAnimal.imanUnid)
-public imanUnidId2:string | null;
-
-@RelationId((pecrItemMovimentoAnimal:PecrItemMovimentoAnimal)=>pecrItemMovimentoAnimal.imanUncr)
-public imanUncrId2:string | null;
-
-@RelationId((pecrItemMovimentoAnimal:PecrItemMovimentoAnimal)=>pecrItemMovimentoAnimal.imanPrdt)
-public imanPrdtId2:string | null;
-
-@RelationId((pecrItemMovimentoAnimal:PecrItemMovimentoAnimal)=>pecrItemMovimentoAnimal.imanCman)
-public imanCmanId2:string | null;
-
-public constructor(init?: Partial<PecrItemMovimentoAnimal>) {
-    super();
-    Object.assign(this, init);
-}
+  @ManyToOne(
+    () => PecrUnidadeCriacao,
+    (pecrUnidadeCriacao) => pecrUnidadeCriacao.pecrItemMovimentoAnimals
+  )
+  @JoinColumn([{ name: "IMAN_UNCR_ID", referencedColumnName: "id" }])
+  public imanUncr: PecrUnidadeCriacao;
 }

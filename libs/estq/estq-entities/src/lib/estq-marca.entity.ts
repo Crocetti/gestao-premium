@@ -1,36 +1,36 @@
-import {BaseEntity,Column,Entity,Index,OneToMany} from "typeorm";
-import {EstqMercadoria} from './estq-mercadoria'
+import { Column, Entity, Index, OneToMany } from "typeorm";
+import { EstqMercadoria } from "./estq-mercadoria";
 
-
-@Index("PK_ESTQ_MARCA",["marcId",],{ unique:true })
+@Index("PK_ESTQ_MARCA", ["id"], { unique: true })
 @Entity("ESTQ_MARCA")
-export  class EstqMarca extends BaseEntity {
+export class EstqMarca {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-@Column("varchar",{ primary:true,name:"MARC_ID",length:27 })
-public marcId:string;
+  @Column("nvarchar", { name: "MARC_CODIGO", nullable: true, length: 5 })
+  public marcCodigo: string | null;
 
-@Column("varchar",{ name:"MARC_CODIGO",nullable:true,length:5 })
-public marcCodigo:string | null;
+  @Column("nvarchar", { name: "MARC_NOME", nullable: true, length: 40 })
+  public marcNome: string | null;
 
-@Column("varchar",{ name:"MARC_NOME",nullable:true,length:40 })
-public marcNome:string | null;
+  @Column("nvarchar", { name: "MARC_DESCRICAO", nullable: true, length: 128 })
+  public marcDescricao: string | null;
 
-@Column("varchar",{ name:"MARC_DESCRICAO",nullable:true,length:128 })
-public marcDescricao:string | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-@Column("smallint",{ name:"MARC_ATIVO",nullable:true,default: () => "0", })
-public marcAtivo:number | null;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-@Column("datetime",{ name:"MARC_LASTUPDATE",nullable:true })
-public marcLastupdate:LocalDateTime | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
-@OneToMany(()=>EstqMercadoria,estqMercadoria=>estqMercadoria.mrcdMarc)
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
 
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
-public estqMercadorias:EstqMercadoria[];
-
-public constructor(init?: Partial<EstqMarca>) {
-    super();
-    Object.assign(this, init);
-}
+  @OneToMany(() => EstqMercadoria, (estqMercadoria) => estqMercadoria.mrcdMarc)
+  public estqMercadorias: EstqMercadoria[];
 }

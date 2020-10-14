@@ -1,12 +1,10 @@
 import {
-  BaseEntity,
   Column,
   Entity,
   Index,
   JoinColumn,
   ManyToOne,
   OneToMany,
-  RelationId,
 } from "typeorm";
 import { PecrCapaMovimentoAnimal } from "./pecr-capa-movimento-animal";
 import { PecrRaca } from "./pecr-raca";
@@ -14,31 +12,35 @@ import { PecrAptidao } from "./pecr-aptidao";
 import { PecrLoteAnimal } from "./pecr-lote-animal";
 import { PecrLoteSaldo } from "./pecr-lote-saldo";
 
-@Index("FK_APTD_RS_LOTE", ["loteAptdId"], {})
-@Index("FK_RACA_RS_LOTE", ["loteRacaId"], {})
-@Index("PK_PECR_LOTE", ["loteId"], { unique: true })
+@Index("PK_PECR_LOTE", ["id"], { unique: true })
 @Entity("PECR_LOTE")
-export class PecrLote extends BaseEntity {
-  @Column("varchar", { primary: true, name: "LOTE_ID", length: 27 })
-  public loteId: string;
+export class PecrLote {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-  @Column("varchar", { name: "LOTE_RACA_ID", nullable: true, length: 27 })
-  public loteRacaId: string | null;
-
-  @Column("varchar", { name: "LOTE_APTD_ID", nullable: true, length: 27 })
-  public loteAptdId: string | null;
-
-  @Column("varchar", { name: "LOTE_CODIGO", nullable: true, length: 10 })
+  @Column("nvarchar", { name: "LOTE_CODIGO", nullable: true, length: 10 })
   public loteCodigo: string | null;
 
-  @Column("varchar", { name: "LOTE_NOME", nullable: true, length: 40 })
+  @Column("nvarchar", { name: "LOTE_NOME", nullable: true, length: 40 })
   public loteNome: string | null;
 
-  @Column("varchar", { name: "LOTE_ORIGEM", nullable: true, length: 10 })
+  @Column("nvarchar", { name: "LOTE_ORIGEM", nullable: true, length: 10 })
   public loteOrigem: string | null;
 
-  @Column("datetime", { name: "LOTE_LASTUPDATE", nullable: true })
-  public loteLastupdate: LocalDateTime | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
+
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
+
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
   @OneToMany(
     () => PecrCapaMovimentoAnimal,
@@ -47,11 +49,11 @@ export class PecrLote extends BaseEntity {
   public pecrCapaMovimentoAnimals: PecrCapaMovimentoAnimal[];
 
   @ManyToOne(() => PecrRaca, (pecrRaca) => pecrRaca.pecrLotes)
-  @JoinColumn([{ name: "LOTE_RACA_ID", referencedColumnName: "racaId" }])
+  @JoinColumn([{ name: "LOTE_RACA_ID", referencedColumnName: "id" }])
   public loteRaca: PecrRaca;
 
   @ManyToOne(() => PecrAptidao, (pecrAptidao) => pecrAptidao.pecrLotes)
-  @JoinColumn([{ name: "LOTE_APTD_ID", referencedColumnName: "aptdId" }])
+  @JoinColumn([{ name: "LOTE_APTD_ID", referencedColumnName: "id" }])
   public loteAptd: PecrAptidao;
 
   @OneToMany(() => PecrLoteAnimal, (pecrLoteAnimal) => pecrLoteAnimal.ltanLote)
@@ -59,15 +61,4 @@ export class PecrLote extends BaseEntity {
 
   @OneToMany(() => PecrLoteSaldo, (pecrLoteSaldo) => pecrLoteSaldo.ltsdLote)
   public pecrLoteSaldos: PecrLoteSaldo[];
-
-  @RelationId((pecrLote: PecrLote) => pecrLote.loteRaca)
-  public loteRacaId2: string | null;
-
-  @RelationId((pecrLote: PecrLote) => pecrLote.loteAptd)
-  public loteAptdId2: string | null;
-
-  public constructor(init?: Partial<PecrLote>) {
-    super();
-    Object.assign(this, init);
-  }
 }

@@ -1,39 +1,31 @@
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  RelationId,
-} from "typeorm";
+import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
 import { CmnsPessoa } from "./cmns-pessoa";
 
-@Index("FK_PESS_RS_PECX", ["pecxPessId"], {})
-@Index("PK_PECF_CAIXA", ["pecxId"], { unique: true })
+@Index("PK_PECF_CAIXA", ["id"], { unique: true })
 @Entity("PECF_CAIXA")
-export class PecfCaixa extends BaseEntity {
-  @Column("varchar", { primary: true, name: "PECX_ID", length: 27 })
-  public pecxId: string;
+export class PecfCaixa {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-  @Column("varchar", { name: "PECX_PESS_ID", nullable: true, length: 27 })
-  public pecxPessId: string | null;
-
-  @Column("varchar", { name: "PECX_CODIGO", nullable: true, length: 3 })
+  @Column("nvarchar", { name: "PECX_CODIGO", nullable: true, length: 3 })
   public pecxCodigo: string | null;
 
-  @Column("datetime", { name: "PECX_LASTUPDATE", nullable: true })
-  public pecxLastupdate: LocalDateTime | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
+
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
+
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
   @ManyToOne(() => CmnsPessoa, (cmnsPessoa) => cmnsPessoa.pecfCaixas)
-  @JoinColumn([{ name: "PECX_PESS_ID", referencedColumnName: "pessId" }])
+  @JoinColumn([{ name: "PECX_PESS_ID", referencedColumnName: "id" }])
   public pecxPess: CmnsPessoa;
-
-  @RelationId((pecfCaixa: PecfCaixa) => pecfCaixa.pecxPess)
-  public pecxPessId2: string | null;
-
-  public constructor(init?: Partial<PecfCaixa>) {
-    super();
-    Object.assign(this, init);
-  }
 }

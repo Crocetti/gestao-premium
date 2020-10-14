@@ -1,77 +1,74 @@
-import {BaseEntity,Column,Entity,Index,JoinColumn,ManyToOne,OneToMany,RelationId} from "typeorm";
-import {VeteCirurgias} from './vete-cirurgias'
-import {VeteConsulta} from './vete-consulta'
-import {VeteInternacao} from './vete-internacao'
-import {VeteRetorno} from './vete-retorno'
-import {VeteRetornoProcedimento} from './vete-retorno-procedimento'
-import {CdstProduto} from './cdst-produto'
-import {VeteServicoComposicao} from './vete-servico-composicao'
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+} from "typeorm";
+import { VeteCirurgias } from "./vete-cirurgias";
+import { VeteConsulta } from "./vete-consulta";
+import { VeteInternacao } from "./vete-internacao";
+import { VeteRetorno } from "./vete-retorno";
+import { VeteRetornoProcedimento } from "./vete-retorno-procedimento";
+import { CdstProduto } from "./cdst-produto";
+import { VeteServicoComposicao } from "./vete-servico-composicao";
 
-
-@Index("FK_PRDT_RS_SERV",["servPrdtId",],{  })
-@Index("PK_VETE_SERVICO",["servId",],{ unique:true })
+@Index("PK_VETE_SERVICO", ["id"], { unique: true })
 @Entity("VETE_SERVICO")
-export  class VeteServico extends BaseEntity {
+export class VeteServico {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-@Column("varchar",{ primary:true,name:"SERV_ID",length:27 })
-public servId:string;
+  @Column("nvarchar", { name: "SERV_CODIGO", nullable: true, length: 40 })
+  public servCodigo: string | null;
 
-@Column("varchar",{ name:"SERV_PRDT_ID",nullable:true,length:27 })
-public servPrdtId:string | null;
+  @Column("nvarchar", { name: "SERV_CATEGORIA", nullable: true, length: 10 })
+  public servCategoria: string | null;
 
-@Column("varchar",{ name:"SERV_CODIGO",nullable:true,length:40 })
-public servCodigo:string | null;
+  @Column("money", { name: "SERV_CUSTO", nullable: true })
+  public servCusto: number | null;
 
-@Column("varchar",{ name:"SERV_CATEGORIA",nullable:true,length:10 })
-public servCategoria:string | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-@Column("money",{ name:"SERV_CUSTO",nullable:true,default: () => "0", })
-public servCusto:number | null;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-@Column("datetime",{ name:"SERV_LASTUPDATE",nullable:true })
-public servLastupdate:LocalDateTime | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
-@OneToMany(()=>VeteCirurgias,veteCirurgias=>veteCirurgias.cgiaServ)
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
 
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
-public veteCirurgias:VeteCirurgias[];
+  @OneToMany(() => VeteCirurgias, (veteCirurgias) => veteCirurgias.cgiaServ)
+  public veteCirurgias: VeteCirurgias[];
 
-@OneToMany(()=>VeteConsulta,veteConsulta=>veteConsulta.consServ)
+  @OneToMany(() => VeteConsulta, (veteConsulta) => veteConsulta.consServ)
+  public veteConsultas: VeteConsulta[];
 
+  @OneToMany(() => VeteInternacao, (veteInternacao) => veteInternacao.intrServ)
+  public veteInternacaos: VeteInternacao[];
 
-public veteConsultas:VeteConsulta[];
+  @OneToMany(() => VeteRetorno, (veteRetorno) => veteRetorno.rtrnServ)
+  public veteRetornos: VeteRetorno[];
 
-@OneToMany(()=>VeteInternacao,veteInternacao=>veteInternacao.intrServ)
+  @OneToMany(
+    () => VeteRetornoProcedimento,
+    (veteRetornoProcedimento) => veteRetornoProcedimento.rtsvServ
+  )
+  public veteRetornoProcedimentos: VeteRetornoProcedimento[];
 
+  @ManyToOne(() => CdstProduto, (cdstProduto) => cdstProduto.veteServicos)
+  @JoinColumn([{ name: "SERV_PRDT_ID", referencedColumnName: "id" }])
+  public servPrdt: CdstProduto;
 
-public veteInternacaos:VeteInternacao[];
-
-@OneToMany(()=>VeteRetorno,veteRetorno=>veteRetorno.rtrnServ)
-
-
-public veteRetornos:VeteRetorno[];
-
-@OneToMany(()=>VeteRetornoProcedimento,veteRetornoProcedimento=>veteRetornoProcedimento.rtsvServ)
-
-
-public veteRetornoProcedimentos:VeteRetornoProcedimento[];
-
-@ManyToOne(()=>CdstProduto,cdstProduto=>cdstProduto.veteServicos)
-@JoinColumn([{ name: "SERV_PRDT_ID", referencedColumnName: "prdtId" },
-])
-
-public servPrdt:CdstProduto;
-
-@OneToMany(()=>VeteServicoComposicao,veteServicoComposicao=>veteServicoComposicao.svcpServ)
-
-
-public veteServicoComposicaos:VeteServicoComposicao[];
-
-@RelationId((veteServico:VeteServico)=>veteServico.servPrdt)
-public servPrdtId2:string | null;
-
-public constructor(init?: Partial<VeteServico>) {
-    super();
-    Object.assign(this, init);
-}
+  @OneToMany(
+    () => VeteServicoComposicao,
+    (veteServicoComposicao) => veteServicoComposicao.svcpServ
+  )
+  public veteServicoComposicaos: VeteServicoComposicao[];
 }

@@ -1,55 +1,48 @@
-import {BaseEntity,Column,Entity,Index,JoinColumn,ManyToOne,RelationId} from "typeorm";
-import {SstmParametro} from './sstm-parametro'
-import {CoreCorporacao} from './core-corporacao'
+import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
+import { SstmParametro } from "./sstm-parametro";
+import { CoreCorporacao } from "./core-corporacao";
 
-
-@Index("FK_CPRC_RS_PRCP",["prcpCprcId",],{  })
-@Index("FK_PRMT_RS_PRCP",["prcpPrmtId",],{  })
-@Index("PK_SSTM_PARAMETRO_CORPORACAO",["prcpId",],{ unique:true })
+@Index("PK_SSTM_PARAMETRO_CORPORACAO", ["id"], { unique: true })
 @Entity("SSTM_PARAMETRO_CORPORACAO")
-export  class SstmParametroCorporacao extends BaseEntity {
+export class SstmParametroCorporacao {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-@Column("varchar",{ primary:true,name:"PRCP_ID",length:27 })
-public prcpId:string;
+  @Column("nvarchar", { name: "PRCP_DEFAULT", length: 128 })
+  public prcpDefault: string;
 
-@Column("varchar",{ name:"PRCP_PRMT_ID",nullable:true,length:27 })
-public prcpPrmtId:string | null;
+  @Column("nvarchar", { name: "PRCP_VALUE", nullable: true, length: 128 })
+  public prcpValue: string | null;
 
-@Column("varchar",{ name:"PRCP_CPRC_ID",nullable:true,length:27 })
-public prcpCprcId:string | null;
+  @Column("smallint", { name: "PRCP_HABILITADO", nullable: true })
+  public prcpHabilitado: number | null;
 
-@Column("varchar",{ name:"PRCP_DEFAULT",length:128 })
-public prcpDefault:string;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-@Column("varchar",{ name:"PRCP_VALUE",nullable:true,length:128 })
-public prcpValue:string | null;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-@Column("smallint",{ name:"PRCP_HABILITADO",nullable:true,default: () => "0", })
-public prcpHabilitado:number | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
-@Column("datetime",{ name:"PRCP_LASTUPDATE",nullable:true })
-public prcpLastupdate:LocalDateTime | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
 
-@ManyToOne(()=>SstmParametro,sstmParametro=>sstmParametro.sstmParametroCorporacaos)
-@JoinColumn([{ name: "PRCP_PRMT_ID", referencedColumnName: "prmtId" },
-])
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
-public prcpPrmt:SstmParametro;
+  @ManyToOne(
+    () => SstmParametro,
+    (sstmParametro) => sstmParametro.sstmParametroCorporacaos
+  )
+  @JoinColumn([{ name: "PRCP_PRMT_ID", referencedColumnName: "id" }])
+  public prcpPrmt: SstmParametro;
 
-@ManyToOne(()=>CoreCorporacao,coreCorporacao=>coreCorporacao.sstmParametroCorporacaos)
-@JoinColumn([{ name: "PRCP_CPRC_ID", referencedColumnName: "cprcId" },
-])
-
-public prcpCprc:CoreCorporacao;
-
-@RelationId((sstmParametroCorporacao:SstmParametroCorporacao)=>sstmParametroCorporacao.prcpPrmt)
-public prcpPrmtId2:string | null;
-
-@RelationId((sstmParametroCorporacao:SstmParametroCorporacao)=>sstmParametroCorporacao.prcpCprc)
-public prcpCprcId2:string | null;
-
-public constructor(init?: Partial<SstmParametroCorporacao>) {
-    super();
-    Object.assign(this, init);
-}
+  @ManyToOne(
+    () => CoreCorporacao,
+    (coreCorporacao) => coreCorporacao.sstmParametroCorporacaos
+  )
+  @JoinColumn([{ name: "PRCP_CPRC_ID", referencedColumnName: "id" }])
+  public prcpCprc: CoreCorporacao;
 }

@@ -1,92 +1,75 @@
 import {
-  BaseEntity,
   Column,
   Entity,
   Index,
   JoinColumn,
   ManyToOne,
   OneToMany,
-  RelationId,
 } from "typeorm";
-import { CdstFabricante } from "./cdst-fabricante";
 import { EstqFabricanteMotor } from "./estq-fabricante-motor";
 import { CdstProduto } from "./cdst-produto";
+import { CdstFabricante } from "./cdst-fabricante";
 import { SrvcServicoMaqEquip } from "./srvc-servico-maq-equip";
 
-@Index("FK_FBCT_RS_MQEQ", ["mqeqFbctId"], {})
-@Index("FK_MOTO_RS_MQEQ", ["mqeqMotoId"], {})
-@Index("FK_PRDT_RS_MQEQ", ["mqeqPrdtId"], {})
-@Index("PK_ESTQ_MAQUINA_EQUIPAMENTO", ["mqeqId"], { unique: true })
+@Index("PK_ESTQ_MAQUINA_EQUIPAMENTO", ["id"], { unique: true })
 @Entity("ESTQ_MAQUINA_EQUIPAMENTO")
-export class EstqMaquinaEquipamento extends BaseEntity {
-  @Column("varchar", { primary: true, name: "MQEQ_ID", length: 27 })
-  public mqeqId: string;
+export class EstqMaquinaEquipamento {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-  @Column("varchar", { name: "MQEQ_MOTO_ID", nullable: true, length: 27 })
-  public mqeqMotoId: string | null;
-
-  @Column("varchar", { name: "MQEQ_PRDT_ID", nullable: true, length: 27 })
-  public mqeqPrdtId: string | null;
-
-  @Column("varchar", { name: "MQEQ_FBCT_ID", nullable: true, length: 27 })
-  public mqeqFbctId: string | null;
-
-  @Column("varchar", { name: "MQEQ_NR_FABRICANTE", nullable: true, length: 40 })
+  @Column("nvarchar", {
+    name: "MQEQ_NR_FABRICANTE",
+    nullable: true,
+    length: 40,
+  })
   public mqeqNrFabricante: string | null;
 
-  @Column("varchar", { name: "MQEQ_NR_PATRIMONIO", nullable: true, length: 40 })
+  @Column("nvarchar", {
+    name: "MQEQ_NR_PATRIMONIO",
+    nullable: true,
+    length: 40,
+  })
   public mqeqNrPatrimonio: string | null;
 
-  @Column("datetime", { name: "MQEQ_LASTUPDATE", nullable: true })
-  public mqeqLastupdate: LocalDateTime | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-  @ManyToOne(
-    () => CdstFabricante,
-    (cdstFabricante) => cdstFabricante.estqMaquinaEquipamentos
-  )
-  @JoinColumn([{ name: "MQEQ_FBCT_ID", referencedColumnName: "fbctId" }])
-  public mqeqFbct: CdstFabricante;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
+
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
   @ManyToOne(
     () => EstqFabricanteMotor,
     (estqFabricanteMotor) => estqFabricanteMotor.estqMaquinaEquipamentos
   )
-  @JoinColumn([{ name: "MQEQ_MOTO_ID", referencedColumnName: "fbmtId" }])
+  @JoinColumn([{ name: "MQEQ_MOTO_ID", referencedColumnName: "id" }])
   public mqeqMoto: EstqFabricanteMotor;
 
   @ManyToOne(
     () => CdstProduto,
     (cdstProduto) => cdstProduto.estqMaquinaEquipamentos
   )
-  @JoinColumn([{ name: "MQEQ_PRDT_ID", referencedColumnName: "prdtId" }])
+  @JoinColumn([{ name: "MQEQ_PRDT_ID", referencedColumnName: "id" }])
   public mqeqPrdt: CdstProduto;
+
+  @ManyToOne(
+    () => CdstFabricante,
+    (cdstFabricante) => cdstFabricante.estqMaquinaEquipamentos
+  )
+  @JoinColumn([{ name: "MQEQ_FBCT_ID", referencedColumnName: "id" }])
+  public mqeqFbct: CdstFabricante;
 
   @OneToMany(
     () => SrvcServicoMaqEquip,
     (srvcServicoMaqEquip) => srvcServicoMaqEquip.srmeMqeq
   )
   public srvcServicoMaqEquips: SrvcServicoMaqEquip[];
-
-  @RelationId(
-    (estqMaquinaEquipamento: EstqMaquinaEquipamento) =>
-      estqMaquinaEquipamento.mqeqFbct
-  )
-  public mqeqFbctId2: string | null;
-
-  @RelationId(
-    (estqMaquinaEquipamento: EstqMaquinaEquipamento) =>
-      estqMaquinaEquipamento.mqeqMoto
-  )
-  public mqeqMotoId2: string | null;
-
-  @RelationId(
-    (estqMaquinaEquipamento: EstqMaquinaEquipamento) =>
-      estqMaquinaEquipamento.mqeqPrdt
-  )
-  public mqeqPrdtId2: string | null;
-
-  public constructor(init?: Partial<EstqMaquinaEquipamento>) {
-    super();
-    Object.assign(this, init);
-  }
 }

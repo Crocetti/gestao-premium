@@ -1,68 +1,65 @@
-import {BaseEntity,Column,Entity,Index,JoinColumn,ManyToOne,OneToMany,RelationId} from "typeorm";
-import {CmnsPessoa} from './cmns-pessoa'
-import {EstqCapaMovimento} from './estq-capa-movimento'
-import {FncrTitulo} from './fncr-titulo'
-import {FsclDocumento} from './fscl-documento'
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+} from "typeorm";
+import { CmnsPessoa } from "./cmns-pessoa";
+import { EstqCapaMovimento } from "./estq-capa-movimento";
+import { FncrTitulo } from "./fncr-titulo";
+import { FsclDocumento } from "./fscl-documento";
 
-
-@Index("FK_PESS_RS_CLNT",["clntPessId",],{  })
-@Index("PK_CDST_CLIENTE",["clntId",],{ unique:true })
+@Index("PK_CDST_CLIENTE", ["id"], { unique: true })
 @Entity("CDST_CLIENTE")
-export  class CdstCliente extends BaseEntity {
+export class CdstCliente {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-@Column("varchar",{ primary:true,name:"CLNT_ID",length:27 })
-public clntId:string;
+  @Column("nvarchar", { name: "CLNT_POTENCIAL", nullable: true, length: 15 })
+  public clntPotencial: string | null;
 
-@Column("varchar",{ name:"CLNT_PESS_ID",nullable:true,length:27 })
-public clntPessId:string | null;
+  @Column("money", { name: "CLNT_CAPITAL_SOCIAL", nullable: true })
+  public clntCapitalSocial: number | null;
 
-@Column("varchar",{ name:"CLNT_POTENCIAL",nullable:true,length:15 })
-public clntPotencial:string | null;
+  @Column("money", { name: "CLNT_LIMITE_CREDITO", nullable: true })
+  public clntLimiteCredito: number | null;
 
-@Column("money",{ name:"CLNT_CAPITAL_SOCIAL",nullable:true,default: () => "0", })
-public clntCapitalSocial:number | null;
+  @Column("nvarchar", { name: "CLNT_STATUS", length: 15 })
+  public clntStatus: string;
 
-@Column("money",{ name:"CLNT_LIMITE_CREDITO",nullable:true,default: () => "0", })
-public clntLimiteCredito:number | null;
+  @Column("nvarchar", { name: "CLNT_OBS", nullable: true })
+  public clntObs: string | null;
 
-@Column("varchar",{ name:"CLNT_STATUS",length:15 })
-public clntStatus:string;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
 
-@Column("smallint",{ name:"CLNT_ATIVO",default: () => "0", })
-public clntAtivo:number;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
 
-@Column("varchar",{ name:"CLNT_OBS",nullable:true,length:5000 })
-public clntObs:string | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
-@Column("datetime",{ name:"CLNT_LASTUPDATE",nullable:true })
-public clntLastupdate:LocalDateTime | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
 
-@ManyToOne(()=>CmnsPessoa,cmnsPessoa=>cmnsPessoa.cdstClientes)
-@JoinColumn([{ name: "CLNT_PESS_ID", referencedColumnName: "pessId" },
-])
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
-public clntPess:CmnsPessoa;
+  @ManyToOne(() => CmnsPessoa, (cmnsPessoa) => cmnsPessoa.cdstClientes)
+  @JoinColumn([{ name: "CLNT_PESS_ID", referencedColumnName: "id" }])
+  public clntPess: CmnsPessoa;
 
-@OneToMany(()=>EstqCapaMovimento,estqCapaMovimento=>estqCapaMovimento.cpmvClnt)
+  @OneToMany(
+    () => EstqCapaMovimento,
+    (estqCapaMovimento) => estqCapaMovimento.cpmvClnt
+  )
+  public estqCapaMovimentos: EstqCapaMovimento[];
 
+  @OneToMany(() => FncrTitulo, (fncrTitulo) => fncrTitulo.ttlsClnt)
+  public fncrTitulos: FncrTitulo[];
 
-public estqCapaMovimentos:EstqCapaMovimento[];
-
-@OneToMany(()=>FncrTitulo,fncrTitulo=>fncrTitulo.ttlsClnt)
-
-
-public fncrTitulos:FncrTitulo[];
-
-@OneToMany(()=>FsclDocumento,fsclDocumento=>fsclDocumento.dcmtClnt)
-
-
-public fsclDocumentos:FsclDocumento[];
-
-@RelationId((cdstCliente:CdstCliente)=>cdstCliente.clntPess)
-public clntPessId2:string | null;
-
-public constructor(init?: Partial<CdstCliente>) {
-    super();
-    Object.assign(this, init);
-}
+  @OneToMany(() => FsclDocumento, (fsclDocumento) => fsclDocumento.dcmtClnt)
+  public fsclDocumentos: FsclDocumento[];
 }

@@ -1,35 +1,42 @@
-import { BaseEntity, Column, Entity, Index, OneToMany } from "typeorm";
+import { Column, Entity, Index, OneToMany } from "typeorm";
 import { SstmObjetoVersao } from "./sstm-objeto-versao";
 
-@Index("PK_SSTM_OBJETO", ["objtId"], { unique: true })
+@Index("PK_SSTM_OBJETO", ["id"], { unique: true })
 @Entity("SSTM_OBJETO")
-export class SstmObjeto extends BaseEntity {
-  @Column("varchar", { primary: true, name: "OBJT_ID", length: 27 })
-  public objtId: string;
+export class SstmObjeto {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-  @Column("varchar", { name: "OBJT_NAME", nullable: true, length: 64 })
+  @Column("nvarchar", { name: "OBJT_NAME", nullable: true, length: 64 })
   public objtName: string | null;
 
-  @Column("varchar", { name: "OBJT_FILE", nullable: true, length: 128 })
+  @Column("nvarchar", { name: "OBJT_FILE", nullable: true, length: 128 })
   public objtFile: string | null;
 
-  @Column("varchar", { name: "OBJT_PATH", nullable: true, length: 256 })
+  @Column("nvarchar", { name: "OBJT_PATH", nullable: true, length: 256 })
   public objtPath: string | null;
 
-  @Column("varchar", { name: "OBJT_TYPE", nullable: true, length: 15 })
+  @Column("nvarchar", { name: "OBJT_TYPE", nullable: true, length: 15 })
   public objtType: string | null;
 
-  @Column("datetime", { name: "OBJT_LASTUPDATE", nullable: true })
-  public objtLastupdate: LocalDateTime | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
+
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
+
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
   @OneToMany(
     () => SstmObjetoVersao,
     (sstmObjetoVersao) => sstmObjetoVersao.obbnObjt
   )
   public sstmObjetoVersaos: SstmObjetoVersao[];
-
-  public constructor(init?: Partial<SstmObjeto>) {
-    super();
-    Object.assign(this, init);
-  }
 }

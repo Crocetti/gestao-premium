@@ -1,45 +1,40 @@
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  RelationId,
-} from "typeorm";
+import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
 import { PecrProdutoBovino } from "./pecr-produto-bovino";
 
-@Index("FK_PRBV_RS_ABCZ", ["abczPrbvId"], {})
-@Index("PK_PECR_DADOS_ABCZ", ["abczId"], { unique: true })
+@Index("PK_PECR_DADOS_ABCZ", ["id"], { unique: true })
 @Entity("PECR_DADOS_ABCZ")
-export class PecrDadosAbcz extends BaseEntity {
-  @Column("varchar", { primary: true, name: "ABCZ_ID", length: 27 })
-  public abczId: string;
+export class PecrDadosAbcz {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-  @Column("varchar", { name: "ABCZ_PRBV_ID", nullable: true, length: 27 })
-  public abczPrbvId: string | null;
-
-  @Column("varchar", { name: "ABCZ_RGN", nullable: true, length: 10 })
+  @Column("nvarchar", { name: "ABCZ_RGN", nullable: true, length: 10 })
   public abczRgn: string | null;
 
-  @Column("varchar", { name: "ABCZ_RGD", nullable: true, length: 10 })
+  @Column("nvarchar", { name: "ABCZ_RGD", nullable: true, length: 10 })
   public abczRgd: string | null;
 
-  @Column("varchar", { name: "ABCZ_SERIE", nullable: true, length: 5 })
+  @Column("nvarchar", { name: "ABCZ_SERIE", nullable: true, length: 5 })
   public abczSerie: string | null;
+
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: Date;
+
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: Date | null;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
+
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
   @ManyToOne(
     () => PecrProdutoBovino,
     (pecrProdutoBovino) => pecrProdutoBovino.pecrDadosAbczs
   )
-  @JoinColumn([{ name: "ABCZ_PRBV_ID", referencedColumnName: "prbvId" }])
+  @JoinColumn([{ name: "ABCZ_PRBV_ID", referencedColumnName: "id" }])
   public abczPrbv: PecrProdutoBovino;
-
-  @RelationId((pecrDadosAbcz: PecrDadosAbcz) => pecrDadosAbcz.abczPrbv)
-  public abczPrbvId2: string | null;
-
-  public constructor(init?: Partial<PecrDadosAbcz>) {
-    super();
-    Object.assign(this, init);
-  }
 }
