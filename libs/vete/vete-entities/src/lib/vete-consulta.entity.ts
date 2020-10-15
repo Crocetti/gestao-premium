@@ -20,16 +20,16 @@ export class VeteConsulta {
   public consReceituario: string | null;
 
   @Column("datetime2", { name: "CONS_DT_AGENDADA", nullable: true })
-  public consDtAgendada: Date | null;
+  public consDtAgendada: LocalDateTime | null;
 
   @Column("datetime2", { name: "CONS_DT_EVENTO", nullable: true })
-  public consDtEvento: Date | null;
+  public consDtEvento: LocalDateTime | null;
 
   @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: Date;
+  public audtDtCreate: LocalDateTime;
 
   @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: Date | null;
+  public audtDtUpdate: LocalDateTime | null;
 
   @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
   public audtUsrsCreate: string;

@@ -17,10 +17,10 @@ export class FncrParcelaBaixa {
   public prbxFormaPagamento: string | null;
 
   @Column("datetime2", { name: "PRBX_DT_LANCAMENTO", nullable: true })
-  public prbxDtLancamento: Date | null;
+  public prbxDtLancamento: LocalDateTime | null;
 
   @Column("datetime2", { name: "PRBX_DT_PAGAMENTO", nullable: true })
-  public prbxDtPagamento: Date | null;
+  public prbxDtPagamento: LocalDateTime | null;
 
   @Column("money", { name: "PRBX_VLR_PAGAMENTO", nullable: true })
   public prbxVlrPagamento: number | null;
@@ -47,10 +47,10 @@ export class FncrParcelaBaixa {
   public prbxQuitaParcela: number | null;
 
   @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: Date;
+  public audtDtCreate: LocalDateTime;
 
   @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: Date | null;
+  public audtDtUpdate: LocalDateTime | null;
 
   @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
   public audtUsrsCreate: string;

@@ -25,7 +25,7 @@ export class FncrTitulo {
   public ttlsNrDocumento: string | null;
 
   @Column("datetime2", { name: "TTLS_DT_EMISSAO", nullable: true })
-  public ttlsDtEmissao: Date | null;
+  public ttlsDtEmissao: LocalDateTime | null;
 
   @Column("money", { name: "TTLS_VLR_DOCUMENTO", nullable: true })
   public ttlsVlrDocumento: number | null;
@@ -60,10 +60,10 @@ export class FncrTitulo {
   public ttlsMulta: number | null;
 
   @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: Date;
+  public audtDtCreate: LocalDateTime;
 
   @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: Date | null;
+  public audtDtUpdate: LocalDateTime | null;
 
   @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
   public audtUsrsCreate: string;

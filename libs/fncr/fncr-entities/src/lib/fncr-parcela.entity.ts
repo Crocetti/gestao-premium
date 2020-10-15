@@ -19,16 +19,16 @@ export class FncrParcela {
   public prclNumero: string | null;
 
   @Column("datetime2", { name: "PRCL_DT_LANCAMENTO", nullable: true })
-  public prclDtLancamento: Date | null;
+  public prclDtLancamento: LocalDateTime | null;
 
   @Column("datetime2", { name: "PRCL_DT_EMISSAO", nullable: true })
-  public prclDtEmissao: Date | null;
+  public prclDtEmissao: LocalDateTime | null;
 
   @Column("datetime2", { name: "PRCL_DT_VENCIMENTO", nullable: true })
-  public prclDtVencimento: Date | null;
+  public prclDtVencimento: LocalDateTime | null;
 
   @Column("datetime2", { name: "PRCL_DT_BAIXA", nullable: true })
-  public prclDtBaixa: Date | null;
+  public prclDtBaixa: LocalDateTime | null;
 
   @Column("money", { name: "PRCL_VLR_PARCELA", nullable: true })
   public prclVlrParcela: number | null;
@@ -58,10 +58,10 @@ export class FncrParcela {
   public prclSituacao: string | null;
 
   @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: Date;
+  public audtDtCreate: LocalDateTime;
 
   @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: Date | null;
+  public audtDtUpdate: LocalDateTime | null;
 
   @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
   public audtUsrsCreate: string;

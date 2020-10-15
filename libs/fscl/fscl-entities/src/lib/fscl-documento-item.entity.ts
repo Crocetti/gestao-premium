@@ -18,10 +18,10 @@ export class FsclDocumentoItem {
   public id: string;
 
   @Column("datetime2", { name: "DCIT_DT_LANCAMENTO", nullable: true })
-  public dcitDtLancamento: Date | null;
+  public dcitDtLancamento: LocalDateTime | null;
 
   @Column("datetime2", { name: "DCIT_DT_MOVIMENTO", nullable: true })
-  public dcitDtMovimento: Date | null;
+  public dcitDtMovimento: LocalDateTime | null;
 
   @Column("nvarchar", { name: "DCIT_PRDT_NOME", nullable: true, length: 64 })
   public dcitPrdtNome: string | null;
@@ -55,10 +55,10 @@ export class FsclDocumentoItem {
   public dcitPrecoUnitario: number | null;
 
   @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: Date;
+  public audtDtCreate: LocalDateTime;
 
   @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: Date | null;
+  public audtDtUpdate: LocalDateTime | null;
 
   @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
   public audtUsrsCreate: string;

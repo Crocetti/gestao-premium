@@ -10,16 +10,16 @@ export class PecrEventoSanitario {
   public id: string;
 
   @Column("datetime2", { name: "EVSN_DT_EVENTO", nullable: true })
-  public evsnDtEvento: Date | null;
+  public evsnDtEvento: LocalDateTime | null;
 
   @Column("nvarchar", { name: "EVSN_OBSERVACAO", nullable: true, length: 500 })
   public evsnObservacao: string | null;
 
   @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: Date;
+  public audtDtCreate: LocalDateTime;
 
   @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: Date | null;
+  public audtDtUpdate: LocalDateTime | null;
 
   @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
   public audtUsrsCreate: string;

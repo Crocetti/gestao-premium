@@ -16,10 +16,10 @@ export class PecrCapaMovimentoAnimal {
   public id: string;
 
   @Column("datetime2", { name: "CMAN_DT_LANCAMENTO", nullable: true })
-  public cmanDtLancamento: Date | null;
+  public cmanDtLancamento: LocalDateTime | null;
 
   @Column("datetime2", { name: "CMAN_DT_MOVIMENTO", nullable: true })
-  public cmanDtMovimento: Date | null;
+  public cmanDtMovimento: LocalDateTime | null;
 
   @Column("nvarchar", { name: "CMAN_TP_DOCUMENTO", nullable: true, length: 25 })
   public cmanTpDocumento: string | null;
@@ -39,10 +39,10 @@ export class PecrCapaMovimentoAnimal {
   public cmanQtdItens: number | null;
 
   @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: Date;
+  public audtDtCreate: LocalDateTime;
 
   @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: Date | null;
+  public audtDtUpdate: LocalDateTime | null;
 
   @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
   public audtUsrsCreate: string;

@@ -31,13 +31,13 @@ export class SstmSistemaVersao {
   public ssvsVersionDatabase: string | null;
 
   @Column("datetime2", { name: "SSVS_DT_VERSION", nullable: true })
-  public ssvsDtVersion: Date | null;
+  public ssvsDtVersion: LocalDateTime | null;
 
   @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: Date;
+  public audtDtCreate: LocalDateTime;
 
   @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: Date | null;
+  public audtDtUpdate: LocalDateTime | null;
 
   @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
   public audtUsrsCreate: string;

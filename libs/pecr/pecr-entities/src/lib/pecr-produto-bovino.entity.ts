@@ -37,10 +37,10 @@ export class PecrProdutoBovino {
   public prbvSexo: string | null;
 
   @Column("datetime2", { name: "PRBV_DT_NASCIMENTO", nullable: true })
-  public prbvDtNascimento: Date | null;
+  public prbvDtNascimento: LocalDateTime | null;
 
   @Column("datetime2", { name: "PRBV_DT_MORTE", nullable: true })
-  public prbvDtMorte: Date | null;
+  public prbvDtMorte: LocalDateTime | null;
 
   @Column("numeric", {
     name: "PRBV_PESO_NASCIMENTO",
@@ -65,10 +65,10 @@ export class PecrProdutoBovino {
   public prbvTipo: string | null;
 
   @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: Date;
+  public audtDtCreate: LocalDateTime;
 
   @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: Date | null;
+  public audtDtUpdate: LocalDateTime | null;
 
   @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
   public audtUsrsCreate: string;

@@ -1,36 +1,42 @@
 import {
-  BaseEntity,
   Column,
   Entity,
   Index,
   JoinColumn,
   ManyToOne,
   OneToMany,
-  RelationId,
 } from "typeorm";
 import { CmnsPessoaFisica } from "./cmns-pessoa-fisica";
 
-@Index("FK_PROF_RS_PROF", ["profProfId"], {})
-@Index("PK_CMNS_PROFISSAO", ["profId"], { unique: true })
+@Index("PK_CMNS_PROFISSAO", ["id"], { unique: true })
 @Entity("CMNS_PROFISSAO")
-export class CmnsProfissao extends BaseEntity {
-  @Column("varchar", { primary: true, name: "PROF_ID", length: 27 })
-  public profId: string;
+export class CmnsProfissao {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-  @Column("varchar", { name: "PROF_PROF_ID", nullable: true, length: 27 })
-  public profProfId: string | null;
-
-  @Column("varchar", { name: "PROF_CODIGO", nullable: true, length: 5 })
+  @Column("nvarchar", { name: "PROF_CODIGO", nullable: true, length: 5 })
   public profCodigo: string | null;
 
-  @Column("varchar", { name: "PROF_NOME", nullable: true, length: 64 })
+  @Column("nvarchar", { name: "PROF_NOME", nullable: true, length: 64 })
   public profNome: string | null;
 
-  @Column("varchar", { name: "PROF_CODIGO_IRPF", nullable: true, length: 5 })
+  @Column("nvarchar", { name: "PROF_CODIGO_IRPF", nullable: true, length: 5 })
   public profCodigoIrpf: string | null;
 
-  @Column("datetime", { name: "PROF_LASTUPDATE", nullable: true })
-  public profLastupdate: LocalDateTime | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: LocalDateTime;
+
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: LocalDateTime | null;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
+
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
   @OneToMany(
     () => CmnsPessoaFisica,
@@ -42,17 +48,9 @@ export class CmnsProfissao extends BaseEntity {
     () => CmnsProfissao,
     (cmnsProfissao) => cmnsProfissao.cmnsProfissaos
   )
-  @JoinColumn([{ name: "PROF_PROF_ID", referencedColumnName: "profId" }])
+  @JoinColumn([{ name: "PROF_PROF_ID", referencedColumnName: "id" }])
   public profProf: CmnsProfissao;
 
   @OneToMany(() => CmnsProfissao, (cmnsProfissao) => cmnsProfissao.profProf)
   public cmnsProfissaos: CmnsProfissao[];
-
-  @RelationId((cmnsProfissao: CmnsProfissao) => cmnsProfissao.profProf)
-  public profProfId2: string | null;
-
-  public constructor(init?: Partial<CmnsProfissao>) {
-    super();
-    Object.assign(this, init);
-  }
 }

@@ -37,19 +37,19 @@ export class FncrCaixaItem {
   public cxitEspecie: string | null;
 
   @Column("datetime2", { name: "CXIT_DT_LANCAMENTO", nullable: true })
-  public cxitDtLancamento: Date | null;
+  public cxitDtLancamento: LocalDateTime | null;
 
   @Column("money", { name: "CXIT_VLR_LANCAMENTO", nullable: true })
   public cxitVlrLancamento: number | null;
 
   @Column("datetime2", { name: "CXIT_DT_MOVIMENTO", nullable: true })
-  public cxitDtMovimento: Date | null;
+  public cxitDtMovimento: LocalDateTime | null;
 
   @Column("datetime2", { name: "CXIT_MES_REFERENCIA", nullable: true })
-  public cxitMesReferencia: Date | null;
+  public cxitMesReferencia: LocalDateTime | null;
 
   @Column("datetime2", { name: "CXIT_DT_CONCILIACAO", nullable: true })
-  public cxitDtConciliacao: Date | null;
+  public cxitDtConciliacao: LocalDateTime | null;
 
   @Column("money", { name: "CXIT_VLR_CONCILIADO", nullable: true })
   public cxitVlrConciliado: number | null;
@@ -65,10 +65,10 @@ export class FncrCaixaItem {
   public cxitMd5: string | null;
 
   @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: Date;
+  public audtDtCreate: LocalDateTime;
 
   @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: Date | null;
+  public audtDtUpdate: LocalDateTime | null;
 
   @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
   public audtUsrsCreate: string;

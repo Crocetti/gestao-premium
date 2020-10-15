@@ -8,7 +8,7 @@ export class RchmFuncionarioHistorico {
   public id: string;
 
   @Column("datetime2", { name: "FCHS_DATA", nullable: true })
-  public fchsData: Date | null;
+  public fchsData: LocalDateTime | null;
 
   @Column("nvarchar", { name: "FCHS_EVENTO", nullable: true, length: 20 })
   public fchsEvento: string | null;
@@ -17,10 +17,10 @@ export class RchmFuncionarioHistorico {
   public fchsDescricao: string | null;
 
   @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: Date;
+  public audtDtCreate: LocalDateTime;
 
   @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: Date | null;
+  public audtDtUpdate: LocalDateTime | null;
 
   @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
   public audtUsrsCreate: string;

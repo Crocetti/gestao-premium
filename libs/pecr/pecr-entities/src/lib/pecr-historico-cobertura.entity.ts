@@ -11,19 +11,19 @@ export class PecrHistoricoCobertura {
   public hscbCodigo: string | null;
 
   @Column("datetime2", { name: "HSCB_DT_PREVISTA", nullable: true })
-  public hscbDtPrevista: Date | null;
+  public hscbDtPrevista: LocalDateTime | null;
 
   @Column("nvarchar", { name: "HSCB_TP_PREVISTO", nullable: true, length: 25 })
   public hscbTpPrevisto: string | null;
 
   @Column("datetime2", { name: "HSCB_DT_REALIZADA", nullable: true })
-  public hscbDtRealizada: Date | null;
+  public hscbDtRealizada: LocalDateTime | null;
 
   @Column("nvarchar", { name: "HSCB_TP_REALIZADO", nullable: true, length: 25 })
   public hscbTpRealizado: string | null;
 
   @Column("datetime2", { name: "HSCB_DT_DIAGNOSTICO", nullable: true })
-  public hscbDtDiagnostico: Date | null;
+  public hscbDtDiagnostico: LocalDateTime | null;
 
   @Column("nvarchar", {
     name: "HSCB_TP_DIAGNOSTICO",
@@ -40,16 +40,16 @@ export class PecrHistoricoCobertura {
   public hscbMtdDiagnostico: string | null;
 
   @Column("datetime2", { name: "HSCB_DT_PREV_PARTO", nullable: true })
-  public hscbDtPrevParto: Date | null;
+  public hscbDtPrevParto: LocalDateTime | null;
 
   @Column("datetime2", { name: "HSCB_DT_EFETIVA_PARTO", nullable: true })
-  public hscbDtEfetivaParto: Date | null;
+  public hscbDtEfetivaParto: LocalDateTime | null;
 
   @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: Date;
+  public audtDtCreate: LocalDateTime;
 
   @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: Date | null;
+  public audtDtUpdate: LocalDateTime | null;
 
   @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
   public audtUsrsCreate: string;

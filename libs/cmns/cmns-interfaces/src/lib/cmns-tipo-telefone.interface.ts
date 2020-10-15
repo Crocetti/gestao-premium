@@ -1,25 +1,36 @@
-import { LocalDateTime } from '@js-joda/core';
+import { Column, Entity, Index, OneToMany } from "typeorm";
+import { CmnsPessoaTelefone } from "./cmns-pessoa-telefone";
 
-export interface ICmnsTipoTelefone {
-    tptlId: string;
-    tptlCodigo: string | null;
-    tptlNome: string | null;
-    tptlLastupdate: LocalDateTime | null;
+@Index("PK_CMNS_TIPO_TELEFONE", ["id"], { unique: true })
+@Entity("CMNS_TIPO_TELEFONE")
+export class CmnsTipoTelefone {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
+
+  @Column("nvarchar", { name: "TPTL_CODIGO", nullable: true, length: 3 })
+  public tptlCodigo: string | null;
+
+  @Column("nvarchar", { name: "TPTL_NOME", nullable: true, length: 64 })
+  public tptlNome: string | null;
+
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: LocalDateTime;
+
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: LocalDateTime | null;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
+
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
+
+  @OneToMany(
+    () => CmnsPessoaTelefone,
+    (cmnsPessoaTelefone) => cmnsPessoaTelefone.pstlTptl
+  )
+  public cmnsPessoaTelefones: CmnsPessoaTelefone[];
 }
-
-export class CmnsTipoTelefoneDto implements ICmnsTipoTelefone {
-    public tptlId: string;
-    public tptlCodigo: string | null;
-    public tptlNome: string | null;
-    public tptlLastupdate: LocalDateTime | null;
-
-    constructor(param?: ICmnsTipoTelefone) {
-        this.tptlId = param?.tptlId ?? null;
-        this.tptlCodigo = param?.tptlCodigo ?? null;
-        this.tptlNome = param?.tptlNome ?? null;
-        this.tptlLastupdate = param?.tptlLastupdate ?? null;
-    }
-}
-
-
-

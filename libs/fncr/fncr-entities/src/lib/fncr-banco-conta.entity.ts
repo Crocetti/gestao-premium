@@ -24,7 +24,7 @@ export class FncrBancoConta {
   public bcctNrConta: string | null;
 
   @Column("datetime2", { name: "BCCT_DT_ABERTURA", nullable: true })
-  public bcctDtAbertura: Date | null;
+  public bcctDtAbertura: LocalDateTime | null;
 
   @Column("nvarchar", {
     name: "BCCT_CLASSIFICACAO",
@@ -37,10 +37,10 @@ export class FncrBancoConta {
   public bcctLimiteEspecial: number | null;
 
   @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: Date;
+  public audtDtCreate: LocalDateTime;
 
   @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: Date | null;
+  public audtDtUpdate: LocalDateTime | null;
 
   @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
   public audtUsrsCreate: string;

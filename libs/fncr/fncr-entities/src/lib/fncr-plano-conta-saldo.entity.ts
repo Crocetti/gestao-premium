@@ -8,7 +8,7 @@ export class FncrPlanoContaSaldo {
   public id: string;
 
   @Column("datetime2", { name: "PCSD_PERIODO", nullable: true })
-  public pcsdPeriodo: Date | null;
+  public pcsdPeriodo: LocalDateTime | null;
 
   @Column("money", { name: "PCSD_INICIAL", nullable: true })
   public pcsdInicial: number | null;
@@ -23,10 +23,10 @@ export class FncrPlanoContaSaldo {
   public pcsdFinal: number | null;
 
   @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: Date;
+  public audtDtCreate: LocalDateTime;
 
   @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: Date | null;
+  public audtDtUpdate: LocalDateTime | null;
 
   @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
   public audtUsrsCreate: string;

@@ -17,7 +17,7 @@ export class EstqProdutoSaldo {
   public id: string;
 
   @Column("datetime2", { name: "PRSD_MES_REFERENCIA", nullable: true })
-  public prsdMesReferencia: Date | null;
+  public prsdMesReferencia: LocalDateTime | null;
 
   @Column("numeric", {
     name: "PRSD_SALDO_INICIAL",
@@ -60,10 +60,10 @@ export class EstqProdutoSaldo {
   public prsdSaldoFinal: number | null;
 
   @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: Date;
+  public audtDtCreate: LocalDateTime;
 
   @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: Date | null;
+  public audtDtUpdate: LocalDateTime | null;
 
   @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
   public audtUsrsCreate: string;

@@ -11,10 +11,10 @@ export class VeteInternacao {
   public id: string;
 
   @Column("datetime2", { name: "INTR_DT_ENTRADA", nullable: true })
-  public intrDtEntrada: Date | null;
+  public intrDtEntrada: LocalDateTime | null;
 
   @Column("datetime2", { name: "INTR_DT_SAIDA", nullable: true })
-  public intrDtSaida: Date | null;
+  public intrDtSaida: LocalDateTime | null;
 
   @Column("nvarchar", { name: "INTR_SUSPEITA_CLINICA", nullable: true })
   public intrSuspeitaClinica: string | null;
@@ -29,10 +29,10 @@ export class VeteInternacao {
   public intrTermoResp: string | null;
 
   @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: Date;
+  public audtDtCreate: LocalDateTime;
 
   @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: Date | null;
+  public audtDtUpdate: LocalDateTime | null;
 
   @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
   public audtUsrsCreate: string;

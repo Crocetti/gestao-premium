@@ -26,10 +26,10 @@ export class VeteOrdemDeServico {
   public osvtNumero: string | null;
 
   @Column("datetime2", { name: "OSVT_DT_ENTRADA", nullable: true })
-  public osvtDtEntrada: Date | null;
+  public osvtDtEntrada: LocalDateTime | null;
 
   @Column("datetime2", { name: "OSVT_DT_SAIDA", nullable: true })
-  public osvtDtSaida: Date | null;
+  public osvtDtSaida: LocalDateTime | null;
 
   @Column("nvarchar", { name: "OSVT_STATUS", nullable: true, length: 25 })
   public osvtStatus: string | null;
@@ -51,13 +51,13 @@ export class VeteOrdemDeServico {
   public osvtFormaPagamento: string | null;
 
   @Column("datetime2", { name: "OSVT_LASTUPDATE", nullable: true })
-  public osvtLastupdate: Date | null;
+  public osvtLastupdate: LocalDateTime | null;
 
   @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: Date;
+  public audtDtCreate: LocalDateTime;
 
   @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: Date | null;
+  public audtDtUpdate: LocalDateTime | null;
 
   @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
   public audtUsrsCreate: string;

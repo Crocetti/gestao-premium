@@ -1,64 +1,45 @@
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  RelationId,
-} from "typeorm";
-import { CmnsPessoa } from "./cmns-pessoa";
+import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
 import { CmnsTipoTelefone } from "./cmns-tipo-telefone";
+import { CmnsPessoa } from "./cmns-pessoa";
 
-@Index("FK_PESS_RS_PSTL", ["pstlPessId"], {})
-@Index("FK_TPTL_RS_PSTL", ["pstlTptlId"], {})
-@Index("PK_CMNS_PESSOA_TELEFONE", ["pstlId"], { unique: true })
+@Index("PK_CMNS_PESSOA_TELEFONE", ["id"], { unique: true })
 @Entity("CMNS_PESSOA_TELEFONE")
-export class CmnsPessoaTelefone extends BaseEntity {
-  @Column("varchar", { primary: true, name: "PSTL_ID", length: 27 })
-  public pstlId: string;
+export class CmnsPessoaTelefone {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-  @Column("varchar", { name: "PSTL_TPTL_ID", nullable: true, length: 27 })
-  public pstlTptlId: string | null;
-
-  @Column("varchar", { name: "PSTL_PESS_ID", nullable: true, length: 27 })
-  public pstlPessId: string | null;
-
-  @Column("varchar", { name: "PSTL_NUMERO", nullable: true, length: 20 })
+  @Column("nvarchar", { name: "PSTL_NUMERO", nullable: true, length: 20 })
   public pstlNumero: string | null;
 
-  @Column("varchar", { name: "PSTL_RAMAL", nullable: true, length: 10 })
+  @Column("nvarchar", { name: "PSTL_RAMAL", nullable: true, length: 10 })
   public pstlRamal: string | null;
 
-  @Column("varchar", { name: "PSTL_OBSERVACAO", nullable: true, length: 5000 })
+  @Column("nvarchar", { name: "PSTL_OBSERVACAO", nullable: true })
   public pstlObservacao: string | null;
 
-  @Column("datetime", { name: "PSTL_LASTUPDATE", nullable: true })
-  public pstlLastupdate: LocalDateTime | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: LocalDateTime;
 
-  @ManyToOne(() => CmnsPessoa, (cmnsPessoa) => cmnsPessoa.cmnsPessoaTelefones)
-  @JoinColumn([{ name: "PSTL_PESS_ID", referencedColumnName: "pessId" }])
-  public pstlPess: CmnsPessoa;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: LocalDateTime | null;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
+
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
 
   @ManyToOne(
     () => CmnsTipoTelefone,
     (cmnsTipoTelefone) => cmnsTipoTelefone.cmnsPessoaTelefones
   )
-  @JoinColumn([{ name: "PSTL_TPTL_ID", referencedColumnName: "tptlId" }])
+  @JoinColumn([{ name: "PSTL_TPTL_ID", referencedColumnName: "id" }])
   public pstlTptl: CmnsTipoTelefone;
 
-  @RelationId(
-    (cmnsPessoaTelefone: CmnsPessoaTelefone) => cmnsPessoaTelefone.pstlPess
-  )
-  public pstlPessId2: string | null;
-
-  @RelationId(
-    (cmnsPessoaTelefone: CmnsPessoaTelefone) => cmnsPessoaTelefone.pstlTptl
-  )
-  public pstlTptlId2: string | null;
-
-  public constructor(init?: Partial<CmnsPessoaTelefone>) {
-    super();
-    Object.assign(this, init);
-  }
+  @ManyToOne(() => CmnsPessoa, (cmnsPessoa) => cmnsPessoa.cmnsPessoaTelefones)
+  @JoinColumn([{ name: "PSTL_PESS_ID", referencedColumnName: "id" }])
+  public pstlPess: CmnsPessoa;
 }

@@ -29,10 +29,10 @@ export class EstqCapaMovimento {
   public cpmvTpDocumento: string | null;
 
   @Column("datetime2", { name: "CPMV_DT_EMISSAO", nullable: true })
-  public cpmvDtEmissao: Date | null;
+  public cpmvDtEmissao: LocalDateTime | null;
 
   @Column("datetime2", { name: "CPMV_DT_LANCAMENTO", nullable: true })
-  public cpmvDtLancamento: Date | null;
+  public cpmvDtLancamento: LocalDateTime | null;
 
   @Column("nvarchar", { name: "CPMV_TP_MOVIMENTO", nullable: true, length: 10 })
   public cpmvTpMovimento: string | null;
@@ -41,7 +41,7 @@ export class EstqCapaMovimento {
   public cpmvTpTransacao: string | null;
 
   @Column("datetime2", { name: "CPMV_DT_SAIDA", nullable: true })
-  public cpmvDtSaida: Date | null;
+  public cpmvDtSaida: LocalDateTime | null;
 
   @Column("nvarchar", {
     name: "CPMV_NATUREZA_OPERACAO",
@@ -130,10 +130,10 @@ export class EstqCapaMovimento {
   public cpmvFormaPagamento: string | null;
 
   @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: Date;
+  public audtDtCreate: LocalDateTime;
 
   @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: Date | null;
+  public audtDtUpdate: LocalDateTime | null;
 
   @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
   public audtUsrsCreate: string;

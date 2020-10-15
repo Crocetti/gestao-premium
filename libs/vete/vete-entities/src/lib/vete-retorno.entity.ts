@@ -19,19 +19,19 @@ export class VeteRetorno {
   public id: string;
 
   @Column("datetime2", { name: "RTRN_DT_AGENDADA", nullable: true })
-  public rtrnDtAgendada: Date | null;
+  public rtrnDtAgendada: LocalDateTime | null;
 
   @Column("datetime2", { name: "RTRN_DT_EFETIVADA", nullable: true })
-  public rtrnDtEfetivada: Date | null;
+  public rtrnDtEfetivada: LocalDateTime | null;
 
   @Column("nvarchar", { name: "RTRN_MOTIVOS", nullable: true })
   public rtrnMotivos: string | null;
 
   @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: Date;
+  public audtDtCreate: LocalDateTime;
 
   @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: Date | null;
+  public audtDtUpdate: LocalDateTime | null;
 
   @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
   public audtUsrsCreate: string;

@@ -6,13 +6,13 @@ import {
   ManyToOne,
   OneToMany,
 } from "typeorm";
-import { CmnsLocalidade } from "./cmns-localidade";
-import { CmnsLogradouro } from "./cmns-logradouro";
-import { CmnsPessoaEndereco } from "./cmns-pessoa-endereco";
+import { CmnsLocalidade } from "./cmns-localidade.entity";
+import { CmnsLogradouro } from "./cmns-logradouro.entity";
+import { CmnsPessoaEndereco } from "./cmns-pessoa-endereco.entity";
 
 @Index("PK_CMNS_BAIRRO", ["id"], { unique: true })
 @Entity("CMNS_BAIRRO")
-export class CmnsBairro {
+export class CmnsBairro  {
   @Column("uniqueidentifier", { primary: true, name: "ID" })
   public id: string;
 
@@ -33,10 +33,10 @@ export class CmnsBairro {
   public bairCepFinal: string | null;
 
   @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: Date;
+  public audtDtCreate: LocalDateTime;
 
   @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: Date | null;
+  public audtDtUpdate: LocalDateTime | null;
 
   @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
   public audtUsrsCreate: string;

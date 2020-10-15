@@ -29,10 +29,10 @@ export class FsclDocumento {
   public dcmtNfe: string | null;
 
   @Column("datetime2", { name: "DCMT_DT_EMISSAO", nullable: true })
-  public dcmtDtEmissao: Date | null;
+  public dcmtDtEmissao: LocalDateTime | null;
 
   @Column("datetime2", { name: "DCMT_DT_LANCAMENTO", nullable: true })
-  public dcmtDtLancamento: Date | null;
+  public dcmtDtLancamento: LocalDateTime | null;
 
   @Column("nvarchar", { name: "DCMT_TP_DOCUMENTO", nullable: true, length: 25 })
   public dcmtTpDocumento: string | null;
@@ -110,10 +110,10 @@ export class FsclDocumento {
   public dcmtVlrDescontos: number | null;
 
   @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: Date;
+  public audtDtCreate: LocalDateTime;
 
   @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: Date | null;
+  public audtDtUpdate: LocalDateTime | null;
 
   @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
   public audtUsrsCreate: string;

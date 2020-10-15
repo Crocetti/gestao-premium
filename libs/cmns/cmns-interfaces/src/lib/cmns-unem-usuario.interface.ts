@@ -1,66 +1,44 @@
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  RelationId,
-} from "typeorm";
+import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
+import { CmnsUsuario } from "./cmns-usuario";
 import { CmnsGrupoUsuario } from "./cmns-grupo-usuario";
 import { CoreUnidadeEmpresarial } from "./core-unidade-empresarial";
-import { CmnsUsuario } from "./cmns-usuario";
 
-@Index("FK_GRUS_RS_UEUS", ["ueusGrusId"], {})
-@Index("FK_UNEM_RS_UEUS", ["ueusUnemId"], {})
-@Index("FK_USRS_RS_UEUS", ["ueusUsrsId"], {})
-@Index("PK_CMNS_UNEM_USUARIO", ["ueusId"], { unique: true })
+@Index("PK_CMNS_UNEM_USUARIO", ["id"], { unique: true })
 @Entity("CMNS_UNEM_USUARIO")
-export class CmnsUnemUsuario extends BaseEntity {
-  @Column("varchar", { primary: true, name: "UEUS_ID", length: 27 })
-  public ueusId: string;
+export class CmnsUnemUsuario {
+  @Column("uniqueidentifier", { primary: true, name: "ID" })
+  public id: string;
 
-  @Column("varchar", { name: "UEUS_USRS_ID", nullable: true, length: 27 })
-  public ueusUsrsId: string | null;
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate: LocalDateTime;
 
-  @Column("varchar", { name: "UEUS_GRUS_ID", nullable: true, length: 27 })
-  public ueusGrusId: string | null;
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate: LocalDateTime | null;
 
-  @Column("varchar", { name: "UEUS_UNEM_ID", nullable: true, length: 27 })
-  public ueusUnemId: string | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate: string;
 
-  @Column("datetime", { name: "UEUS_LASTUPDATE", nullable: true })
-  public ueusLastupdate: LocalDateTime | null;
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate: string | null;
+
+  @Column("smallint", { name: "AUDT_ACTIVE" })
+  public audtActive: number;
+
+  @ManyToOne(() => CmnsUsuario, (cmnsUsuario) => cmnsUsuario.cmnsUnemUsuarios)
+  @JoinColumn([{ name: "UEUS_USRS_ID", referencedColumnName: "id" }])
+  public ueusUsrs: CmnsUsuario;
 
   @ManyToOne(
     () => CmnsGrupoUsuario,
     (cmnsGrupoUsuario) => cmnsGrupoUsuario.cmnsUnemUsuarios
   )
-  @JoinColumn([{ name: "UEUS_GRUS_ID", referencedColumnName: "grusId" }])
+  @JoinColumn([{ name: "UEUS_GRUS_ID", referencedColumnName: "id" }])
   public ueusGrus: CmnsGrupoUsuario;
 
   @ManyToOne(
     () => CoreUnidadeEmpresarial,
     (coreUnidadeEmpresarial) => coreUnidadeEmpresarial.cmnsUnemUsuarios
   )
-  @JoinColumn([{ name: "UEUS_UNEM_ID", referencedColumnName: "unemId" }])
+  @JoinColumn([{ name: "UEUS_UNEM_ID", referencedColumnName: "id" }])
   public ueusUnem: CoreUnidadeEmpresarial;
-
-  @ManyToOne(() => CmnsUsuario, (cmnsUsuario) => cmnsUsuario.cmnsUnemUsuarios)
-  @JoinColumn([{ name: "UEUS_USRS_ID", referencedColumnName: "usrsId" }])
-  public ueusUsrs: CmnsUsuario;
-
-  @RelationId((cmnsUnemUsuario: CmnsUnemUsuario) => cmnsUnemUsuario.ueusGrus)
-  public ueusGrusId2: string | null;
-
-  @RelationId((cmnsUnemUsuario: CmnsUnemUsuario) => cmnsUnemUsuario.ueusUnem)
-  public ueusUnemId2: string | null;
-
-  @RelationId((cmnsUnemUsuario: CmnsUnemUsuario) => cmnsUnemUsuario.ueusUsrs)
-  public ueusUsrsId2: string | null;
-
-  public constructor(init?: Partial<CmnsUnemUsuario>) {
-    super();
-    Object.assign(this, init);
-  }
 }

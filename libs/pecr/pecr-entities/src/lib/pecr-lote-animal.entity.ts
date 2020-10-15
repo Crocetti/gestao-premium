@@ -9,16 +9,16 @@ export class PecrLoteAnimal {
   public id: string;
 
   @Column("datetime2", { name: "LTAN_DT_ENTRADA", nullable: true })
-  public ltanDtEntrada: Date | null;
+  public ltanDtEntrada: LocalDateTime | null;
 
   @Column("datetime2", { name: "LTAN_DT_SAIDA", nullable: true })
-  public ltanDtSaida: Date | null;
+  public ltanDtSaida: LocalDateTime | null;
 
   @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: Date;
+  public audtDtCreate: LocalDateTime;
 
   @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: Date | null;
+  public audtDtUpdate: LocalDateTime | null;
 
   @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
   public audtUsrsCreate: string;

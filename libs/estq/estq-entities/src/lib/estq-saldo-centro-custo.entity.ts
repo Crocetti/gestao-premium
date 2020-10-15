@@ -9,7 +9,7 @@ export class EstqSaldoCentroCusto {
   public id: string;
 
   @Column("datetime2", { name: "SDCC_MES_REFERENCIA", nullable: true })
-  public sdccMesReferencia: Date | null;
+  public sdccMesReferencia: LocalDateTime | null;
 
   @Column("numeric", {
     name: "SDCC_INICIAL",
@@ -60,10 +60,10 @@ export class EstqSaldoCentroCusto {
   public sdccFinal: number | null;
 
   @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: Date;
+  public audtDtCreate: LocalDateTime;
 
   @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: Date | null;
+  public audtDtUpdate: LocalDateTime | null;
 
   @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
   public audtUsrsCreate: string;

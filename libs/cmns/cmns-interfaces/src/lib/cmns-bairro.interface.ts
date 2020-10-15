@@ -1,25 +1,15 @@
-import { LocalDateTime } from '@js-joda/core';
-import { ICmnsLocalidade } from './cmns-localidade.interface';
-
-export interface ICmnsBairro {
-    bairId: string;
-    bairLcldId: string;
-    bairNome: string;
-    bairNomeAbreviado: string;
-    bairCepInicial: string;
-    bairCepFinal: string;
-    bairLastupdate: LocalDateTime;
-    cmnsLocalidade: ICmnsLocalidade;
-}
-
 export class CmnsBairro {
-    @prop
-    public bairId: string;
-    public bairLcldId: string | null;
+    public id: string;
     public bairNome: string | null;
     public bairNomeAbreviado: string | null;
     public bairCepInicial: string | null;
     public bairCepFinal: string | null;
-    public bairLastupdate: LocalDateTime | null;
+    public audtDtCreate: LocalDateTime;
+    public audtDtUpdate: LocalDateTime | null;
+    public audtUsrsCreate: string;
+    public audtUsrsUpdate: string | null;
+    public audtActive: number;
     public cmnsLocalidade: ICmnsLocalidade;
+    public cmnsLogradouros: ICmnsLogradouro[];
+    public cmnsPessoaEnderecos: ICmnsPessoaEndereco[];
 }

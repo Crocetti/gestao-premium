@@ -24,10 +24,10 @@ export class RchmFuncionario {
   public fcnrMatricula: string | null;
 
   @Column("datetime2", { name: "FCNR_DT_ADMISSAO", nullable: true })
-  public fcnrDtAdmissao: Date | null;
+  public fcnrDtAdmissao: LocalDateTime | null;
 
   @Column("datetime2", { name: "FCNR_DT_DEMISSAO", nullable: true })
-  public fcnrDtDemissao: Date | null;
+  public fcnrDtDemissao: LocalDateTime | null;
 
   @Column("smallint", { name: "FCNR_PRIMEIRO_EMPREGO", nullable: true })
   public fcnrPrimeiroEmprego: number | null;
@@ -36,7 +36,7 @@ export class RchmFuncionario {
   public fcnrNrPis: string | null;
 
   @Column("datetime2", { name: "FCNR_DT_PIS", nullable: true })
-  public fcnrDtPis: Date | null;
+  public fcnrDtPis: LocalDateTime | null;
 
   @Column("smallint", { name: "FCNR_CONTRATO_EXPERIENCIA", nullable: true })
   public fcnrContratoExperiencia: number | null;
@@ -48,10 +48,10 @@ export class RchmFuncionario {
   public fcnrTipo: string | null;
 
   @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: Date;
+  public audtDtCreate: LocalDateTime;
 
   @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: Date | null;
+  public audtDtUpdate: LocalDateTime | null;
 
   @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
   public audtUsrsCreate: string;

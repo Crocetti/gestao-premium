@@ -16,10 +16,10 @@ export class FncrBancoMovimento {
   public bcmvNumeroDocumento: string | null;
 
   @Column("datetime2", { name: "BCMV_DT_LANCAMENTO", nullable: true })
-  public bcmvDtLancamento: Date | null;
+  public bcmvDtLancamento: LocalDateTime | null;
 
   @Column("datetime2", { name: "BCMV_DT_MOVIMENTO", nullable: true })
-  public bcmvDtMovimento: Date | null;
+  public bcmvDtMovimento: LocalDateTime | null;
 
   @Column("money", { name: "BCMV_VALOR", nullable: true })
   public bcmvValor: number | null;
@@ -28,10 +28,10 @@ export class FncrBancoMovimento {
   public bcmvComplemento: string | null;
 
   @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: Date;
+  public audtDtCreate: LocalDateTime;
 
   @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: Date | null;
+  public audtDtUpdate: LocalDateTime | null;
 
   @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
   public audtUsrsCreate: string;

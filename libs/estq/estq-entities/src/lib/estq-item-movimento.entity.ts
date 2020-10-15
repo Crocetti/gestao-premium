@@ -20,10 +20,10 @@ export class EstqItemMovimento {
   public id: string;
 
   @Column("datetime2", { name: "ITMV_DT_LANCAMENTO", nullable: true })
-  public itmvDtLancamento: Date | null;
+  public itmvDtLancamento: LocalDateTime | null;
 
   @Column("datetime2", { name: "ITMV_DT_MOVIMENTO", nullable: true })
-  public itmvDtMovimento: Date | null;
+  public itmvDtMovimento: LocalDateTime | null;
 
   @Column("nvarchar", { name: "ITMV_PRDT_CODIGO", nullable: true, length: 20 })
   public itmvPrdtCodigo: string | null;
@@ -92,10 +92,10 @@ export class EstqItemMovimento {
   public itmvStatus: string | null;
 
   @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: Date;
+  public audtDtCreate: LocalDateTime;
 
   @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: Date | null;
+  public audtDtUpdate: LocalDateTime | null;
 
   @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
   public audtUsrsCreate: string;

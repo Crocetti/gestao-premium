@@ -11,16 +11,16 @@ export class SrvcOrdemServico {
   public odsvNumero: string | null;
 
   @Column("datetime2", { name: "ODSV_DT_LANCAMENTO", nullable: true })
-  public odsvDtLancamento: Date | null;
+  public odsvDtLancamento: LocalDateTime | null;
 
   @Column("datetime2", { name: "ODSV_DT_EMISSAO", nullable: true })
-  public odsvDtEmissao: Date | null;
+  public odsvDtEmissao: LocalDateTime | null;
 
   @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: Date;
+  public audtDtCreate: LocalDateTime;
 
   @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: Date | null;
+  public audtDtUpdate: LocalDateTime | null;
 
   @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
   public audtUsrsCreate: string;

@@ -19,10 +19,10 @@ export class FncrCaixaMovimento {
   public cxmvNumero: string | null;
 
   @Column("datetime2", { name: "CXMV_DT_ABERTURA", nullable: true })
-  public cxmvDtAbertura: Date | null;
+  public cxmvDtAbertura: LocalDateTime | null;
 
   @Column("datetime2", { name: "CXMV_DT_FECHAMENTO", nullable: true })
-  public cxmvDtFechamento: Date | null;
+  public cxmvDtFechamento: LocalDateTime | null;
 
   @Column("money", { name: "CXMV_VLR_CREDITOS", nullable: true })
   public cxmvVlrCreditos: number | null;
@@ -37,10 +37,10 @@ export class FncrCaixaMovimento {
   public cxmvSaldoFechamento: number | null;
 
   @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: Date;
+  public audtDtCreate: LocalDateTime;
 
   @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: Date | null;
+  public audtDtUpdate: LocalDateTime | null;
 
   @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
   public audtUsrsCreate: string;
