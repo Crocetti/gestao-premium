@@ -24,3 +24,4 @@ export * from './lib/cmns-pessoa-telefone.entity';
 export * from './lib/cmns-usuario.entity';
 export * from './lib/cmns-grupo-usuario.entity';
 export * from './lib/cmns-unem-usuario.entity';
+export * from './lib/cmns-entities.config';
