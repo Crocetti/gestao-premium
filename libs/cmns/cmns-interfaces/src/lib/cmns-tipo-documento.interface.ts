@@ -1,39 +1,27 @@
-import { Column, Entity, Index, OneToMany } from "typeorm";
-import { CmnsPessoaDocumento } from "./cmns-pessoa-documento";
+import { BasicInterface, BasicModel } from '@gpremium/shared-int';
+import { prop, required } from '@rxweb/reactive-form-validators';
 
-@Index("PK_CMNS_TIPO_DOCUMENTO", ["id"], { unique: true })
-@Entity("CMNS_TIPO_DOCUMENTO")
-export class CmnsTipoDocumento {
-  @Column("uniqueidentifier", { primary: true, name: "ID" })
-  public id: string;
+export interface ICmnsTipoDocumento extends BasicInterface {
+    tpdcCodigo: string;
+    tpdcNome: string;
+    tpdcTipo: string;
+}
 
-  @Column("nvarchar", { name: "TPDC_CODIGO", nullable: true, length: 3 })
-  public tpdcCodigo: string | null;
+export class CmnsTipoDocumentoDto extends BasicModel implements ICmnsTipoDocumento {
+    @prop()
+    @required({message: 'O código do tipo de documento é obrigatório!'})
+    public tpdcCodigo: string;
+    @prop()
+    @required({message: 'O nome do tipo de documento é obrigatório!'})
+    public tpdcNome: string;
+    @prop()
+    @required({message: 'O tipo do tipo de documento é obrigatório!'})
+    public tpdcTipo: string;
 
-  @Column("nvarchar", { name: "TPDC_NOME", nullable: true, length: 64 })
-  public tpdcNome: string | null;
-
-  @Column("nvarchar", { name: "TPDC_TIPO", nullable: true, length: 15 })
-  public tpdcTipo: string | null;
-
-  @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: LocalDateTime;
-
-  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: LocalDateTime | null;
-
-  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
-  public audtUsrsCreate: string;
-
-  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
-  public audtUsrsUpdate: string | null;
-
-  @Column("smallint", { name: "AUDT_ACTIVE" })
-  public audtActive: number;
-
-  @OneToMany(
-    () => CmnsPessoaDocumento,
-    (cmnsPessoaDocumento) => cmnsPessoaDocumento.psdcTpdc
-  )
-  public cmnsPessoaDocumentos: CmnsPessoaDocumento[];
+    constructor(param?: Partial<ICmnsTipoDocumento>) {
+        super(param);
+        this.tpdcCodigo = param?.tpdcCodigo ?? null;
+        this.tpdcNome = param?.tpdcNome ?? null;
+        this.tpdcTipo = param?.tpdcTipo ?? null;
+    }
 }

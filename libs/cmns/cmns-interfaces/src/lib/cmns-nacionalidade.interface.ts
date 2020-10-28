@@ -1,36 +1,22 @@
-import { Column, Entity, Index, OneToMany } from "typeorm";
-import { CmnsPessoaFisica } from "./cmns-pessoa-fisica";
+import { BasicInterface, BasicModel } from '@gpremium/shared-int';
+import { required } from '@rxweb/reactive-form-validators';
 
-@Index("PK_CMNS_NACIONALIDADE", ["id"], { unique: true })
-@Entity("CMNS_NACIONALIDADE")
-export class CmnsNacionalidade {
-  @Column("uniqueidentifier", { primary: true, name: "ID" })
-  public id: string;
-
-  @Column("nvarchar", { name: "NCNL_CODIGO", nullable: true, length: 3 })
-  public ncnlCodigo: string | null;
-
-  @Column("nvarchar", { name: "NCNL_NOME", nullable: true, length: 64 })
-  public ncnlNome: string | null;
-
-  @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: LocalDateTime;
-
-  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: LocalDateTime | null;
-
-  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
-  public audtUsrsCreate: string;
-
-  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
-  public audtUsrsUpdate: string | null;
-
-  @Column("smallint", { name: "AUDT_ACTIVE" })
-  public audtActive: number;
-
-  @OneToMany(
-    () => CmnsPessoaFisica,
-    (cmnsPessoaFisica) => cmnsPessoaFisica.psfsNcnl
-  )
-  public cmnsPessoaFisicas: CmnsPessoaFisica[];
+export interface ICmnsNacionalidade extends BasicInterface {
+    ncnlCodigo: string;
+    ncnlNome: string;
 }
+
+export class CmnsNacionalidadeDto extends BasicModel implements ICmnsNacionalidade {
+    @required({message: 'O código da Nacionalidade é obrigatório!'})
+    public ncnlCodigo: string;
+    @required({message: 'O nome da Nacionalidade é obrigatório!'})
+    public ncnlNome: string;
+
+    constructor(value?: ICmnsNacionalidade) {
+        super(value)
+        this.ncnlCodigo = value?.ncnlCodigo ?? null;
+        this.ncnlNome = value?.ncnlNome ?? null;
+    }
+}
+
+

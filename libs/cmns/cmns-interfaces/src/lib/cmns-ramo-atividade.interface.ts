@@ -1,65 +1,42 @@
-import {
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  OneToMany,
-} from "typeorm";
-import { CmnsPessoaJuridica } from "./cmns-pessoa-juridica";
+import { BasicInterface, BasicModel } from '@gpremium/shared-int';
+import { prop } from '@rxweb/reactive-form-validators';
 
-@Index("PK_CMNS_RAMO_ATIVIDADE", ["id"], { unique: true })
-@Entity("CMNS_RAMO_ATIVIDADE")
-export class CmnsRamoAtividade {
-  @Column("uniqueidentifier", { primary: true, name: "ID" })
-  public id: string;
-
-  @Column("nvarchar", { name: "RMAT_NOME", nullable: true, length: 256 })
-  public rmatNome: string | null;
-
-  @Column("nvarchar", { name: "RMAT_CODIGO_RF", nullable: true, length: 10 })
-  public rmatCodigoRf: string | null;
-
-  @Column("smallint", { name: "RMAT_RETEM_CONFINS", nullable: true })
-  public rmatRetemConfins: number | null;
-
-  @Column("smallint", { name: "RMAT_RETEM_PIS", nullable: true })
-  public rmatRetemPis: number | null;
-
-  @Column("smallint", { name: "RMAT_RETEM_CSLL", nullable: true })
-  public rmatRetemCsll: number | null;
-
-  @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: LocalDateTime;
-
-  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: LocalDateTime | null;
-
-  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
-  public audtUsrsCreate: string;
-
-  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
-  public audtUsrsUpdate: string | null;
-
-  @Column("smallint", { name: "AUDT_ACTIVE" })
-  public audtActive: number;
-
-  @OneToMany(
-    () => CmnsPessoaJuridica,
-    (cmnsPessoaJuridica) => cmnsPessoaJuridica.psjrRmat
-  )
-  public cmnsPessoaJuridicas: CmnsPessoaJuridica[];
-
-  @ManyToOne(
-    () => CmnsRamoAtividade,
-    (cmnsRamoAtividade) => cmnsRamoAtividade.cmnsRamoAtividades
-  )
-  @JoinColumn([{ name: "RMAT_RMAT_ID", referencedColumnName: "id" }])
-  public rmatRmat: CmnsRamoAtividade;
-
-  @OneToMany(
-    () => CmnsRamoAtividade,
-    (cmnsRamoAtividade) => cmnsRamoAtividade.rmatRmat
-  )
-  public cmnsRamoAtividades: CmnsRamoAtividade[];
+export interface ICmnsRamoAtividade extends BasicInterface {
+    rmatNome: string;
+    rmatCodigoRf: string;
+    rmatRetemConfins: number;
+    rmatRetemPis: number;
+    rmatRetemCsll: number;
+    cmnsRamoAtividade: ICmnsRamoAtividade;
+    cmnsRamoAtividades: ICmnsRamoAtividade[];
 }
+
+export class CmnsRamoAtividadeDto extends BasicModel implements ICmnsRamoAtividade {
+    @prop()
+    public rmatNome: string;
+    @prop()
+    public rmatCodigoRf: string;
+    @prop()
+    public rmatRetemConfins: number;
+    @prop()
+    public rmatRetemPis: number;
+    @prop()
+    public rmatRetemCsll: number;
+    @prop()
+    public cmnsRamoAtividade: ICmnsRamoAtividade;
+    @prop()
+    public cmnsRamoAtividades: ICmnsRamoAtividade[];
+
+    constructor(param?: Partial<ICmnsRamoAtividade>) {
+        super(param);
+        this.rmatNome = param?.rmatNome ?? null;
+        this.rmatCodigoRf = param?.rmatCodigoRf ?? null;
+        this.rmatRetemConfins = param?.rmatRetemConfins ?? null;
+        this.rmatRetemPis = param?.rmatRetemPis ?? null;
+        this.rmatRetemCsll = param?.rmatRetemCsll ?? null;
+        this.cmnsRamoAtividade = param?.cmnsRamoAtividade ?? null;
+        this.cmnsRamoAtividades = param?.cmnsRamoAtividades ?? null;
+    }
+
+}
+

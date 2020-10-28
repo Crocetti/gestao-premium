@@ -1,36 +1,17 @@
-import { Column, Entity, Index, OneToMany } from "typeorm";
-import { CmnsPessoaEndereco } from "./cmns-pessoa-endereco";
+import { BasicInterface, BasicModel } from '@gpremium/shared-int';
+import { prop, required } from '@rxweb/reactive-form-validators';
 
-@Index("PK_CMNS_TIPO_ENDERECO", ["id"], { unique: true })
-@Entity("CMNS_TIPO_ENDERECO")
-export class CmnsTipoEndereco {
-  @Column("uniqueidentifier", { primary: true, name: "ID" })
-  public id: string;
+export interface ICmnsTipoEndereco extends BasicInterface {
+    tpenCodigo: string;
+    tpenNome: string;
+}
 
-  @Column("nvarchar", { name: "TPEN_CODIGO", nullable: true, length: 3 })
-  public tpenCodigo: string | null;
-
-  @Column("nvarchar", { name: "TPEN_NOME", nullable: true, length: 64 })
-  public tpenNome: string | null;
-
-  @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: LocalDateTime;
-
-  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: LocalDateTime | null;
-
-  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
-  public audtUsrsCreate: string;
-
-  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
-  public audtUsrsUpdate: string | null;
-
-  @Column("smallint", { name: "AUDT_ACTIVE" })
-  public audtActive: number;
-
-  @OneToMany(
-    () => CmnsPessoaEndereco,
-    (cmnsPessoaEndereco) => cmnsPessoaEndereco.psenTpen
-  )
-  public cmnsPessoaEnderecos: CmnsPessoaEndereco[];
+export class CmnsTipoEnderecoDto extends BasicModel
+    implements ICmnsTipoEndereco {
+    @prop()
+    @required({message: 'O código do tipo de endereço é obrigatório!'})
+    public tpenCodigo: string;
+    @prop()
+    @required({message: 'O nome do tipo de endereço é obrigatório!'})
+    public tpenNome: string;
 }

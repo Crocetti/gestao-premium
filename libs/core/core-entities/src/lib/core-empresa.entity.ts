@@ -1,61 +1,40 @@
+import { BasicEntity } from '@gpremium/shared-ent';
 import {
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  OneToMany,
-} from "typeorm";
-import { CoreCorporacao } from "./core-corporacao";
-import { CoreUnidadeEmpresarial } from "./core-unidade-empresarial";
-import { SstmParametroEmpresa } from "./sstm-parametro-empresa";
+    Column,
+    Entity,
+    Index,
+    JoinColumn,
+    ManyToOne,
+    OneToMany,
+} from 'typeorm';
+import type { ICoreCorporacao, ICoreEmpresa, ICoreUnidadeEmpresarial } from '@gpremium/core-interfaces';
+import { CoreCorporacao } from './core-corporacao.entity';
+import { CoreUnidadeEmpresarial } from './core-unidade-empresarial.entity';
 
-@Index("PK_CORE_EMPRESA", ["id"], { unique: true })
-@Entity("CORE_EMPRESA")
-export class CoreEmpresa {
-  @Column("uniqueidentifier", { primary: true, name: "ID" })
-  public id: string;
+@Index('PK_CORE_EMPRESA', ['id'], { unique: true })
+@Entity('CORE_EMPRESA')
+export class CoreEmpresa extends BasicEntity implements ICoreEmpresa {
 
-  @Column("nvarchar", { name: "EMPR_NOME", nullable: true, length: 64 })
-  public emprNome: string | null;
+    @Column('nvarchar', { name: 'EMPR_NOME', nullable: true, length: 64 })
+    public emprNome: string | null;
 
-  @Column("nvarchar", { name: "EMPR_SENHA", nullable: true, length: 256 })
-  public emprSenha: string | null;
+    @Column('nvarchar', { name: 'EMPR_SENHA', nullable: true, length: 256 })
+    public emprSenha: string | null;
 
-  @Column("nvarchar", { name: "EMPR_LOGOMARCA", nullable: true })
-  public emprLogomarca: string | null;
+    @Column('nvarchar', { name: 'EMPR_LOGOMARCA', nullable: true })
+    public emprLogomarca: string | null;
 
-  @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: LocalDateTime;
+    @ManyToOne(
+        () => CoreCorporacao,
+        (coreCorporacao) => coreCorporacao.coreEmpresas
+    )
+    @JoinColumn([{ name: 'EMPR_CPRC_ID', referencedColumnName: 'id' }])
+    public coreCorporacao: ICoreCorporacao;
 
-  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: LocalDateTime | null;
+    @OneToMany(
+        () => CoreUnidadeEmpresarial,
+        (coreUnidadeEmpresarial) => coreUnidadeEmpresarial.coreEmpresa
+    )
+    public coreUnidadeEmpresarials: ICoreUnidadeEmpresarial[];
 
-  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
-  public audtUsrsCreate: string;
-
-  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
-  public audtUsrsUpdate: string | null;
-
-  @Column("smallint", { name: "AUDT_ACTIVE" })
-  public audtActive: number;
-
-  @ManyToOne(
-    () => CoreCorporacao,
-    (coreCorporacao) => coreCorporacao.coreEmpresas
-  )
-  @JoinColumn([{ name: "EMPR_CPRC_ID", referencedColumnName: "id" }])
-  public emprCprc: CoreCorporacao;
-
-  @OneToMany(
-    () => CoreUnidadeEmpresarial,
-    (coreUnidadeEmpresarial) => coreUnidadeEmpresarial.unemEmpr
-  )
-  public coreUnidadeEmpresarials: CoreUnidadeEmpresarial[];
-
-  @OneToMany(
-    () => SstmParametroEmpresa,
-    (sstmParametroEmpresa) => sstmParametroEmpresa.premEmpr
-  )
-  public sstmParametroEmpresas: SstmParametroEmpresa[];
 }

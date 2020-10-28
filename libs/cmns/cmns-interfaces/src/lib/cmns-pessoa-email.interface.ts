@@ -1,50 +1,24 @@
-import {
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  OneToMany,
-} from "typeorm";
-import { CmnsPessoa } from "./cmns-pessoa";
-import { CmnsTipoEmail } from "./cmns-tipo-email";
-import { CmnsUsuario } from "./cmns-usuario";
+import { BasicInterface, BasicModel } from '@gpremium/shared-int';
+import { prop } from '@rxweb/reactive-form-validators';
+import { ICmnsPessoa } from './cmns-pessoa.interface';
+import { ICmnsTipoEmail } from './cmns-tipo-email.interface';
 
-@Index("PK_CMNS_PESSOA_EMAIL", ["id"], { unique: true })
-@Entity("CMNS_PESSOA_EMAIL")
-export class CmnsPessoaEmail {
-  @Column("uniqueidentifier", { primary: true, name: "ID" })
-  public id: string;
+export interface ICmnsPessoaEmail extends BasicInterface {
+    psemEndereco: string;
+    cmnsPessoa: ICmnsPessoa;
+    cmnsTipoEmail: ICmnsTipoEmail;
+}
 
-  @Column("nvarchar", { name: "PSEM_ENDERECO", nullable: true, length: 256 })
-  public psemEndereco: string | null;
+export class CmnsPessoaEmailDto extends BasicModel implements ICmnsPessoaEmail {
+    @prop()
+    public psemEndereco: string;
+    @prop()
+    public cmnsPessoa: ICmnsPessoa;
+    @prop()
+    public cmnsTipoEmail: ICmnsTipoEmail;
 
-  @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: LocalDateTime;
-
-  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: LocalDateTime | null;
-
-  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
-  public audtUsrsCreate: string;
-
-  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
-  public audtUsrsUpdate: string | null;
-
-  @Column("smallint", { name: "AUDT_ACTIVE" })
-  public audtActive: number;
-
-  @ManyToOne(() => CmnsPessoa, (cmnsPessoa) => cmnsPessoa.cmnsPessoaEmails)
-  @JoinColumn([{ name: "PSEM_PESS_ID", referencedColumnName: "id" }])
-  public psemPess: CmnsPessoa;
-
-  @ManyToOne(
-    () => CmnsTipoEmail,
-    (cmnsTipoEmail) => cmnsTipoEmail.cmnsPessoaEmails
-  )
-  @JoinColumn([{ name: "PSEM_TPEM_ID", referencedColumnName: "id" }])
-  public psemTpem: CmnsTipoEmail;
-
-  @OneToMany(() => CmnsUsuario, (cmnsUsuario) => cmnsUsuario.usrsPsem)
-  public cmnsUsuarios: CmnsUsuario[];
+    constructor(param?: Partial<ICmnsPessoaEmail>) {
+        super(param);
+        Object.assign(this, param);
+    }
 }

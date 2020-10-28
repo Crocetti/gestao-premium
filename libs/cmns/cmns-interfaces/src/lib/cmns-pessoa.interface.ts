@@ -1,172 +1,83 @@
-import { Column, Entity, Index, OneToMany } from "typeorm";
-import { CdstCliente } from "./cdst-cliente";
-import { CdstFabricante } from "./cdst-fabricante";
-import { CdstFornecedor } from "./cdst-fornecedor";
-import { CdstProdutorRural } from "./cdst-produtor-rural";
-import { CdstPropriedadeRural } from "./cdst-propriedade-rural";
-import { CdstTransportadora } from "./cdst-transportadora";
-import { CmnsPessoaDocumento } from "./cmns-pessoa-documento";
-import { CmnsPessoaEmail } from "./cmns-pessoa-email";
-import { CmnsPessoaEndereco } from "./cmns-pessoa-endereco";
-import { CmnsPessoaFisica } from "./cmns-pessoa-fisica";
-import { CmnsPessoaImagem } from "./cmns-pessoa-imagem";
-import { CmnsPessoaJuridica } from "./cmns-pessoa-juridica";
-import { CmnsPessoaTelefone } from "./cmns-pessoa-telefone";
-import { CmnsUsuario } from "./cmns-usuario";
-import { CoreUnidadeEmpresarial } from "./core-unidade-empresarial";
-import { FncrCaixa } from "./fncr-caixa";
-import { FncrCaixaItem } from "./fncr-caixa-item";
-import { PecfCaixa } from "./pecf-caixa";
-import { PecfContador } from "./pecf-contador";
-import { RchmFuncionario } from "./rchm-funcionario";
-import { VeteAnimal } from "./vete-animal";
+import { BasicInterface, BasicModel } from '@gpremium/shared-int';
+import { prop, required } from '@rxweb/reactive-form-validators';
+import { ICmnsPessoaDocumento } from './cmns-pessoa-documento.interface';
+import { ICmnsPessoaEmail } from './cmns-pessoa-email.interface';
+import { ICmnsPessoaEndereco } from './cmns-pessoa-endereco.interface';
+import { ICmnsPessoaFisica } from './cmns-pessoa-fisica.interface';
+import { ICmnsPessoaImagem } from './cmns-pessoa-imagem.interface';
+import { ICmnsPessoaJuridica } from './cmns-pessoa-juridica.interface';
+import { ICmnsPessoaTelefone } from './cmns-pessoa-telefone.interface';
+import { ICmnsUsuario } from './cmns-usuario.interface';
 
-@Index("PK_CMNS_PESSOA", ["id"], { unique: true })
-@Entity("CMNS_PESSOA")
-export class CmnsPessoa {
-  @Column("uniqueidentifier", { primary: true, name: "ID" })
-  public id: string;
+export interface ICmnsPessoa extends BasicInterface {
+    pessCodigo: string;
+    pessCpfCnpj: string;
+    pessNome: string;
+    pessFisicaJuridica: string;
+    pessObservacao?: string;
+    pessUrl?: string;
+    pessRelacionamento?: string;
+    cmnsPessoaJuridica?: ICmnsPessoaJuridica;
+    CmnsPessoaFisica?: ICmnsPessoaFisica;
+    cmnsUsuario?: ICmnsUsuario;
+    cmnsPessoaDocumentos?: ICmnsPessoaDocumento[];
+    cmnsPessoaEmails?: ICmnsPessoaEmail[];
+    cmnsPessoaEnderecos?: ICmnsPessoaEndereco[];
+    cmnsPessoaImagens?: ICmnsPessoaImagem[];
+    cmnsPessoaTelefones?: ICmnsPessoaTelefone[];
 
-  @Column("nvarchar", { name: "PESS_CODIGO", nullable: true, length: 10 })
-  public pessCodigo: string | null;
+}
 
-  @Column("nvarchar", { name: "PESS_CPF_CNPJ", nullable: true, length: 18 })
-  public pessCpfCnpj: string | null;
+export class CmnsPessoaDto extends BasicModel implements ICmnsPessoa {
+    @required({message: 'O código da Pessoa é obrigatório!'})
+    public pessCodigo: string;
+    @required({message: 'O cpf/cnpj da Pessoa é obrigatório!'})
+    public pessCpfCnpj: string;
+    @required({message: 'O nome da Pessoa é obrigatório!'})
+    public pessNome: string;
+    @required({message: 'O tipo de pessoa da Pessoa é obrigatório!'})
+    public pessFisicaJuridica: string;
+    @prop()
+    public pessObservacao?: string;
+    @prop()
+    public pessUrl?: string;
+    @prop()
+    public pessRelacionamento?: string;
+    @prop()
+    public cmnsPessoaJuridica?: ICmnsPessoaJuridica;
+    @prop()
+    public cmnsPessoaFisica?: ICmnsPessoaFisica;
+    @prop()
+    public cmnsUsuario?: ICmnsUsuario;
+    @prop()
+    public cmnsPessoaDocumentos?: ICmnsPessoaDocumento[];
+    @prop()
+    public cmnsPessoaEmails?: ICmnsPessoaEmail[];
+    @prop()
+    public cmnsPessoaEnderecos?: ICmnsPessoaEndereco[];
+    @prop()
+    public cmnsPessoaImagens?: ICmnsPessoaImagem[];
+    @prop()
+    public cmnsPessoaTelefones?: ICmnsPessoaTelefone[];
 
-  @Column("nvarchar", { name: "PESS_NOME", nullable: true, length: 128 })
-  public pessNome: string | null;
+    constructor(param?: Partial<ICmnsPessoa>) {
+        super(param);
+        this.pessCodigo = param?.pessCodigo ?? null;
+        this.pessCpfCnpj = param?.pessCpfCnpj ?? null;
+        this.pessNome = param?.pessNome ?? null;
+        this.pessFisicaJuridica = param?.pessFisicaJuridica ?? null;
+        this.pessObservacao = param?.pessObservacao ?? null;
+        this.pessUrl = param?.pessUrl ?? null;
+        this.pessRelacionamento = param?.pessRelacionamento ?? null;
+        this.cmnsPessoaFisica = param?.CmnsPessoaFisica ?? null;
+        this.cmnsPessoaJuridica = param?.cmnsPessoaJuridica ?? null;
+        //
+        this.cmnsPessoaDocumentos = param?.cmnsPessoaDocumentos ?? null;
+        this.cmnsPessoaEmails = param?.cmnsPessoaEmails ?? null;
+        this.cmnsPessoaEnderecos = param?.cmnsPessoaEnderecos ?? null;
+        this.cmnsPessoaImagens = param?.cmnsPessoaImagens ?? null;
+        this.cmnsPessoaTelefones = param?.cmnsPessoaTelefones ?? null;
 
-  @Column("nvarchar", {
-    name: "PESS_FISICA_JURIDICA",
-    nullable: true,
-    length: 10,
-  })
-  public pessFisicaJuridica: string | null;
+    }
 
-  @Column("nvarchar", { name: "PESS_OBSERVACAO", nullable: true })
-  public pessObservacao: string | null;
-
-  @Column("nvarchar", { name: "PESS_URL", nullable: true, length: 256 })
-  public pessUrl: string | null;
-
-  @Column("nvarchar", {
-    name: "PESS_RELACIONAMENTO",
-    nullable: true,
-    length: 256,
-  })
-  public pessRelacionamento: string | null;
-
-  @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: LocalDateTime;
-
-  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: LocalDateTime | null;
-
-  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
-  public audtUsrsCreate: string;
-
-  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
-  public audtUsrsUpdate: string | null;
-
-  @Column("smallint", { name: "AUDT_ACTIVE" })
-  public audtActive: number;
-
-  @OneToMany(() => CdstCliente, (cdstCliente) => cdstCliente.clntPess)
-  public cdstClientes: CdstCliente[];
-
-  @OneToMany(() => CdstFabricante, (cdstFabricante) => cdstFabricante.fbctPess)
-  public cdstFabricantes: CdstFabricante[];
-
-  @OneToMany(() => CdstFornecedor, (cdstFornecedor) => cdstFornecedor.frncPess)
-  public cdstFornecedors: CdstFornecedor[];
-
-  @OneToMany(
-    () => CdstProdutorRural,
-    (cdstProdutorRural) => cdstProdutorRural.pdrrPess
-  )
-  public cdstProdutorRurals: CdstProdutorRural[];
-
-  @OneToMany(
-    () => CdstPropriedadeRural,
-    (cdstPropriedadeRural) => cdstPropriedadeRural.pprrPess
-  )
-  public cdstPropriedadeRurals: CdstPropriedadeRural[];
-
-  @OneToMany(
-    () => CdstTransportadora,
-    (cdstTransportadora) => cdstTransportadora.trnsPess
-  )
-  public cdstTransportadoras: CdstTransportadora[];
-
-  @OneToMany(
-    () => CmnsPessoaDocumento,
-    (cmnsPessoaDocumento) => cmnsPessoaDocumento.psdcPess
-  )
-  public cmnsPessoaDocumentos: CmnsPessoaDocumento[];
-
-  @OneToMany(
-    () => CmnsPessoaEmail,
-    (cmnsPessoaEmail) => cmnsPessoaEmail.psemPess
-  )
-  public cmnsPessoaEmails: CmnsPessoaEmail[];
-
-  @OneToMany(
-    () => CmnsPessoaEndereco,
-    (cmnsPessoaEndereco) => cmnsPessoaEndereco.psenPess
-  )
-  public cmnsPessoaEnderecos: CmnsPessoaEndereco[];
-
-  @OneToMany(
-    () => CmnsPessoaFisica,
-    (cmnsPessoaFisica) => cmnsPessoaFisica.psfsPess
-  )
-  public cmnsPessoaFisicas: CmnsPessoaFisica[];
-
-  @OneToMany(
-    () => CmnsPessoaImagem,
-    (cmnsPessoaImagem) => cmnsPessoaImagem.psimPess
-  )
-  public cmnsPessoaImagems: CmnsPessoaImagem[];
-
-  @OneToMany(
-    () => CmnsPessoaJuridica,
-    (cmnsPessoaJuridica) => cmnsPessoaJuridica.psjrPess
-  )
-  public cmnsPessoaJuridicas: CmnsPessoaJuridica[];
-
-  @OneToMany(
-    () => CmnsPessoaTelefone,
-    (cmnsPessoaTelefone) => cmnsPessoaTelefone.pstlPess
-  )
-  public cmnsPessoaTelefones: CmnsPessoaTelefone[];
-
-  @OneToMany(() => CmnsUsuario, (cmnsUsuario) => cmnsUsuario.usrsPess)
-  public cmnsUsuarios: CmnsUsuario[];
-
-  @OneToMany(
-    () => CoreUnidadeEmpresarial,
-    (coreUnidadeEmpresarial) => coreUnidadeEmpresarial.unemPess
-  )
-  public coreUnidadeEmpresarials: CoreUnidadeEmpresarial[];
-
-  @OneToMany(() => FncrCaixa, (fncrCaixa) => fncrCaixa.caixPess)
-  public fncrCaixas: FncrCaixa[];
-
-  @OneToMany(() => FncrCaixaItem, (fncrCaixaItem) => fncrCaixaItem.cxitPess)
-  public fncrCaixaItems: FncrCaixaItem[];
-
-  @OneToMany(() => PecfCaixa, (pecfCaixa) => pecfCaixa.pecxPess)
-  public pecfCaixas: PecfCaixa[];
-
-  @OneToMany(() => PecfContador, (pecfContador) => pecfContador.ctdrPess)
-  public pecfContadors: PecfContador[];
-
-  @OneToMany(
-    () => RchmFuncionario,
-    (rchmFuncionario) => rchmFuncionario.fcnrPess
-  )
-  public rchmFuncionarios: RchmFuncionario[];
-
-  @OneToMany(() => VeteAnimal, (veteAnimal) => veteAnimal.anmlPess)
-  public veteAnimals: VeteAnimal[];
 }

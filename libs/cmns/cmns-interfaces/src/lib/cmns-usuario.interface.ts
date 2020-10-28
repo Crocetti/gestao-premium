@@ -1,70 +1,28 @@
-import {
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  OneToMany,
-} from "typeorm";
-import { CmnsUnemUsuario } from "./cmns-unem-usuario";
-import { CmnsPessoaEmail } from "./cmns-pessoa-email";
-import { CmnsPessoa } from "./cmns-pessoa";
-import { EstqCapaMovimento } from "./estq-capa-movimento";
-import { SstmParametroUsuario } from "./sstm-parametro-usuario";
+import { BasicInterface, BasicModel } from '@gpremium/shared-int';
+import { prop } from '@rxweb/reactive-form-validators';
+import { ICmnsPessoaEmail } from './cmns-pessoa-email.interface';
+import { ICmnsPessoa } from './cmns-pessoa.interface';
 
-@Index("PK_CMNS_USUARIO", ["id"], { unique: true })
-@Entity("CMNS_USUARIO")
-export class CmnsUsuario {
-  @Column("uniqueidentifier", { primary: true, name: "ID" })
-  public id: string;
+export interface ICmnsUsuario extends BasicInterface {
+    usrsNomeLogin: string;
+    usrsSenha: string;
+    cmnsPessoaEmail: ICmnsPessoaEmail;
+    cmnsPessoa: ICmnsPessoa;
+}
 
-  @Column("nvarchar", { name: "USRS_NOME_LOGIN", nullable: true, length: 40 })
-  public usrsNomeLogin: string | null;
+export class CmnsUsuarioDto extends BasicModel implements ICmnsUsuario {
+    @prop()
+    public usrsNomeLogin: string;
+    @prop()
+    public usrsSenha: string;
+    @prop()
+    public cmnsPessoaEmail: ICmnsPessoaEmail;
+    @prop()
+    public cmnsPessoa: ICmnsPessoa;
 
-  @Column("nvarchar", { name: "USRS_SENHA", nullable: true, length: 256 })
-  public usrsSenha: string | null;
+    constructor(param?: Partial<ICmnsUsuario>) {
+        super(param);
+        Object.assign(this, param);
+    }
 
-  @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: LocalDateTime;
-
-  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: LocalDateTime | null;
-
-  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
-  public audtUsrsCreate: string;
-
-  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
-  public audtUsrsUpdate: string | null;
-
-  @Column("smallint", { name: "AUDT_ACTIVE" })
-  public audtActive: number;
-
-  @OneToMany(
-    () => CmnsUnemUsuario,
-    (cmnsUnemUsuario) => cmnsUnemUsuario.ueusUsrs
-  )
-  public cmnsUnemUsuarios: CmnsUnemUsuario[];
-
-  @ManyToOne(
-    () => CmnsPessoaEmail,
-    (cmnsPessoaEmail) => cmnsPessoaEmail.cmnsUsuarios
-  )
-  @JoinColumn([{ name: "USRS_PSEM_ID", referencedColumnName: "id" }])
-  public usrsPsem: CmnsPessoaEmail;
-
-  @ManyToOne(() => CmnsPessoa, (cmnsPessoa) => cmnsPessoa.cmnsUsuarios)
-  @JoinColumn([{ name: "USRS_PESS_ID", referencedColumnName: "id" }])
-  public usrsPess: CmnsPessoa;
-
-  @OneToMany(
-    () => EstqCapaMovimento,
-    (estqCapaMovimento) => estqCapaMovimento.cpmvUsrs
-  )
-  public estqCapaMovimentos: EstqCapaMovimento[];
-
-  @OneToMany(
-    () => SstmParametroUsuario,
-    (sstmParametroUsuario) => sstmParametroUsuario.prusUsrs
-  )
-  public sstmParametroUsuarios: SstmParametroUsuario[];
 }

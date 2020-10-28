@@ -1,36 +1,21 @@
-import { Column, Entity, Index, OneToMany } from "typeorm";
-import { CmnsPessoaEmail } from "./cmns-pessoa-email";
+import { BasicInterface, BasicModel } from '@gpremium/shared-int';
+import { prop, required } from '@rxweb/reactive-form-validators';
 
-@Index("PK_CMNS_TIPO_EMAIL", ["id"], { unique: true })
-@Entity("CMNS_TIPO_EMAIL")
-export class CmnsTipoEmail {
-  @Column("uniqueidentifier", { primary: true, name: "ID" })
-  public id: string;
+export interface ICmnsTipoEmail extends BasicInterface {
+    tpemCodigo: string;
+    tpemNome: string;
+}
 
-  @Column("nvarchar", { name: "TPEM_CODIGO", nullable: true, length: 3 })
-  public tpemCodigo: string | null;
+export class CmnsTipoEmailDto extends BasicModel implements ICmnsTipoEmail {
+    @prop()
+    @required({message: 'O Código do Tipo de e-mail é obrigatório!'})
+    public tpemCodigo: string;
+    @required({message: 'O Nome do Tipo de e-mail é obrigatório!'})
+    public tpemNome: string;
 
-  @Column("nvarchar", { name: "TPEM_NOME", nullable: true, length: 64 })
-  public tpemNome: string | null;
-
-  @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: LocalDateTime;
-
-  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: LocalDateTime | null;
-
-  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
-  public audtUsrsCreate: string;
-
-  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
-  public audtUsrsUpdate: string | null;
-
-  @Column("smallint", { name: "AUDT_ACTIVE" })
-  public audtActive: number;
-
-  @OneToMany(
-    () => CmnsPessoaEmail,
-    (cmnsPessoaEmail) => cmnsPessoaEmail.psemTpem
-  )
-  public cmnsPessoaEmails: CmnsPessoaEmail[];
+    constructor(param?: Partial<ICmnsTipoEmail>) {
+        super(param);
+        this.tpemCodigo = param?.tpemCodigo ?? null;
+        this.tpemNome = param?.tpemNome ?? null;
+    }
 }

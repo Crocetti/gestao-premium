@@ -1,45 +1,30 @@
-import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
-import { CmnsTipoTelefone } from "./cmns-tipo-telefone";
-import { CmnsPessoa } from "./cmns-pessoa";
+import { BasicInterface, BasicModel } from '@gpremium/shared-int';
+import { prop } from '@rxweb/reactive-form-validators';
+import { ICmnsPessoa } from './cmns-pessoa.interface';
+import { ICmnsTipoTelefone } from './cmns-tipo-telefone.interface';
 
-@Index("PK_CMNS_PESSOA_TELEFONE", ["id"], { unique: true })
-@Entity("CMNS_PESSOA_TELEFONE")
-export class CmnsPessoaTelefone {
-  @Column("uniqueidentifier", { primary: true, name: "ID" })
-  public id: string;
+export interface ICmnsPessoaTelefone extends BasicInterface {
+    pstlNumero: string;
+    pstlRamal: string;
+    pstlObservacao: string;
+    cmnsTipoTelefone: ICmnsTipoTelefone;
+    cmnsPessoa: ICmnsPessoa;
+}
 
-  @Column("nvarchar", { name: "PSTL_NUMERO", nullable: true, length: 20 })
-  public pstlNumero: string | null;
+export class CmnsPessoaTelefoneDto extends BasicModel implements ICmnsPessoaTelefone {
+    @prop()
+    public pstlNumero: string;
+    @prop()
+    public pstlRamal: string;
+    @prop()
+    public pstlObservacao: string;
+    @prop()
+    public cmnsTipoTelefone: ICmnsTipoTelefone;
+    @prop()
+    public cmnsPessoa: ICmnsPessoa;
 
-  @Column("nvarchar", { name: "PSTL_RAMAL", nullable: true, length: 10 })
-  public pstlRamal: string | null;
-
-  @Column("nvarchar", { name: "PSTL_OBSERVACAO", nullable: true })
-  public pstlObservacao: string | null;
-
-  @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: LocalDateTime;
-
-  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: LocalDateTime | null;
-
-  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
-  public audtUsrsCreate: string;
-
-  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
-  public audtUsrsUpdate: string | null;
-
-  @Column("smallint", { name: "AUDT_ACTIVE" })
-  public audtActive: number;
-
-  @ManyToOne(
-    () => CmnsTipoTelefone,
-    (cmnsTipoTelefone) => cmnsTipoTelefone.cmnsPessoaTelefones
-  )
-  @JoinColumn([{ name: "PSTL_TPTL_ID", referencedColumnName: "id" }])
-  public pstlTptl: CmnsTipoTelefone;
-
-  @ManyToOne(() => CmnsPessoa, (cmnsPessoa) => cmnsPessoa.cmnsPessoaTelefones)
-  @JoinColumn([{ name: "PSTL_PESS_ID", referencedColumnName: "id" }])
-  public pstlPess: CmnsPessoa;
+    constructor(param?: Partial<ICmnsPessoaTelefone>) {
+        super(param);
+        Object.assign(this, param);
+    }
 }

@@ -1,60 +1,46 @@
-import {
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  OneToMany,
-} from "typeorm";
-import { CmnsBairro } from "./cmns-bairro";
-import { CmnsUnidadeFederativa } from "./cmns-unidade-federativa";
+import { BasicInterface, BasicModel } from '@gpremium/shared-int';
+import { prop, required } from '@rxweb/reactive-form-validators';
+import { ICmnsBairro } from './cmns-bairro.interface';
+import { ICmnsUnidadeFederativa } from './cmns-unidade-federativa.interface';
 
-@Index("PK_CMNS_LOCALIDADE", ["id"], { unique: true })
-@Entity("CMNS_LOCALIDADE")
-export class CmnsLocalidade {
-  @Column("uniqueidentifier", { primary: true, name: "ID" })
-  public id: string;
+export interface ICmnsLocalidade extends BasicInterface {
+    lcldNome: string;
+    lcldCep: string;
+    lcldNrIbge?: string;
+    lcldNomeAbrev?: string;
+    lcldCepInicial?: string;
+    lcldCepFinal?: string;
+    cmnsUnfd: ICmnsUnidadeFederativa;
+    cmnsBairros?: ICmnsBairro[]
+}
 
-  @Column("nvarchar", { name: "LCLD_NR_IBGE", nullable: true, length: 12 })
-  public lcldNrIbge: string | null;
+export class CmnsLocalidadeDto extends BasicModel implements ICmnsLocalidade {
+    @required({message: 'O nome da Localidade é obrigatório!'})
+    public lcldNome: string;
+    @required({message: 'O cep da Localidade é obrigatório!'})
+    public lcldCep: string;
+    @prop()
+    public lcldNrIbge?: string;
+    @prop()
+    public lcldNomeAbrev?: string;
+    @prop()
+    public lcldCepInicial?: string;
+    @prop()
+    public lcldCepFinal?: string;
+    @required()
+    public cmnsUnfd: ICmnsUnidadeFederativa;
 
-  @Column("nvarchar", { name: "LCLD_NOME", nullable: true, length: 128 })
-  public lcldNome: string | null;
+    public cmnsBairros: ICmnsBairro[];
 
-  @Column("nvarchar", { name: "LCLD_CEP", nullable: true, length: 9 })
-  public lcldCep: string | null;
-
-  @Column("nvarchar", { name: "LCLD_NOME_ABREV", nullable: true, length: 40 })
-  public lcldNomeAbrev: string | null;
-
-  @Column("nvarchar", { name: "LCLD_CEP_INICIAL", nullable: true, length: 9 })
-  public lcldCepInicial: string | null;
-
-  @Column("nvarchar", { name: "LCLD_CEP_FINAL", nullable: true, length: 9 })
-  public lcldCepFinal: string | null;
-
-  @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: LocalDateTime;
-
-  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: LocalDateTime | null;
-
-  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
-  public audtUsrsCreate: string;
-
-  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
-  public audtUsrsUpdate: string | null;
-
-  @Column("smallint", { name: "AUDT_ACTIVE" })
-  public audtActive: number;
-
-  @OneToMany(() => CmnsBairro, (cmnsBairro) => cmnsBairro.bairLcld)
-  public cmnsBairros: CmnsBairro[];
-
-  @ManyToOne(
-    () => CmnsUnidadeFederativa,
-    (cmnsUnidadeFederativa) => cmnsUnidadeFederativa.cmnsLocalidades
-  )
-  @JoinColumn([{ name: "LCLD_UNFD_ID", referencedColumnName: "id" }])
-  public lcldUnfd: CmnsUnidadeFederativa;
+    constructor(value?: Partial<ICmnsLocalidade>) {
+        super(value);
+        this.lcldNome = value?.lcldNome ?? null;
+        this.lcldCep = value?.lcldCep ?? null;
+        this.lcldNrIbge = value?.lcldNrIbge ?? null;
+        this.lcldNomeAbrev = value?.lcldNomeAbrev ?? null;
+        this.lcldCepInicial = value?.lcldCepInicial ?? null;
+        this.lcldCepFinal = value?.lcldCepFinal ?? null;
+        this.cmnsUnfd = value?.cmnsUnfd ?? null;
+        this.cmnsBairros = value?.cmnsBairros ?? null;
+    }
 }

@@ -1,64 +1,43 @@
-import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
-import { CmnsTipoEndereco } from "./cmns-tipo-endereco";
-import { CmnsBairro } from "./cmns-bairro";
-import { CmnsPessoa } from "./cmns-pessoa";
+import { BasicInterface, BasicModel } from '@gpremium/shared-int';
+import { prop } from '@rxweb/reactive-form-validators';
+import type { ICmnsBairro } from './cmns-bairro.interface';
+import { ICmnsPessoa } from './cmns-pessoa.interface';
+import { ICmnsTipoEndereco } from './cmns-tipo-endereco.interface';
 
-@Index("PK_CMNS_PESSOA_ENDERECO", ["id"], { unique: true })
-@Entity("CMNS_PESSOA_ENDERECO")
-export class CmnsPessoaEndereco {
-  @Column("uniqueidentifier", { primary: true, name: "ID" })
-  public id: string;
+export interface ICmnsPessoaEndereco extends BasicInterface {
+    psenCep: string;
+    psenLogradouro: string;
+    psenNumero: string;
+    psenComplemento: string;
+    psenDistanciaKm: number;
+    psenZona: string;
+    cmnsTipoEndereco: ICmnsTipoEndereco;
+    cmnsBairro: ICmnsBairro;
+    cmnsPessoa: ICmnsPessoa;
+}
 
-  @Column("nvarchar", { name: "PSEN_CEP", nullable: true, length: 9 })
-  public psenCep: string | null;
+export class CmnsPessoaEnderecoDto extends BasicModel implements ICmnsPessoaEndereco {
+    @prop()
+    public psenCep: string;
+    @prop()
+    public psenLogradouro: string;
+    @prop()
+    public psenNumero: string;
+    @prop()
+    public psenComplemento: string;
+    @prop()
+    public psenDistanciaKm: number;
+    @prop()
+    public psenZona: string;
+    @prop()
+    public cmnsTipoEndereco: ICmnsTipoEndereco;
+    @prop()
+    public cmnsBairro: ICmnsBairro;
+    @prop()
+    public cmnsPessoa: ICmnsPessoa;
 
-  @Column("nvarchar", { name: "PSEN_LOGRADOURO", nullable: true, length: 128 })
-  public psenLogradouro: string | null;
-
-  @Column("nvarchar", { name: "PSEN_NUMERO", nullable: true, length: 20 })
-  public psenNumero: string | null;
-
-  @Column("nvarchar", { name: "PSEN_COMPLEMENTO", nullable: true, length: 40 })
-  public psenComplemento: string | null;
-
-  @Column("numeric", {
-    name: "PSEN_DISTANCIA_KM",
-    nullable: true,
-    precision: 18,
-    scale: 4,
-  })
-  public psenDistanciaKm: number | null;
-
-  @Column("nvarchar", { name: "PSEN_ZONA", nullable: true, length: 15 })
-  public psenZona: string | null;
-
-  @Column("datetime2", { name: "AUDT_DT_CREATE" })
-  public audtDtCreate: LocalDateTime;
-
-  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
-  public audtDtUpdate: LocalDateTime | null;
-
-  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
-  public audtUsrsCreate: string;
-
-  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
-  public audtUsrsUpdate: string | null;
-
-  @Column("smallint", { name: "AUDT_ACTIVE" })
-  public audtActive: number;
-
-  @ManyToOne(
-    () => CmnsTipoEndereco,
-    (cmnsTipoEndereco) => cmnsTipoEndereco.cmnsPessoaEnderecos
-  )
-  @JoinColumn([{ name: "PSEN_TPEN_ID", referencedColumnName: "id" }])
-  public psenTpen: CmnsTipoEndereco;
-
-  @ManyToOne(() => CmnsBairro, (cmnsBairro) => cmnsBairro.cmnsPessoaEnderecos)
-  @JoinColumn([{ name: "PSEN_BAIR_ID", referencedColumnName: "id" }])
-  public psenBair: CmnsBairro;
-
-  @ManyToOne(() => CmnsPessoa, (cmnsPessoa) => cmnsPessoa.cmnsPessoaEnderecos)
-  @JoinColumn([{ name: "PSEN_PESS_ID", referencedColumnName: "id" }])
-  public psenPess: CmnsPessoa;
+    constructor(param?: Partial<ICmnsPessoaEndereco>) {
+        super(param);
+        Object.assign(this, param);
+    }
 }

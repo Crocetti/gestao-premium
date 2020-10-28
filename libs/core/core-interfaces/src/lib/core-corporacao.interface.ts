@@ -1,43 +1,26 @@
-import { BaseEntity, Column, Entity, Index, OneToMany } from "typeorm";
-import { CoreEmpresa } from "./core-empresa";
-import { SstmParametroCorporacao } from "./sstm-parametro-corporacao";
-import { SstmSistemaCorporacao } from "./sstm-sistema-corporacao";
+import { prop } from '@rxweb/reactive-form-validators';
+import { BasicInterface, BasicModel } from '@gpremium/shared-int';
+import { ICoreEmpresa } from './core-empresa.interface';
 
-@Index("PK_CORE_CORPORACAO", ["cprcId"], { unique: true })
-@Entity("CORE_CORPORACAO")
-export class CoreCorporacao extends BaseEntity {
-  @Column("varchar", { primary: true, name: "CPRC_ID", length: 27 })
-  public cprcId: string;
+export interface ICoreCorporacao extends BasicInterface {
+    cprcNome: string;
+    cprcSenha: string;
+    cprcLogomarca: string;
+    coreEmpresas?: ICoreEmpresa[]
+}
 
-  @Column("varchar", { name: "CPRC_NOME", nullable: true, length: 64 })
-  public cprcNome: string | null;
+export class CoreCorporacaoDto extends BasicModel implements ICoreCorporacao {
+    @prop()
+    public cprcNome: string;
+    @prop()
+    public cprcSenha: string;
+    @prop()
+    public cprcLogomarca: string;
+    @prop()
+    public coreEmpresas?: ICoreEmpresa[];
 
-  @Column("varchar", { name: "CPRC_SENHA", nullable: true, length: 256 })
-  public cprcSenha: string | null;
-
-  @Column("image", { name: "CPRC_LOGOMARCA", nullable: true })
-  public cprcLogomarca: Buffer | null;
-
-  @Column("datetime", { name: "CPRC_LASTUPDATE", nullable: true })
-  public cprcLastupdate: LocalDateTime | null;
-
-  @OneToMany(() => CoreEmpresa, (coreEmpresa) => coreEmpresa.emprCprc)
-  public coreEmpresas: CoreEmpresa[];
-
-  @OneToMany(
-    () => SstmParametroCorporacao,
-    (sstmParametroCorporacao) => sstmParametroCorporacao.prcpCprc
-  )
-  public sstmParametroCorporacaos: SstmParametroCorporacao[];
-
-  @OneToMany(
-    () => SstmSistemaCorporacao,
-    (sstmSistemaCorporacao) => sstmSistemaCorporacao.sscpCprc
-  )
-  public sstmSistemaCorporacaos: SstmSistemaCorporacao[];
-
-  public constructor(init?: Partial<CoreCorporacao>) {
-    super();
-    Object.assign(this, init);
-  }
+    constructor(param?: Partial<ICoreCorporacao>) {
+        super(param);
+        Object.assign(this, param);
+    }
 }

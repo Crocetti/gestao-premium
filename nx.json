@@ -41,7 +41,10 @@
     "cdst-entities": {
       "tags": []
     },
-    "cmns-entities": {
+    "cmns-base-ents": {
+      "tags": []
+    },
+    "cmns-pess-ents": {
       "tags": []
     },
     "core-entities": {
@@ -122,7 +125,7 @@
     "vete-interfaces": {
       "tags": []
     },
-    "cmns-controllers": {
+    "cmns-back": {
       "tags": ["global"]
     },
     "gp-api": {
@@ -143,6 +146,51 @@
     },
     "home-pages": {
       "tags": ["home shared"]
+    },
+    "shared-ent": {
+      "tags": []
+    },
+    "shared-int": {
+      "tags": []
+    },
+    "core-back": {
+      "tags": []
+    },
+    "cdst-back": {
+      "tags": []
+    },
+    "menu-back": {
+      "tags": []
+    },
+    "sstm-back": {
+      "tags": []
+    },
+    "estq-back": {
+      "tags": []
+    },
+    "fncr-back": {
+      "tags": []
+    },
+    "mail-back": {
+      "tags": []
+    },
+    "pecf-back": {
+      "tags": []
+    },
+    "pecr-back": {
+      "tags": []
+    },
+    "rchm-back": {
+      "tags": []
+    },
+    "srvc-back": {
+      "tags": []
+    },
+    "vete-back": {
+      "tags": []
+    },
+    "fscl-back": {
+      "tags": []
     }
   }
 }
