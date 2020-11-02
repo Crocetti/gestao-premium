@@ -12,7 +12,7 @@ import { CmnsPessoa } from '@gpremium/cmns-pess-ents';
 import type {
     ICoreEmpresa,
     ICoreUnidadeEmpresarial,
-} from '@gpremium/core-interfaces';
+} from '@gpremium/core-intf';
 import type { ICmnsPessoa } from '@gpremium/cmns-pess-intf';
 import { BasicEntity } from '@gpremium/shared-ent';
 

@@ -1,1 +1,1 @@
-export * from './lib/cdst-interfaces.module';
+export * from './lib/cdst-intf.module';

@@ -1,5 +1,5 @@
-export * from './lib/fncr-entities.module';
-export * from './lib/fncr-entities.config';
+export * from './lib/fncr-ents.module';
+export * from './lib/fncr-ents.config';
 export * from './lib/fncr-banco.entity';
 export * from './lib/fncr-banco-conta-saldo.entity';
 export * from './lib/fncr-banco-conta.entity';

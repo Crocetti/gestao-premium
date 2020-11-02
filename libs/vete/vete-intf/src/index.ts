@@ -1,1 +1,1 @@
-export * from './lib/vete-interfaces.module';
+export * from './lib/vete-intf.module';

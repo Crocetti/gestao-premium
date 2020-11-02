@@ -9,7 +9,7 @@ import type {
 import type {
     ICoreUnidadeEmpresarial,
     ICmnsUnemUsuario,
-} from '@gpremium/core-interfaces';
+} from '@gpremium/core-intf';
 
 @Index('PK_CMNS_UNEM_USUARIO', ['id'], { unique: true })
 @Entity('CMNS_UNEM_USUARIO')

@@ -1,1 +1,1 @@
-export * from './lib/menu-entities.module';
+export * from './lib/menu-ents.module';

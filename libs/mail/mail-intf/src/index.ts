@@ -1,1 +1,1 @@
-export * from './lib/mail-interfaces.module';
+export * from './lib/mail-intf.module';

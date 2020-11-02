@@ -1,1 +1,1 @@
-export * from './lib/fscl-interfaces.module';
+export * from './lib/fscl-intf.module';

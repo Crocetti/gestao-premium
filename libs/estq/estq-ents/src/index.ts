@@ -1,5 +1,5 @@
-export * from './lib/estq-entities.module';
-export * from './lib/estq-entities.config';
+export * from './lib/estq-ents.module';
+export * from './lib/estq-ents.config';
 export * from './lib/estq-grupo.entity';
 export * from './lib/estq-subgrupo.entity';
 export * from './lib/estq-marca.entity';

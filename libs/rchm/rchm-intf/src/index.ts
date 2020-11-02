@@ -1,1 +1,1 @@
-export * from './lib/rchm-interfaces.module';
+export * from './lib/rchm-intf.module';

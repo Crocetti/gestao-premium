@@ -1,1 +1,1 @@
-export * from './lib/vete-entities.module';
+export * from './lib/vete-ents.module';

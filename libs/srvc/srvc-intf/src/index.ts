@@ -1,1 +1,1 @@
-export * from './lib/srvc-interfaces.module';
+export * from './lib/srvc-intf.module';

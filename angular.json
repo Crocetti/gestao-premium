@@ -177,9 +177,9 @@
         }
       }
     },
-    "api-interfaces": {
-      "root": "libs/api-interfaces",
-      "sourceRoot": "libs/api-interfaces/src",
+    "api-intf": {
+      "root": "libs/api-intf",
+      "sourceRoot": "libs/api-intf/src",
       "projectType": "library",
       "schematics": {},
       "architect": {
@@ -187,16 +187,16 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/api-interfaces/tsconfig.lib.json",
-              "libs/api-interfaces/tsconfig.spec.json"
+              "libs/api-intf/tsconfig.lib.json",
+              "libs/api-intf/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/api-interfaces/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/api-intf/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/api-interfaces/jest.config.js",
+            "jestConfig": "libs/api-intf/jest.config.js",
             "passWithNoTests": true
           }
         }
@@ -352,26 +352,26 @@
         }
       }
     },
-    "fscl-entities": {
+    "fscl-ents": {
       "projectType": "library",
-      "root": "libs/fscl/fscl-entities",
-      "sourceRoot": "libs/fscl/fscl-entities/src",
+      "root": "libs/fscl/fscl-ents",
+      "sourceRoot": "libs/fscl/fscl-ents/src",
       "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/fscl/fscl-entities/tsconfig.lib.json",
-              "libs/fscl/fscl-entities/tsconfig.spec.json"
+              "libs/fscl/fscl-ents/tsconfig.lib.json",
+              "libs/fscl/fscl-ents/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/fscl/fscl-entities/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/fscl/fscl-ents/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/fscl/fscl-entities/jest.config.js",
+            "jestConfig": "libs/fscl/fscl-ents/jest.config.js",
             "passWithNoTests": true
           }
         }
@@ -382,26 +382,26 @@
         }
       }
     },
-    "mail-entities": {
+    "mail-ents": {
       "projectType": "library",
-      "root": "libs/mail/mail-entities",
-      "sourceRoot": "libs/mail/mail-entities/src",
+      "root": "libs/mail/mail-ents",
+      "sourceRoot": "libs/mail/mail-ents/src",
       "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/mail/mail-entities/tsconfig.lib.json",
-              "libs/mail/mail-entities/tsconfig.spec.json"
+              "libs/mail/mail-ents/tsconfig.lib.json",
+              "libs/mail/mail-ents/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/mail/mail-entities/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/mail/mail-ents/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/mail/mail-entities/jest.config.js",
+            "jestConfig": "libs/mail/mail-ents/jest.config.js",
             "passWithNoTests": true
           }
         }
@@ -412,26 +412,26 @@
         }
       }
     },
-    "menu-entities": {
+    "menu-ents": {
       "projectType": "library",
-      "root": "libs/menu/menu-entities",
-      "sourceRoot": "libs/menu/menu-entities/src",
+      "root": "libs/menu/menu-ents",
+      "sourceRoot": "libs/menu/menu-ents/src",
       "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/menu/menu-entities/tsconfig.lib.json",
-              "libs/menu/menu-entities/tsconfig.spec.json"
+              "libs/menu/menu-ents/tsconfig.lib.json",
+              "libs/menu/menu-ents/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/menu/menu-entities/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/menu/menu-ents/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/menu/menu-entities/jest.config.js",
+            "jestConfig": "libs/menu/menu-ents/jest.config.js",
             "passWithNoTests": true
           }
         }
@@ -442,26 +442,26 @@
         }
       }
     },
-    "pecf-entities": {
+    "pecf-ents": {
       "projectType": "library",
-      "root": "libs/pecf/pecf-entities",
-      "sourceRoot": "libs/pecf/pecf-entities/src",
+      "root": "libs/pecf/pecf-ents",
+      "sourceRoot": "libs/pecf/pecf-ents/src",
       "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/pecf/pecf-entities/tsconfig.lib.json",
-              "libs/pecf/pecf-entities/tsconfig.spec.json"
+              "libs/pecf/pecf-ents/tsconfig.lib.json",
+              "libs/pecf/pecf-ents/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/pecf/pecf-entities/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/pecf/pecf-ents/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/pecf/pecf-entities/jest.config.js",
+            "jestConfig": "libs/pecf/pecf-ents/jest.config.js",
             "passWithNoTests": true
           }
         }
@@ -472,26 +472,26 @@
         }
       }
     },
-    "pecr-entities": {
+    "pecr-ents": {
       "projectType": "library",
-      "root": "libs/pecr/pecr-entities",
-      "sourceRoot": "libs/pecr/pecr-entities/src",
+      "root": "libs/pecr/pecr-ents",
+      "sourceRoot": "libs/pecr/pecr-ents/src",
       "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/pecr/pecr-entities/tsconfig.lib.json",
-              "libs/pecr/pecr-entities/tsconfig.spec.json"
+              "libs/pecr/pecr-ents/tsconfig.lib.json",
+              "libs/pecr/pecr-ents/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/pecr/pecr-entities/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/pecr/pecr-ents/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/pecr/pecr-entities/jest.config.js",
+            "jestConfig": "libs/pecr/pecr-ents/jest.config.js",
             "passWithNoTests": true
           }
         }
@@ -502,26 +502,26 @@
         }
       }
     },
-    "rchm-entities": {
+    "rchm-ents": {
       "projectType": "library",
-      "root": "libs/rchm/rchm-entities",
-      "sourceRoot": "libs/rchm/rchm-entities/src",
+      "root": "libs/rchm/rchm-ents",
+      "sourceRoot": "libs/rchm/rchm-ents/src",
       "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/rchm/rchm-entities/tsconfig.lib.json",
-              "libs/rchm/rchm-entities/tsconfig.spec.json"
+              "libs/rchm/rchm-ents/tsconfig.lib.json",
+              "libs/rchm/rchm-ents/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/rchm/rchm-entities/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/rchm/rchm-ents/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/rchm/rchm-entities/jest.config.js",
+            "jestConfig": "libs/rchm/rchm-ents/jest.config.js",
             "passWithNoTests": true
           }
         }
@@ -532,26 +532,26 @@
         }
       }
     },
-    "srvc-entities": {
+    "srvc-ents": {
       "projectType": "library",
-      "root": "libs/srvc/srvc-entities",
-      "sourceRoot": "libs/srvc/srvc-entities/src",
+      "root": "libs/srvc/srvc-ents",
+      "sourceRoot": "libs/srvc/srvc-ents/src",
       "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/srvc/srvc-entities/tsconfig.lib.json",
-              "libs/srvc/srvc-entities/tsconfig.spec.json"
+              "libs/srvc/srvc-ents/tsconfig.lib.json",
+              "libs/srvc/srvc-ents/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/srvc/srvc-entities/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/srvc/srvc-ents/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/srvc/srvc-entities/jest.config.js",
+            "jestConfig": "libs/srvc/srvc-ents/jest.config.js",
             "passWithNoTests": true
           }
         }
@@ -562,26 +562,26 @@
         }
       }
     },
-    "sstm-entities": {
+    "sstm-ents": {
       "projectType": "library",
-      "root": "libs/sstm/sstm-entities",
-      "sourceRoot": "libs/sstm/sstm-entities/src",
+      "root": "libs/sstm/sstm-ents",
+      "sourceRoot": "libs/sstm/sstm-ents/src",
       "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/sstm/sstm-entities/tsconfig.lib.json",
-              "libs/sstm/sstm-entities/tsconfig.spec.json"
+              "libs/sstm/sstm-ents/tsconfig.lib.json",
+              "libs/sstm/sstm-ents/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/sstm/sstm-entities/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/sstm/sstm-ents/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/sstm/sstm-entities/jest.config.js",
+            "jestConfig": "libs/sstm/sstm-ents/jest.config.js",
             "passWithNoTests": true
           }
         }
@@ -592,26 +592,26 @@
         }
       }
     },
-    "vete-entities": {
+    "vete-ents": {
       "projectType": "library",
-      "root": "libs/vete/vete-entities",
-      "sourceRoot": "libs/vete/vete-entities/src",
+      "root": "libs/vete/vete-ents",
+      "sourceRoot": "libs/vete/vete-ents/src",
       "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/vete/vete-entities/tsconfig.lib.json",
-              "libs/vete/vete-entities/tsconfig.spec.json"
+              "libs/vete/vete-ents/tsconfig.lib.json",
+              "libs/vete/vete-ents/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/vete/vete-entities/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/vete/vete-ents/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/vete/vete-entities/jest.config.js",
+            "jestConfig": "libs/vete/vete-ents/jest.config.js",
             "passWithNoTests": true
           }
         }
@@ -742,26 +742,26 @@
         }
       }
     },
-    "fncr-interfaces": {
+    "fncr-intf": {
       "projectType": "library",
-      "root": "libs/fncr/fncr-interfaces",
-      "sourceRoot": "libs/fncr/fncr-interfaces/src",
+      "root": "libs/fncr/fncr-intf",
+      "sourceRoot": "libs/fncr/fncr-intf/src",
       "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/fncr/fncr-interfaces/tsconfig.lib.json",
-              "libs/fncr/fncr-interfaces/tsconfig.spec.json"
+              "libs/fncr/fncr-intf/tsconfig.lib.json",
+              "libs/fncr/fncr-intf/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/fncr/fncr-interfaces/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/fncr/fncr-intf/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/fncr/fncr-interfaces/jest.config.js",
+            "jestConfig": "libs/fncr/fncr-intf/jest.config.js",
             "passWithNoTests": true
           }
         }
@@ -772,26 +772,26 @@
         }
       }
     },
-    "fscl-interfaces": {
+    "fscl-intf": {
       "projectType": "library",
-      "root": "libs/fscl/fscl-interfaces",
-      "sourceRoot": "libs/fscl/fscl-interfaces/src",
+      "root": "libs/fscl/fscl-intf",
+      "sourceRoot": "libs/fscl/fscl-intf/src",
       "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/fscl/fscl-interfaces/tsconfig.lib.json",
-              "libs/fscl/fscl-interfaces/tsconfig.spec.json"
+              "libs/fscl/fscl-intf/tsconfig.lib.json",
+              "libs/fscl/fscl-intf/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/fscl/fscl-interfaces/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/fscl/fscl-intf/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/fscl/fscl-interfaces/jest.config.js",
+            "jestConfig": "libs/fscl/fscl-intf/jest.config.js",
             "passWithNoTests": true
           }
         }
@@ -802,26 +802,26 @@
         }
       }
     },
-    "mail-interfaces": {
+    "mail-intf": {
       "projectType": "library",
-      "root": "libs/mail/mail-interfaces",
-      "sourceRoot": "libs/mail/mail-interfaces/src",
+      "root": "libs/mail/mail-intf",
+      "sourceRoot": "libs/mail/mail-intf/src",
       "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/mail/mail-interfaces/tsconfig.lib.json",
-              "libs/mail/mail-interfaces/tsconfig.spec.json"
+              "libs/mail/mail-intf/tsconfig.lib.json",
+              "libs/mail/mail-intf/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/mail/mail-interfaces/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/mail/mail-intf/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/mail/mail-interfaces/jest.config.js",
+            "jestConfig": "libs/mail/mail-intf/jest.config.js",
             "passWithNoTests": true
           }
         }
@@ -832,26 +832,26 @@
         }
       }
     },
-    "menu-interfaces": {
+    "menu-intf": {
       "projectType": "library",
-      "root": "libs/menu/menu-interfaces",
-      "sourceRoot": "libs/menu/menu-interfaces/src",
+      "root": "libs/menu/menu-intf",
+      "sourceRoot": "libs/menu/menu-intf/src",
       "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/menu/menu-interfaces/tsconfig.lib.json",
-              "libs/menu/menu-interfaces/tsconfig.spec.json"
+              "libs/menu/menu-intf/tsconfig.lib.json",
+              "libs/menu/menu-intf/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/menu/menu-interfaces/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/menu/menu-intf/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/menu/menu-interfaces/jest.config.js",
+            "jestConfig": "libs/menu/menu-intf/jest.config.js",
             "passWithNoTests": true
           }
         }
@@ -862,26 +862,26 @@
         }
       }
     },
-    "pecf-interfaces": {
+    "pecf-intf": {
       "projectType": "library",
-      "root": "libs/pecf/pecf-interfaces",
-      "sourceRoot": "libs/pecf/pecf-interfaces/src",
+      "root": "libs/pecf/pecf-intf",
+      "sourceRoot": "libs/pecf/pecf-intf/src",
       "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/pecf/pecf-interfaces/tsconfig.lib.json",
-              "libs/pecf/pecf-interfaces/tsconfig.spec.json"
+              "libs/pecf/pecf-intf/tsconfig.lib.json",
+              "libs/pecf/pecf-intf/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/pecf/pecf-interfaces/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/pecf/pecf-intf/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/pecf/pecf-interfaces/jest.config.js",
+            "jestConfig": "libs/pecf/pecf-intf/jest.config.js",
             "passWithNoTests": true
           }
         }
@@ -892,26 +892,26 @@
         }
       }
     },
-    "pecr-interfaces": {
+    "pecr-intf": {
       "projectType": "library",
-      "root": "libs/pecr/pecr-interfaces",
-      "sourceRoot": "libs/pecr/pecr-interfaces/src",
+      "root": "libs/pecr/pecr-intf",
+      "sourceRoot": "libs/pecr/pecr-intf/src",
       "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/pecr/pecr-interfaces/tsconfig.lib.json",
-              "libs/pecr/pecr-interfaces/tsconfig.spec.json"
+              "libs/pecr/pecr-intf/tsconfig.lib.json",
+              "libs/pecr/pecr-intf/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/pecr/pecr-interfaces/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/pecr/pecr-intf/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/pecr/pecr-interfaces/jest.config.js",
+            "jestConfig": "libs/pecr/pecr-intf/jest.config.js",
             "passWithNoTests": true
           }
         }
@@ -922,26 +922,26 @@
         }
       }
     },
-    "rchm-interfaces": {
+    "rchm-intf": {
       "projectType": "library",
-      "root": "libs/rchm/rchm-interfaces",
-      "sourceRoot": "libs/rchm/rchm-interfaces/src",
+      "root": "libs/rchm/rchm-intf",
+      "sourceRoot": "libs/rchm/rchm-intf/src",
       "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/rchm/rchm-interfaces/tsconfig.lib.json",
-              "libs/rchm/rchm-interfaces/tsconfig.spec.json"
+              "libs/rchm/rchm-intf/tsconfig.lib.json",
+              "libs/rchm/rchm-intf/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/rchm/rchm-interfaces/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/rchm/rchm-intf/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/rchm/rchm-interfaces/jest.config.js",
+            "jestConfig": "libs/rchm/rchm-intf/jest.config.js",
             "passWithNoTests": true
           }
         }
@@ -952,26 +952,26 @@
         }
       }
     },
-    "srvc-interfaces": {
+    "srvc-intf": {
       "projectType": "library",
-      "root": "libs/srvc/srvc-interfaces",
-      "sourceRoot": "libs/srvc/srvc-interfaces/src",
+      "root": "libs/srvc/srvc-intf",
+      "sourceRoot": "libs/srvc/srvc-intf/src",
       "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/srvc/srvc-interfaces/tsconfig.lib.json",
-              "libs/srvc/srvc-interfaces/tsconfig.spec.json"
+              "libs/srvc/srvc-intf/tsconfig.lib.json",
+              "libs/srvc/srvc-intf/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/srvc/srvc-interfaces/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/srvc/srvc-intf/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/srvc/srvc-interfaces/jest.config.js",
+            "jestConfig": "libs/srvc/srvc-intf/jest.config.js",
             "passWithNoTests": true
           }
         }
@@ -982,26 +982,26 @@
         }
       }
     },
-    "sstm-interfaces": {
+    "sstm-intf": {
       "projectType": "library",
-      "root": "libs/sstm/sstm-interfaces",
-      "sourceRoot": "libs/sstm/sstm-interfaces/src",
+      "root": "libs/sstm/sstm-intf",
+      "sourceRoot": "libs/sstm/sstm-intf/src",
       "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/sstm/sstm-interfaces/tsconfig.lib.json",
-              "libs/sstm/sstm-interfaces/tsconfig.spec.json"
+              "libs/sstm/sstm-intf/tsconfig.lib.json",
+              "libs/sstm/sstm-intf/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/sstm/sstm-interfaces/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/sstm/sstm-intf/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/sstm/sstm-interfaces/jest.config.js",
+            "jestConfig": "libs/sstm/sstm-intf/jest.config.js",
             "passWithNoTests": true
           }
         }
@@ -1012,26 +1012,26 @@
         }
       }
     },
-    "vete-interfaces": {
+    "vete-intf": {
       "projectType": "library",
-      "root": "libs/vete/vete-interfaces",
-      "sourceRoot": "libs/vete/vete-interfaces/src",
+      "root": "libs/vete/vete-intf",
+      "sourceRoot": "libs/vete/vete-intf/src",
       "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/vete/vete-interfaces/tsconfig.lib.json",
-              "libs/vete/vete-interfaces/tsconfig.spec.json"
+              "libs/vete/vete-intf/tsconfig.lib.json",
+              "libs/vete/vete-intf/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/vete/vete-interfaces/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/vete/vete-intf/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/vete/vete-interfaces/jest.config.js",
+            "jestConfig": "libs/vete/vete-intf/jest.config.js",
             "passWithNoTests": true
           }
         }
@@ -1042,26 +1042,26 @@
         }
       }
     },
-    "fncr-entities": {
+    "fncr-ents": {
       "projectType": "library",
-      "root": "libs/fncr/fncr-entities",
-      "sourceRoot": "libs/fncr/fncr-entities/src",
+      "root": "libs/fncr/fncr-ents",
+      "sourceRoot": "libs/fncr/fncr-ents/src",
       "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/fncr/fncr-entities/tsconfig.lib.json",
-              "libs/fncr/fncr-entities/tsconfig.spec.json"
+              "libs/fncr/fncr-ents/tsconfig.lib.json",
+              "libs/fncr/fncr-ents/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/fncr/fncr-entities/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/fncr/fncr-ents/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/fncr/fncr-entities/jest.config.js",
+            "jestConfig": "libs/fncr/fncr-ents/jest.config.js",
             "passWithNoTests": true
           }
         }

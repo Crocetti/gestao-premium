@@ -1,4 +1,4 @@
-export * from './lib/cdst-entities.config';
+export * from './lib/cdst-ents.config';
 export * from './lib/cdst-classe-produto.entity';
 export * from './lib/cdst-cliente.entity';
 export * from './lib/cdst-fabricante.entity';

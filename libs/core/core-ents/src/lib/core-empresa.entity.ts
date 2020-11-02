@@ -7,14 +7,17 @@ import {
     ManyToOne,
     OneToMany,
 } from 'typeorm';
-import type { ICoreCorporacao, ICoreEmpresa, ICoreUnidadeEmpresarial } from '@gpremium/core-interfaces';
+import type {
+    ICoreCorporacao,
+    ICoreEmpresa,
+    ICoreUnidadeEmpresarial,
+} from '@gpremium/core-intf';
 import { CoreCorporacao } from './core-corporacao.entity';
 import { CoreUnidadeEmpresarial } from './core-unidade-empresarial.entity';
 
 @Index('PK_CORE_EMPRESA', ['id'], { unique: true })
 @Entity('CORE_EMPRESA')
 export class CoreEmpresa extends BasicEntity implements ICoreEmpresa {
-
     @Column('nvarchar', { name: 'EMPR_NOME', nullable: true, length: 64 })
     public emprNome: string | null;
 
@@ -36,5 +39,4 @@ export class CoreEmpresa extends BasicEntity implements ICoreEmpresa {
         (coreUnidadeEmpresarial) => coreUnidadeEmpresarial.coreEmpresa
     )
     public coreUnidadeEmpresarials: ICoreUnidadeEmpresarial[];
-
 }

@@ -14,10 +14,10 @@ import {
 import {
     CMNS_PESS_ENTITIES,
 } from '@gpremium/cmns-pess-ents';
-import { CORE_ENTITIES } from '@gpremium/core-entities';
-// import { CDST_ENTITIES } from '@gpremium/cdst-entities';
-// import { ESTQ_ENTITIES } from '@gpremium/estq-entities';
-// import { FNCR_ENTITIES } from '@gpremium/fncr-entities';
+import { CORE_ENTITIES } from '@gpremium/core-ents';
+// import { CDST_ENTITIES } from '@gpremium/cdst-ents';
+// import { ESTQ_ENTITIES } from '@gpremium/estq-ents';
+// import { FNCR_ENTITIES } from '@gpremium/fncr-ents';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';

@@ -1,1 +1,1 @@
-export * from './lib/pecf-entities.module';
+export * from './lib/pecf-ents.module';

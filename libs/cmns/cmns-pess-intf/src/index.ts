@@ -1,4 +1,4 @@
-export * from './lib/cmns-interfaces.module';
+export * from './lib/cmns-intf.module';
 export type { ICmnsPessoa } from './lib/cmns-pessoa.interface';
 export { CmnsPessoaDto } from './lib/cmns-pessoa.interface';
 export type { ICmnsPessoaDocumento } from './lib/cmns-pessoa-documento.interface';

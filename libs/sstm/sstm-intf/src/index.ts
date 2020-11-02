@@ -1,1 +1,1 @@
-export * from './lib/sstm-interfaces.module';
+export * from './lib/sstm-intf.module';

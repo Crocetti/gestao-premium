@@ -1,1 +1,1 @@
-export * from './lib/srvc-entities.module';
+export * from './lib/srvc-ents.module';

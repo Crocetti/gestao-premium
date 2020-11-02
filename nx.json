@@ -35,7 +35,7 @@
     "api": {
       "tags": []
     },
-    "api-interfaces": {
+    "api-intf": {
       "tags": []
     },
     "cdst-ents": {
@@ -53,34 +53,34 @@
     "estq-ents": {
       "tags": []
     },
-    "fncr-entities": {
+    "fncr-ents": {
       "tags": []
     },
-    "fscl-entities": {
+    "fscl-ents": {
       "tags": []
     },
-    "mail-entities": {
+    "mail-ents": {
       "tags": []
     },
-    "menu-entities": {
+    "menu-ents": {
       "tags": []
     },
-    "pecf-entities": {
+    "pecf-ents": {
       "tags": []
     },
-    "pecr-entities": {
+    "pecr-ents": {
       "tags": []
     },
-    "rchm-entities": {
+    "rchm-ents": {
       "tags": []
     },
-    "srvc-entities": {
+    "srvc-ents": {
       "tags": []
     },
-    "sstm-entities": {
+    "sstm-ents": {
       "tags": []
     },
-    "vete-entities": {
+    "vete-ents": {
       "tags": []
     },
     "cdst-intf": {
@@ -95,34 +95,34 @@
     "estq-intf": {
       "tags": []
     },
-    "fncr-interfaces": {
+    "fncr-intf": {
       "tags": []
     },
-    "fscl-interfaces": {
+    "fscl-intf": {
       "tags": []
     },
-    "mail-interfaces": {
+    "mail-intf": {
       "tags": []
     },
-    "menu-interfaces": {
+    "menu-intf": {
       "tags": []
     },
-    "pecf-interfaces": {
+    "pecf-intf": {
       "tags": []
     },
-    "pecr-interfaces": {
+    "pecr-intf": {
       "tags": []
     },
-    "rchm-interfaces": {
+    "rchm-intf": {
       "tags": []
     },
-    "srvc-interfaces": {
+    "srvc-intf": {
       "tags": []
     },
-    "sstm-interfaces": {
+    "sstm-intf": {
       "tags": []
     },
-    "vete-interfaces": {
+    "vete-intf": {
       "tags": []
     },
     "cmns-back": {
@@ -202,7 +202,7 @@
       "tags": []
     },
     "cmns-base-int": {
-      "tags": ["interfaces base"]
+      "tags": ["intf base"]
     }
   }
 }

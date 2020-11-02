@@ -1,1 +1,1 @@
-export * from './lib/fscl-entities.module';
+export * from './lib/fscl-ents.module';

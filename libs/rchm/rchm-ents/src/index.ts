@@ -1,1 +1,1 @@
-export * from './lib/rchm-entities.module';
+export * from './lib/rchm-ents.module';

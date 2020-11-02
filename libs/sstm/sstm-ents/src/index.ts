@@ -1,1 +1,1 @@
-export * from './lib/sstm-entities.module';
+export * from './lib/sstm-ents.module';

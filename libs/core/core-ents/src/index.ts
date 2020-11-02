@@ -1,5 +1,5 @@
 export * from './lib/core-ents.module';
-export * from './lib/core-entities.config';
+export * from './lib/core-ents.config';
 export * from './lib/core-corporacao.entity';
 export * from './lib/core-empresa.entity';
 export * from './lib/core-unidade-empresarial.entity';

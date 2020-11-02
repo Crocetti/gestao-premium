@@ -1,1 +1,1 @@
-export * from './lib/menu-interfaces.module';
+export * from './lib/menu-intf.module';

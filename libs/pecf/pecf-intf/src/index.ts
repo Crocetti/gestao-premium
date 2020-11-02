@@ -1,1 +1,1 @@
-export * from './lib/pecf-interfaces.module';
+export * from './lib/pecf-intf.module';

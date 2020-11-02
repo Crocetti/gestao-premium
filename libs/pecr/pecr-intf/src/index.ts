@@ -1,1 +1,1 @@
-export * from './lib/pecr-interfaces.module';
+export * from './lib/pecr-intf.module';

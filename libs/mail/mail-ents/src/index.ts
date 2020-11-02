@@ -1,1 +1,1 @@
-export * from './lib/mail-entities.module';
+export * from './lib/mail-ents.module';

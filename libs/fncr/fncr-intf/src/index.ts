@@ -1,1 +1,1 @@
-export * from './lib/fncr-interfaces.module';
+export * from './lib/fncr-intf.module';

@@ -1,5 +1,5 @@
 import { ICmnsTipoEndereco } from '@gpremium/cmns-base-intf';
-import { ICoreCorporacao, ICoreEmpresa } from '@gpremium/core-interfaces';
+import { ICoreCorporacao, ICoreEmpresa } from '@gpremium/core-intf';
 import { BasicEntity } from '@gpremium/shared-ent';
 import { Column, Entity, Index, OneToMany } from 'typeorm';
 import { CoreEmpresa } from './core-empresa.entity';
