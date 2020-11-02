@@ -38,7 +38,7 @@
     "api-interfaces": {
       "tags": []
     },
-    "cdst-entities": {
+    "cdst-ents": {
       "tags": []
     },
     "cmns-base-ents": {
@@ -50,7 +50,7 @@
     "core-ents": {
       "tags": []
     },
-    "estq-entities": {
+    "estq-ents": {
       "tags": []
     },
     "fncr-entities": {
@@ -83,7 +83,7 @@
     "vete-entities": {
       "tags": []
     },
-    "cdst-interfaces": {
+    "cdst-intf": {
       "tags": []
     },
     "cmns-pess-intf": {
@@ -92,7 +92,7 @@
     "core-intf": {
       "tags": []
     },
-    "estq-interfaces": {
+    "estq-intf": {
       "tags": []
     },
     "fncr-interfaces": {

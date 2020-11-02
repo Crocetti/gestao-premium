@@ -202,26 +202,26 @@
         }
       }
     },
-    "cdst-entities": {
+    "cdst-ents": {
       "projectType": "library",
-      "root": "libs/cdst/cdst-entities",
-      "sourceRoot": "libs/cdst/cdst-entities/src",
+      "root": "libs/cdst/cdst-ents",
+      "sourceRoot": "libs/cdst/cdst-ents/src",
       "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/cdst/cdst-entities/tsconfig.lib.json",
-              "libs/cdst/cdst-entities/tsconfig.spec.json"
+              "libs/cdst/cdst-ents/tsconfig.lib.json",
+              "libs/cdst/cdst-ents/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/cdst/cdst-entities/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/cdst/cdst-ents/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/cdst/cdst-entities/jest.config.js",
+            "jestConfig": "libs/cdst/cdst-ents/jest.config.js",
             "passWithNoTests": true
           }
         }
@@ -322,26 +322,26 @@
         }
       }
     },
-    "estq-entities": {
+    "estq-ents": {
       "projectType": "library",
-      "root": "libs/estq/estq-entities",
-      "sourceRoot": "libs/estq/estq-entities/src",
+      "root": "libs/estq/estq-ents",
+      "sourceRoot": "libs/estq/estq-ents/src",
       "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/estq/estq-entities/tsconfig.lib.json",
-              "libs/estq/estq-entities/tsconfig.spec.json"
+              "libs/estq/estq-ents/tsconfig.lib.json",
+              "libs/estq/estq-ents/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/estq/estq-entities/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/estq/estq-ents/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/estq/estq-entities/jest.config.js",
+            "jestConfig": "libs/estq/estq-ents/jest.config.js",
             "passWithNoTests": true
           }
         }
@@ -622,26 +622,26 @@
         }
       }
     },
-    "cdst-interfaces": {
+    "cdst-intf": {
       "projectType": "library",
-      "root": "libs/cdst/cdst-interfaces",
-      "sourceRoot": "libs/cdst/cdst-interfaces/src",
+      "root": "libs/cdst/cdst-intf",
+      "sourceRoot": "libs/cdst/cdst-intf/src",
       "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/cdst/cdst-interfaces/tsconfig.lib.json",
-              "libs/cdst/cdst-interfaces/tsconfig.spec.json"
+              "libs/cdst/cdst-intf/tsconfig.lib.json",
+              "libs/cdst/cdst-intf/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/cdst/cdst-interfaces/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/cdst/cdst-intf/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/cdst/cdst-interfaces/jest.config.js",
+            "jestConfig": "libs/cdst/cdst-intf/jest.config.js",
             "passWithNoTests": true
           }
         }
@@ -712,26 +712,26 @@
         }
       }
     },
-    "estq-interfaces": {
+    "estq-intf": {
       "projectType": "library",
-      "root": "libs/estq/estq-interfaces",
-      "sourceRoot": "libs/estq/estq-interfaces/src",
+      "root": "libs/estq/estq-intf",
+      "sourceRoot": "libs/estq/estq-intf/src",
       "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/estq/estq-interfaces/tsconfig.lib.json",
-              "libs/estq/estq-interfaces/tsconfig.spec.json"
+              "libs/estq/estq-intf/tsconfig.lib.json",
+              "libs/estq/estq-intf/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/estq/estq-interfaces/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/estq/estq-intf/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/estq/estq-interfaces/jest.config.js",
+            "jestConfig": "libs/estq/estq-intf/jest.config.js",
             "passWithNoTests": true
           }
         }
