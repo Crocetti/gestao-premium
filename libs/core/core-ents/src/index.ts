@@ -1,4 +1,4 @@
-export * from './lib/core-entities.module';
+export * from './lib/core-ents.module';
 export * from './lib/core-entities.config';
 export * from './lib/core-corporacao.entity';
 export * from './lib/core-empresa.entity';
