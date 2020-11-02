@@ -47,7 +47,7 @@
     "cmns-pess-ents": {
       "tags": []
     },
-    "core-entities": {
+    "core-ents": {
       "tags": []
     },
     "estq-entities": {
@@ -89,7 +89,7 @@
     "cmns-pess-intf": {
       "tags": []
     },
-    "core-interfaces": {
+    "core-intf": {
       "tags": []
     },
     "estq-interfaces": {

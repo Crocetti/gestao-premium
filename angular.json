@@ -292,26 +292,26 @@
         }
       }
     },
-    "core-entities": {
+    "core-ents": {
       "projectType": "library",
-      "root": "libs/core/core-entities",
-      "sourceRoot": "libs/core/core-entities/src",
+      "root": "libs/core/core-ents",
+      "sourceRoot": "libs/core/core-ents/src",
       "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/core/core-entities/tsconfig.lib.json",
-              "libs/core/core-entities/tsconfig.spec.json"
+              "libs/core/core-ents/tsconfig.lib.json",
+              "libs/core/core-ents/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/core/core-entities/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/core/core-ents/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/core/core-entities/jest.config.js",
+            "jestConfig": "libs/core/core-ents/jest.config.js",
             "passWithNoTests": true
           }
         }
@@ -682,26 +682,26 @@
         }
       }
     },
-    "core-interfaces": {
+    "core-intf": {
       "projectType": "library",
-      "root": "libs/core/core-interfaces",
-      "sourceRoot": "libs/core/core-interfaces/src",
+      "root": "libs/core/core-intf",
+      "sourceRoot": "libs/core/core-intf/src",
       "prefix": "gpremium",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/core/core-interfaces/tsconfig.lib.json",
-              "libs/core/core-interfaces/tsconfig.spec.json"
+              "libs/core/core-intf/tsconfig.lib.json",
+              "libs/core/core-intf/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/core/core-interfaces/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/core/core-intf/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/core/core-interfaces/jest.config.js",
+            "jestConfig": "libs/core/core-intf/jest.config.js",
             "passWithNoTests": true
           }
         }
