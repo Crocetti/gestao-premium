@@ -1,3 +1,4 @@
-export * from './lib/shared-int.module';
 export * from './lib/basic-model';
-export * from './lib/basic.interface';
+export type { BasicInterface } from './lib/basic.interface';
+export type { IConfigBack } from './lib/config-back.interface';
+export { ConfigBack } from './lib/config-back.interface';

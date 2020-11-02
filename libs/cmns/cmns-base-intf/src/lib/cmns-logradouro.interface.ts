@@ -3,6 +3,7 @@ import { prop, required } from '@rxweb/reactive-form-validators';
 import type { ICmnsBairro } from './cmns-bairro.interface';
 
 export interface ICmnsLogradouro extends BasicInterface {
+    lgrdCodigo: string;
     lgrdNome: string;
     lgrdNomeAbrev?: string;
     lgrdCep: string;
@@ -11,6 +12,8 @@ export interface ICmnsLogradouro extends BasicInterface {
 }
 
 export class CmnsLogradouroDto extends BasicModel implements ICmnsLogradouro {
+    @required({message: 'O código do Logradouro é obrigatório'})
+    public lgrdCodigo: string;
     @required({message: 'O Nome do Logradouro é obrigatório'})
     public lgrdNome: string;
     @prop()

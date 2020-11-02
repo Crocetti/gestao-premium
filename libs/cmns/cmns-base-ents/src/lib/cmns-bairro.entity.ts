@@ -8,12 +8,15 @@ import {
 } from 'typeorm';
 import { CmnsLocalidade } from './cmns-localidade.entity';
 import { CmnsLogradouro } from './cmns-logradouro.entity';
-import type { ICmnsBairro, ICmnsLocalidade, ICmnsLogradouro } from '@gpremium/cmns-interfaces';
+import type { ICmnsBairro, ICmnsLocalidade, ICmnsLogradouro } from '@gpremium/cmns-base-intf';
 import { BasicEntity } from '@gpremium/shared-ent';
 
 @Index('PK_CMNS_BAIRRO', ['id'], { unique: true })
 @Entity('CMNS_BAIRRO')
 export class CmnsBairro extends BasicEntity implements ICmnsBairro {
+
+    @Column('nvarchar', { name: 'BAIR_CODIGO', nullable: true, length: 10 })
+    public bairCodigo: string | null;
 
     @Column('nvarchar', { name: 'BAIR_NOME', nullable: true, length: 128 })
     public bairNome: string | null;

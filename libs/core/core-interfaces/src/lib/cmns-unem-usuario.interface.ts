@@ -1,5 +1,8 @@
 import { BasicInterface, BasicModel } from '@gpremium/shared-int';
-import type { ICmnsUsuario,  ICmnsGrupoUsuario } from '@gpremium/cmns-interfaces';
+import type {
+    ICmnsUsuario,
+    ICmnsGrupoUsuario,
+} from '@gpremium/cmns-pess-intf';
 import type { ICoreUnidadeEmpresarial } from './core-unidade-empresarial.interface';
 import { prop } from '@rxweb/reactive-form-validators';
 
@@ -9,7 +12,7 @@ export interface ICmnsUnemUsuario extends BasicInterface {
     coreUnidadeEmpresarial: ICoreUnidadeEmpresarial;
 }
 
-export class CmnsUnemUsuarioDto extends BasicModel implements ICmnsUnemUsuario  {
+export class CmnsUnemUsuarioDto extends BasicModel implements ICmnsUnemUsuario {
     @prop()
     public cmnsUsuario: ICmnsUsuario;
     @prop()

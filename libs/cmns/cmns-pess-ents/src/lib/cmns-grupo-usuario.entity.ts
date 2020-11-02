@@ -1,6 +1,6 @@
-import { ICmnsGrupoUsuario } from '@gpremium/cmns-interfaces';
 import { BasicEntity } from '@gpremium/shared-ent';
 import { Column, Entity, Index, OneToMany } from 'typeorm';
+import { ICmnsGrupoUsuario } from '@gpremium/cmns-pess-intf';
 
 @Index('PK_CMNS_GRUPO_USUARIO', ['id'], { unique: true })
 @Entity('CMNS_GRUPO_USUARIO')

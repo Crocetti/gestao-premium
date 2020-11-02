@@ -86,7 +86,7 @@
     "cdst-interfaces": {
       "tags": []
     },
-    "cmns-interfaces": {
+    "cmns-pess-intf": {
       "tags": []
     },
     "core-interfaces": {
@@ -191,6 +191,18 @@
     },
     "fscl-back": {
       "tags": []
+    },
+    "shared-back": {
+      "tags": []
+    },
+    "shared-all": {
+      "tags": []
+    },
+    "shared-front": {
+      "tags": []
+    },
+    "cmns-base-int": {
+      "tags": ["interfaces base"]
     }
   }
 }

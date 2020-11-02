@@ -9,11 +9,14 @@ import {
 import { BasicEntity } from '@gpremium/shared-ent';
 import { CmnsBairro } from './cmns-bairro.entity';
 import { CmnsUnidadeFederativa } from './cmns-unidade-federativa.entity';
-import type{ ICmnsBairro, ICmnsLocalidade, ICmnsUnidadeFederativa } from '@gpremium/cmns-interfaces';
+import type{ ICmnsBairro, ICmnsLocalidade, ICmnsUnidadeFederativa } from '@gpremium/cmns-base-intf';
 
 @Index('PK_CMNS_LOCALIDADE', ['id'], { unique: true })
 @Entity('CMNS_LOCALIDADE')
 export class CmnsLocalidade extends BasicEntity implements ICmnsLocalidade {
+
+    @Column('nvarchar', { name: 'LCLD_CODIGO', nullable: true, length: 10 })
+    public lcldCodigo: string;
 
     @Column('nvarchar', { name: 'LCLD_NR_IBGE', nullable: true, length: 12 })
     public lcldNrIbge?: string;

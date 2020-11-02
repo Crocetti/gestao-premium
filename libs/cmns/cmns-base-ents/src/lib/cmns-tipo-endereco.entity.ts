@@ -1,6 +1,6 @@
 import { BasicEntity } from '@gpremium/shared-ent';
 import { Column, Entity, Index, OneToMany } from "typeorm";
-import type { ICmnsTipoEndereco } from '@gpremium/cmns-interfaces';
+import type { ICmnsTipoEndereco } from '@gpremium/cmns-base-intf';
 
 @Index("PK_CMNS_TIPO_ENDERECO", ["id"], { unique: true })
 @Entity("CMNS_TIPO_ENDERECO")

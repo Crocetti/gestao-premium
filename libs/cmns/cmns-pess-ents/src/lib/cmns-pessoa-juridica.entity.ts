@@ -1,14 +1,25 @@
 import { BasicEntity } from '@gpremium/shared-ent';
-import { Column, Entity, Index, JoinColumn, ManyToOne, OneToOne } from 'typeorm';
+import {
+    Column,
+    Entity,
+    Index,
+    JoinColumn,
+    ManyToOne,
+    OneToOne,
+} from 'typeorm';
 import { CmnsPessoa } from './cmns-pessoa.entity';
 import { CmnsRamoAtividade } from '@gpremium/cmns-base-ents';
-import type { ICmnsPessoa, ICmnsPessoaJuridica, ICmnsRamoAtividade } from '@gpremium/cmns-interfaces';
-
+import type {
+    ICmnsRamoAtividade,
+} from '@gpremium/cmns-base-intf';
+import type {
+    ICmnsPessoa,
+    ICmnsPessoaJuridica,
+} from '@gpremium/cmns-pess-intf';
 @Index('PK_CMNS_PESSOA_JURIDICA', ['id'], { unique: true })
 @Entity('CMNS_PESSOA_JURIDICA')
 export class CmnsPessoaJuridica extends BasicEntity
     implements ICmnsPessoaJuridica {
-
     @Column('nvarchar', {
         name: 'PSJR_RAZAO_SOCIAL',
         nullable: true,
@@ -37,15 +48,11 @@ export class CmnsPessoaJuridica extends BasicEntity
     })
     public psjrInscMunicipal: string | null;
 
-    @OneToOne(
-        () => CmnsPessoa,
-        (cmnsPessoa) => cmnsPessoa.cmnsPessoaJuridica
-    )
+    @OneToOne(() => CmnsPessoa, (cmnsPessoa) => cmnsPessoa.cmnsPessoaJuridica)
     @JoinColumn([{ name: 'PSJR_PESS_ID', referencedColumnName: 'id' }])
     public cmnsPessoa: ICmnsPessoa;
 
-    @ManyToOne(() => CmnsRamoAtividade )
+    @ManyToOne(() => CmnsRamoAtividade)
     @JoinColumn([{ name: 'PSJR_RMAT_ID', referencedColumnName: 'id' }])
     public cmnsRamoAtividade: ICmnsRamoAtividade;
-
 }

@@ -1,14 +1,24 @@
 import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
-import { CmnsOrgaoExpedidor, CmnsTipoDocumento } from '@gpremium/cmns-base-ents';
+import {
+    CmnsOrgaoExpedidor,
+    CmnsTipoDocumento,
+} from '@gpremium/cmns-base-ents';
 import { CmnsPessoa } from './cmns-pessoa.entity';
 import { BasicEntity } from '@gpremium/shared-ent';
 import { LocalDateTime } from '@js-joda/core';
-import type { ICmnsOrgaoExpedidor, ICmnsPessoa, ICmnsPessoaDocumento, ICmnsTipoDocumento } from '@gpremium/cmns-interfaces';
+import type {
+    ICmnsOrgaoExpedidor,
+    ICmnsTipoDocumento,
+} from '@gpremium/cmns-base-intf';
+import type {
+    ICmnsPessoa,
+    ICmnsPessoaDocumento,
+} from '@gpremium/cmns-pess-intf';
 
 @Index('PK_CMNS_PESSOA_DOCUMENTO', ['id'], { unique: true })
 @Entity('CMNS_PESSOA_DOCUMENTO')
-export class CmnsPessoaDocumento extends BasicEntity implements ICmnsPessoaDocumento {
-
+export class CmnsPessoaDocumento extends BasicEntity
+    implements ICmnsPessoaDocumento {
     @Column('nvarchar', {
         name: 'PSDC_NR_DOCUMENTO',
         nullable: true,

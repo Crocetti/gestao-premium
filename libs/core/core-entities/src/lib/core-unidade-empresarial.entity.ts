@@ -9,13 +9,17 @@ import {
 } from 'typeorm';
 import { CoreEmpresa } from './core-empresa.entity';
 import { CmnsPessoa } from '@gpremium/cmns-pess-ents';
-import type { ICoreEmpresa, ICoreUnidadeEmpresarial } from '@gpremium/core-interfaces';
-import type { ICmnsPessoa } from '@gpremium/cmns-interfaces';
+import type {
+    ICoreEmpresa,
+    ICoreUnidadeEmpresarial,
+} from '@gpremium/core-interfaces';
+import type { ICmnsPessoa } from '@gpremium/cmns-pess-intf';
 import { BasicEntity } from '@gpremium/shared-ent';
 
 @Index('PK_CORE_UNIDADE_EMPRESARIAL', ['id'], { unique: true })
 @Entity('CORE_UNIDADE_EMPRESARIAL')
-export class CoreUnidadeEmpresarial extends BasicEntity implements ICoreUnidadeEmpresarial {
+export class CoreUnidadeEmpresarial extends BasicEntity
+    implements ICoreUnidadeEmpresarial {
     @Column('nvarchar', { name: 'UNEM_CODIGO', nullable: true, length: 10 })
     public unemCodigo: string | null;
 

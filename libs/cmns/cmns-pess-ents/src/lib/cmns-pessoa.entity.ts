@@ -6,7 +6,18 @@ import { CmnsPessoaFisica } from './cmns-pessoa-fisica.entity';
 import { CmnsPessoaImagem } from './cmns-pessoa-imagem.entity';
 import { CmnsPessoaJuridica } from './cmns-pessoa-juridica.entity';
 import { CmnsPessoaTelefone } from './cmns-pessoa-telefone.entity';
-import type { ICmnsPessoa, ICmnsPessoaEmail, ICmnsPessoaEndereco, ICmnsPessoaFisica, ICmnsPessoaImagem, ICmnsPessoaJuridica, ICmnsPessoaTelefone, ICmnsPessoaDocumento, ICmnsUsuario } from '@gpremium/cmns-interfaces';
+import type {
+    ICmnsPessoa,
+    ICmnsPessoaEmail,
+    ICmnsPessoaEndereco,
+    ICmnsPessoaFisica,
+    ICmnsPessoaImagem,
+    ICmnsPessoaJuridica,
+    ICmnsPessoaTelefone,
+    ICmnsPessoaDocumento,
+    ICmnsUsuario,
+} from '@gpremium/cmns-base-intf';
+
 import { CmnsPessoaDocumento } from './cmns-pessoa-documento.entity';
 
 @Index('PK_CMNS_PESSOA', ['id'], { unique: true })
@@ -71,7 +82,6 @@ export class CmnsPessoa extends BasicEntity implements ICmnsPessoa {
     )
     public cmnsPessoaEnderecos: ICmnsPessoaEndereco[];
 
-
     @OneToMany(
         () => CmnsPessoaImagem,
         (cmnsPessoaImagem) => cmnsPessoaImagem.cmnsPessoa
@@ -83,5 +93,4 @@ export class CmnsPessoa extends BasicEntity implements ICmnsPessoa {
         (cmnsPessoaTelefone) => cmnsPessoaTelefone.cmnsPessoa
     )
     public cmnsPessoaTelefones: ICmnsPessoaTelefone[];
-
 }

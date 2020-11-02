@@ -1,7 +1,7 @@
 import { Column, Entity, Index, OneToMany } from 'typeorm';
 import { BasicEntity } from '@gpremium/shared-ent';
 import { LocalDateTime } from '@js-joda/core';
-import type { ICmnsNacionalidade } from '@gpremium/cmns-interfaces';
+import type { ICmnsNacionalidade } from '@gpremium/cmns-base-intf';
 
 @Index('PK_CMNS_NACIONALIDADE', ['id'], { unique: true })
 @Entity('CMNS_NACIONALIDADE')

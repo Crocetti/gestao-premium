@@ -1,5 +1,7 @@
 
 import { Module } from '@nestjs/common';
+import { utilities as nestWinstonModuleUtilities, WinstonModule } from 'nest-winston';
+import * as winstom from 'winston';
 import { CmnsBackModule } from '@gpremium/cmns-back';
 import { CoreBackModule } from '@gpremium/core-back';
 // import { CdstBackModule } from '@gpremium/cdst-back';
@@ -23,6 +25,27 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
     imports: [
+        WinstonModule.forRoot({
+            level: 'info',
+            format: winstom.format.json(),
+            transports:[
+                new winstom.transports.File({
+                    filename: 'error.log',
+                    level: 'error',
+                    format: winstom.format.combine(
+                        winstom.format.timestamp(),
+                        nestWinstonModuleUtilities.format.nestLike()
+                    )
+                }),
+                new winstom.transports.File({
+                    filename: 'combined.log',
+                    format: winstom.format.combine(
+                        winstom.format.timestamp(),
+                        nestWinstonModuleUtilities.format.nestLike()
+                    )
+                })
+            ]
+        }),
         TypeOrmModule.forRoot({
             name: 'default',
             type: 'mssql',

@@ -2,26 +2,24 @@ import { BasicModel, BasicInterface } from '@gpremium/shared-int';
 import { ICmnsUnidadeFederativa } from './cmns-unidade-federativa.interface';
 import { prop, required } from '@rxweb/reactive-form-validators';
 export interface ICmnsPais extends  BasicInterface {
+    paisCodigo: string;
     paisNome: string;
     paisSigla: string;
     paisNomeAbreviado?: string;
-    paisCodigo?: string;
     paisCepInicial?: string;
     paisCepFinal?: string;
     cmnsUnidadeFederativas?: ICmnsUnidadeFederativa[];
 }
 
 export class CmnsPaisDto extends BasicModel implements ICmnsPais {
-    @prop()
+    @required({message: 'Código do País é obrigatório!'})
+    public paisCodigo: string;
     @required({message: 'Nome do País é obrigatório!'})
     public paisNome: string;
-    @prop()
     @required({message: 'Sigla do País é obrigatório!'})
     public paisSigla: string;
     @prop()
     public paisNomeAbreviado?: string;
-    @prop()
-    public paisCodigo?: string;
     @prop()
     public paisCepInicial?: string;
     @prop()

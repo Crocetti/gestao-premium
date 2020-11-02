@@ -1,6 +1,6 @@
 import { Column, Entity, Index, OneToMany } from "typeorm";
 import { BasicEntity } from '@gpremium/shared-ent';
-import type { ICmnsTipoEmail } from '@gpremium/cmns-interfaces';
+import type { ICmnsTipoEmail } from '@gpremium/cmns-base-intf';
 
 @Index("PK_CMNS_TIPO_EMAIL", ["id"], { unique: true })
 @Entity("CMNS_TIPO_EMAIL")

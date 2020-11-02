@@ -1,11 +1,14 @@
 import { BasicEntity } from '@gpremium/shared-ent';
 import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
 import { CmnsBairro } from './cmns-bairro.entity';
-import type { ICmnsBairro, ICmnsLogradouro } from '@gpremium/cmns-interfaces';
+import type { ICmnsBairro, ICmnsLogradouro } from '@gpremium/cmns-base-intf';
 
 @Index('PK_CMNS_LOGRADOURO', ['id'], { unique: true })
 @Entity('CMNS_LOGRADOURO')
 export class CmnsLogradouro extends BasicEntity implements ICmnsLogradouro {
+
+    @Column('nvarchar', { name: 'LGRD_CODIGO', nullable: true, length: 10 })
+    public lgrdCodigo: string;
 
     @Column('nvarchar', { name: 'LGRD_NOME', nullable: true, length: 256 })
     public lgrdNome: string;

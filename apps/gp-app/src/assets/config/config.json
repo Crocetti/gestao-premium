@@ -1,0 +1,13 @@
+{
+    "apiGMKey": "AIzaSyCCySFCK4rG8ISfjhg4j6-3xl4Y2q0rV9U",
+    "app": {
+        "protocol": "http://",
+        "host": "localhost",
+        "port": "4300"
+    },
+    "api": {
+        "protocol": "http://",
+        "host":"localhost",
+        "port":"9300"
+    }
+}

@@ -6,7 +6,11 @@ import {
     ManyToOne,
     OneToMany,
 } from 'typeorm';
-import type { ICmnsLocalidade, ICmnsPais, ICmnsUnidadeFederativa } from '@gpremium/cmns-interfaces';
+import type {
+    ICmnsLocalidade,
+    ICmnsPais,
+    ICmnsUnidadeFederativa,
+} from '@gpremium/cmns-base-intf';
 import { BasicEntity } from '@gpremium/shared-ent';
 import { LocalDateTime } from '@js-joda/core';
 import { CmnsLocalidade } from './cmns-localidade.entity';
@@ -16,7 +20,6 @@ import { CmnsPais } from './cmns-pais.entity';
 @Entity('CMNS_UNIDADE_FEDERATIVA')
 export class CmnsUnidadeFederativa extends BasicEntity
     implements ICmnsUnidadeFederativa {
-
     @Column('nvarchar', { name: 'UNFD_NOME', nullable: true, length: 64 })
     public unfdNome: string;
 
@@ -39,6 +42,9 @@ export class CmnsUnidadeFederativa extends BasicEntity
     @JoinColumn([{ name: 'UNFD_PAIS_ID', referencedColumnName: 'id' }])
     public cmnsPais: ICmnsPais;
 
-    @OneToMany(() => CmnsLocalidade,(cmnsLocalidade) => cmnsLocalidade.cmnsUnfd)
+    @OneToMany(
+        () => CmnsLocalidade,
+        (cmnsLocalidade) => cmnsLocalidade.cmnsUnfd
+    )
     public cmnsLocalidades?: ICmnsLocalidade[];
 }

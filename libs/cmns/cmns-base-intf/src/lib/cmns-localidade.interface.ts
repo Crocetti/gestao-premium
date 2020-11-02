@@ -4,6 +4,7 @@ import { ICmnsBairro } from './cmns-bairro.interface';
 import { ICmnsUnidadeFederativa } from './cmns-unidade-federativa.interface';
 
 export interface ICmnsLocalidade extends BasicInterface {
+    lcldCodigo: string;
     lcldNome: string;
     lcldCep: string;
     lcldNrIbge?: string;
@@ -15,6 +16,8 @@ export interface ICmnsLocalidade extends BasicInterface {
 }
 
 export class CmnsLocalidadeDto extends BasicModel implements ICmnsLocalidade {
+    @required({message: 'O Código da Localidade é obrigatório!'})
+    public lcldCodigo: string;
     @required({message: 'O nome da Localidade é obrigatório!'})
     public lcldNome: string;
     @required({message: 'O cep da Localidade é obrigatório!'})

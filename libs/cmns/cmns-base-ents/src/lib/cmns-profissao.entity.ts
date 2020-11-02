@@ -7,7 +7,7 @@ import {
     ManyToOne,
     OneToMany,
 } from 'typeorm';
-import type { ICmnsProfissao } from '@gpremium/cmns-interfaces';
+import type { ICmnsProfissao } from '@gpremium/cmns-base-intf';
 
 @Index('PK_CMNS_PROFISSAO', ['id'], { unique: true })
 @Entity('CMNS_PROFISSAO')

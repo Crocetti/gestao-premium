@@ -2,6 +2,7 @@ import { BasicInterface, BasicModel } from '@gpremium/shared-int';
 import { prop, required } from '@rxweb/reactive-form-validators';
 
 export interface ICmnsGrupoUsuario extends BasicInterface {
+    grusCodigo: string;
     grusNome: string;
     grusSigla: string;
     grusNivel?: number;
@@ -9,6 +10,8 @@ export interface ICmnsGrupoUsuario extends BasicInterface {
 }
 
 export class CmnsGrupoUsuarioDto extends BasicModel implements ICmnsGrupoUsuario {
+    @required({message: 'O código do grupo de usuário é obrigatório!'})
+    public grusCodigo: string;
     @required({message: 'O nome do grupo de usuário é obrigatório!'})
     public grusNome: string;
     @required({message: 'A sigla do grupo de usuário é obrigatório!'})

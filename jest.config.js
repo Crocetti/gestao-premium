@@ -56,5 +56,8 @@ module.exports = {
     '<rootDir>/libs/fscl/fscl-controllers',
     '<rootDir>/libs/cmns/cmns-base-ents',
     '<rootDir>/libs/cmns/cmns-usrs-ents',
+    '<rootDir>/libs/shared/shared-all',
+    '<rootDir>/libs/shared/shared-front',
+    '<rootDir>/libs/cmns/cmns-base-int',
   ],
 };

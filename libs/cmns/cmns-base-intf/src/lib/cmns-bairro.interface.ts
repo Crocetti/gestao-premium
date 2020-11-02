@@ -4,6 +4,7 @@ import type { ICmnsLogradouro } from './cmns-logradouro.interface';
 import type { ICmnsLocalidade } from './cmns-localidade.interface';
 
 export interface ICmnsBairro extends BasicInterface {
+    bairCodigo: string;
     bairNome: string;
     bairNomeAbreviado?: string;
     bairCepInicial?: string;
@@ -13,6 +14,8 @@ export interface ICmnsBairro extends BasicInterface {
 }
 
 export class CmnsBairroDto extends BasicModel implements ICmnsBairro {
+    @required({message: 'O código do Bairro é obrigatório!'})
+    public bairCodigo: string;
     @required({message: 'O nome do Bairro é obrigatório!'})
     public bairNome: string;
     @prop()
@@ -28,6 +31,7 @@ export class CmnsBairroDto extends BasicModel implements ICmnsBairro {
 
     constructor(param?: Partial<ICmnsBairro>) {
         super(param);
+        this.bairCodigo = param?.bairCodigo ?? null;
         this.bairNome = param?.bairNome ?? null;
         this.bairNomeAbreviado = param?.bairNomeAbreviado ?? null;
         this.bairCepInicial = param?.bairCepInicial ?? null;

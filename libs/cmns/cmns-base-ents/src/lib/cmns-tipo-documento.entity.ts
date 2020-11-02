@@ -1,6 +1,6 @@
 import { BasicEntity } from '@gpremium/shared-ent';
 import { Column, Entity, Index, OneToMany } from "typeorm";
-import type { ICmnsTipoDocumento } from '@gpremium/cmns-interfaces';
+import type { ICmnsTipoDocumento } from '@gpremium/cmns-base-intf';
 
 @Index("PK_CMNS_TIPO_DOCUMENTO", ["id"], { unique: true })
 @Entity("CMNS_TIPO_DOCUMENTO")

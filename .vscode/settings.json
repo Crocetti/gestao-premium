@@ -1,0 +1,95 @@
+{
+    "vsicons.presets.nestjs": true,
+    "vsicons.presets.angular": true,
+    "sqltools.connections": [
+        {
+            "askForPassword": true,
+            "connectionTimeout": 30,
+            "database": "master",
+            "dialect": "MSSQL",
+            "name": "Local",
+            "port": 1433,
+            "server": "127.0.0.1",
+            "username": "sa"
+        },
+        {
+            "connectionTimeout": 30,
+            "database": "master",
+            "dialect": "MSSQL",
+            "name": "sisprogweb.dynu.net",
+            "password": "sisprog",
+            "port": 1433,
+            "server": "sisprogweb.dynu.net",
+            "username": "sa"
+        },
+        {
+            "connectionTimeout": 30,
+            "database": "ExBra",
+            "dialect": "MSSQL",
+            "name": "ExBra",
+            "password": "@aac663#",
+            "port": 1433,
+            "server": "127.0.0.1",
+            "username": "SA"
+        }
+    ],
+    "workbench.colorCustomizations": {},
+    "typescript.tsdk": "node_modules\\typescript\\lib",
+    "explorer.compactFolders": false,
+
+    "editor.tabSize": 4,
+    "editor.tabCompletion": "off",
+    "editor.fontFamily": "Fira Code",
+    "editor.fontLigatures": true,
+    "svn.ignoreMissingSvnWarning": true,
+    "git.ignoreLimitWarning": true,
+    "debug.javascript.warnOnLongPrediction": false,
+    "todohighlight.include": [
+        "**/*.js",
+        "**/*.jsx",
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.html",
+        "**/*.php",
+        "**/*.css",
+        "**/*.scss"
+    ],
+    "todohighlight.exclude": [
+        "**/node_modules/**",
+        "**/bower_components/**",
+        "**/dist/**",
+        "**/build/**",
+        "**/.vscode/**",
+        "**/.github/**",
+        "**/_output/**",
+        "**/*.min.*",
+        "**/*.map",
+        "**/.next/**"
+    ],
+    "todohighlight.keywords": [
+        "DEBUG:",
+        "REVIEW:",
+        {
+            "text": "NOTE:",
+            "color": "#ff0000",
+            "backgroundColor": "yellow",
+            "overviewRulerColor": "grey"
+        },
+        {
+            "text": "HACK:",
+            "color": "#000",
+            "isWholeLine": false,
+        },
+        {
+            "text": "TODO:",
+            "color": "red",
+            "border": "1px solid red",
+            "borderRadius": "2px", //NOTE: using borderRadius along with `border` or you will see nothing change
+            "backgroundColor": "rgba(0,0,0,.2)",
+            //other styling properties goes here ...
+        }
+    ]
+
+}
+
+

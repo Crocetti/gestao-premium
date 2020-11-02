@@ -1,6 +1,6 @@
 import { BasicInterface, BasicModel } from '@gpremium/shared-int';
 import type { ICoreEmpresa } from './core-empresa.interface';
-import type { ICmnsPessoa } from '@gpremium/cmns-interfaces';
+import type { ICmnsPessoa } from '@gpremium/cmns-pess-intf';
 
 export interface ICoreUnidadeEmpresarial extends BasicInterface {
     unemCodigo: string;
@@ -11,7 +11,8 @@ export interface ICoreUnidadeEmpresarial extends BasicInterface {
     cmnsPessoa: ICmnsPessoa;
 }
 
-export class CoreUnidadeEmpresarialDto extends BasicModel implements ICoreUnidadeEmpresarial {
+export class CoreUnidadeEmpresarialDto extends BasicModel
+    implements ICoreUnidadeEmpresarial {
     public unemCodigo: string;
     public unemSkinName: string;
     public unemSenha: string;
@@ -21,6 +22,6 @@ export class CoreUnidadeEmpresarialDto extends BasicModel implements ICoreUnidad
 
     constructor(param?: Partial<ICoreUnidadeEmpresarial>) {
         super(param);
-        Object.assign(this, param)
+        Object.assign(this, param);
     }
 }

@@ -1,0 +1,22 @@
+export * from './lib/cmns-interfaces.module';
+export type { ICmnsPessoa } from './lib/cmns-pessoa.interface';
+export { CmnsPessoaDto } from './lib/cmns-pessoa.interface';
+export type { ICmnsPessoaDocumento } from './lib/cmns-pessoa-documento.interface';
+export { CmnsPessoaDocumentoDto } from './lib/cmns-pessoa-documento.interface';
+export type { ICmnsPessoaEmail } from './lib/cmns-pessoa-email.interface';
+export { CmnsPessoaEmailDto } from './lib/cmns-pessoa-email.interface';
+export type { ICmnsPessoaEndereco } from './lib/cmns-pessoa-endereco.interface';
+export { CmnsPessoaEnderecoDto } from './lib/cmns-pessoa-endereco.interface';
+export type { ICmnsPessoaFisica } from './lib/cmns-pessoa-fisica.interface';
+export { CmnsPessoaFisicaDto } from './lib/cmns-pessoa-fisica.interface';
+export type { ICmnsPessoaImagem } from './lib/cmns-pessoa-imagem.interface';
+export { CmnsPessoaImagemDto } from './lib/cmns-pessoa-imagem.interface';
+export type { ICmnsPessoaJuridica } from './lib/cmns-pessoa-juridica.interface';
+export { CmnsPessoaJuridicaDto } from './lib/cmns-pessoa-juridica.interface';
+export type { ICmnsPessoaTelefone }from './lib/cmns-pessoa-telefone.interface';
+export { CmnsPessoaTelefoneDto }from './lib/cmns-pessoa-telefone.interface';
+export type { ICmnsGrupoUsuario } from './lib/cmns-grupo-usuario.interface';
+export { CmnsGrupoUsuarioDto } from './lib/cmns-grupo-usuario.interface';
+export type { ICmnsUsuario } from './lib/cmns-usuario.interface';
+export { CmnsUsuarioDto } from './lib/cmns-usuario.interface';
+

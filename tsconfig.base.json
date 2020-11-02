@@ -24,7 +24,8 @@
       "@gpremium/shared-int": ["libs/shared/shared-int/src/index.ts"],
       "@gpremium/cmns-base-ents": ["libs/cmns/cmns-base-ents/src/index.ts"],
       "@gpremium/cmns-pess-ents": ["libs/cmns/cmns-pess-ents/src/index.ts"],
-      "@gpremium/cmns-interfaces": ["libs/cmns/cmns-interfaces/src/index.ts"],
+      "@gpremium/cmns-base-intf": ["libs/cmns/cmns-base-intf/src/index.ts"],
+      "@gpremium/cmns-pess-intf": ["libs/cmns/cmns-pess-intf/src/index.ts"],
       "@gpremium/cmns-back": ["libs/cmns/cmns-back/src/index.ts"],
       "@gpremium/core-entities": ["libs/core/core-entities/src/index.ts"],
       "@gpremium/core-interfaces": ["libs/core/core-interfaces/src/index.ts"],
@@ -64,7 +65,10 @@
       "@gpremium/srvc-back": ["libs/srvc/srvc-back/src/index.ts"],
       "@gpremium/vete-entities": ["libs/vete/vete-entities/src/index.ts"],
       "@gpremium/vete-interfaces": ["libs/vete/vete-interfaces/src/index.ts"],
-      "@gpremium/vete-back": ["libs/vete/vete-back/src/index.ts"]
+      "@gpremium/vete-back": ["libs/vete/vete-back/src/index.ts"],
+      "@gpremium/shared-back": ["libs/shared/shared-back/src/index.ts"],
+      "@gpremium/shared-all": ["libs/shared/shared-all/src/index.ts"],
+      "@gpremium/shared-front": ["libs/shared/shared-front/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

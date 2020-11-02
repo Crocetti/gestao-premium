@@ -1,6 +1,6 @@
 import { Column, Entity, Index, OneToMany } from 'typeorm';
 import { BasicEntity } from '@gpremium/shared-ent';
-import type { ICmnsOrgaoExpedidor } from '@gpremium/cmns-interfaces';
+import type { ICmnsOrgaoExpedidor } from '@gpremium/cmns-base-intf';
 
 @Index('PK_CMNS_ORGAO_EXPEDIDOR', ['id'], { unique: true })
 @Entity('CMNS_ORGAO_EXPEDIDOR')

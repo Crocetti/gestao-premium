@@ -1,7 +1,7 @@
 import { Column, Entity, Index, OneToMany } from 'typeorm';
 import { LocalDateTime } from '@js-joda/core';
 import { BasicEntity } from '@gpremium/shared-ent';
-import type { ICmnsCargo } from '@gpremium/cmns-interfaces';
+import type { ICmnsCargo } from '@gpremium/cmns-base-intf';
 
 @Index('PK_CMNS_CARGO', ['id'], { unique: true })
 @Entity('CMNS_CARGO')

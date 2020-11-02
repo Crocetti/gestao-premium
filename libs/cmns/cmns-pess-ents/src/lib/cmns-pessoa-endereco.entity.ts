@@ -2,13 +2,19 @@ import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
 import { CmnsTipoEndereco, CmnsBairro } from '@gpremium/cmns-base-ents';
 import { CmnsPessoa } from './cmns-pessoa.entity';
 import { BasicEntity } from '@gpremium/shared-ent';
-import type { ICmnsBairro, ICmnsPessoa, ICmnsPessoaEndereco, ICmnsTipoEndereco } from '@gpremium/cmns-interfaces';
+import type {
+    ICmnsBairro,
+    ICmnsTipoEndereco,
+} from '@gpremium/cmns-base-intf';
+import type {
+    ICmnsPessoa,
+    ICmnsPessoaEndereco,
+} from '@gpremium/cmns-pess-intf';
 
 @Index('PK_CMNS_PESSOA_ENDERECO', ['id'], { unique: true })
 @Entity('CMNS_PESSOA_ENDERECO')
 export class CmnsPessoaEndereco extends BasicEntity
     implements ICmnsPessoaEndereco {
-
     @Column('nvarchar', { name: 'PSEN_CEP', nullable: true, length: 9 })
     public psenCep: string | null;
 
