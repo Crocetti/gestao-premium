@@ -68,7 +68,21 @@
       "@gpremium/vete-back": ["libs/vete/vete-back/src/index.ts"],
       "@gpremium/shared-back": ["libs/shared/shared-back/src/index.ts"],
       "@gpremium/shared-all": ["libs/shared/shared-all/src/index.ts"],
-      "@gpremium/shared-front": ["libs/shared/shared-front/src/index.ts"]
+      "@gpremium/shared-front": ["libs/shared/shared-front/src/index.ts"],
+      "@gpremium/cdst-front": ["libs/cdst/cdst-front/src/index.ts"],
+      "@gpremium/cmns-front": ["libs/cmns/cmns-front/src/index.ts"],
+      "@gpremium/core-front": ["libs/core/core-front/src/index.ts"],
+      "@gpremium/estq-front": ["libs/estq/estq-front/src/index.ts"],
+      "@gpremium/fncr-front": ["libs/fncr/fncr-front/src/index.ts"],
+      "@gpremium/fscl-front": ["libs/fscl/fscl-front/src/index.ts"],
+      "@gpremium/mail-front": ["libs/mail/mail-front/src/index.ts"],
+      "@gpremium/menu-front": ["libs/menu/menu-front/src/index.ts"],
+      "@gpremium/pecf-front": ["libs/pecf/pecf-front/src/index.ts"],
+      "@gpremium/pecr-front": ["libs/pecr/pecr-front/src/index.ts"],
+      "@gpremium/rchm-front": ["libs/rchm/rchm-front/src/index.ts"],
+      "@gpremium/srvc-front": ["libs/srvc/srvc-front/src/index.ts"],
+      "@gpremium/sstm-front": ["libs/sstm/sstm-front/src/index.ts"],
+      "@gpremium/vete-front": ["libs/vete/vete-front/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

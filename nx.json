@@ -203,6 +203,48 @@
     },
     "cmns-base-int": {
       "tags": ["intf base"]
+    },
+    "cdst-front": {
+      "tags": []
+    },
+    "cmns-front": {
+      "tags": []
+    },
+    "core-front": {
+      "tags": []
+    },
+    "estq-front": {
+      "tags": []
+    },
+    "fncr-front": {
+      "tags": []
+    },
+    "fscl-front": {
+      "tags": []
+    },
+    "mail-front": {
+      "tags": []
+    },
+    "menu-front": {
+      "tags": []
+    },
+    "pecf-front": {
+      "tags": []
+    },
+    "pecr-front": {
+      "tags": []
+    },
+    "rchm-front": {
+      "tags": []
+    },
+    "srvc-front": {
+      "tags": []
+    },
+    "sstm-front": {
+      "tags": []
+    },
+    "vete-front": {
+      "tags": []
     }
   }
 }

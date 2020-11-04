@@ -4,6 +4,7 @@ import { ICmnsPessoaEmail } from './cmns-pessoa-email.interface';
 import { ICmnsPessoa } from './cmns-pessoa.interface';
 
 export interface ICmnsUsuario extends BasicInterface {
+    usrCodigo: string;
     usrsNomeLogin: string;
     usrsSenha: string;
     cmnsPessoaEmail: ICmnsPessoaEmail;
@@ -11,6 +12,8 @@ export interface ICmnsUsuario extends BasicInterface {
 }
 
 export class CmnsUsuarioDto extends BasicModel implements ICmnsUsuario {
+    @prop()
+    public usrsCodigo: string;
     @prop()
     public usrsNomeLogin: string;
     @prop()
