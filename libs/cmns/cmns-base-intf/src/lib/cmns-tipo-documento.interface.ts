@@ -24,4 +24,13 @@ export class CmnsTipoDocumentoDto extends BasicModel implements ICmnsTipoDocumen
         this.tpdcNome = param?.tpdcNome ?? null;
         this.tpdcTipo = param?.tpdcTipo ?? null;
     }
+
+    public patchValues(values: Partial<ICmnsTipoDocumento>) {
+        const keys = Object.keys(values);
+        keys.forEach((key) => {
+            if (this.hasOwnProperty(key)) {
+                this[key] = values[key]
+            }
+        });
+    }
 }

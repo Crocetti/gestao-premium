@@ -1,6 +1,7 @@
 import { BasicInterface, BasicModel } from '@gpremium/shared-int';
 import { prop, required } from '@rxweb/reactive-form-validators';
 import type { ICmnsBairro } from './cmns-bairro.interface';
+import { ICmnsLocalidade } from './cmns-localidade.interface';
 
 export interface ICmnsLogradouro extends BasicInterface {
     lgrdCodigo: string;
@@ -32,5 +33,14 @@ export class CmnsLogradouroDto extends BasicModel implements ICmnsLogradouro {
         this.lgrdCep = value?.lgrdCep ?? null;
         this.lgrdZona = value?.lgrdZona ?? null;
         this.cmnsBairro = value?.cmnsBairro ?? null;
+    }
+
+    public patchValues(values: Partial<ICmnsLogradouro>) {
+        const keys = Object.keys(values);
+        keys.forEach((key) => {
+            if (this.hasOwnProperty(key)) {
+                this[key] = values[key]
+            }
+        });
     }
 }

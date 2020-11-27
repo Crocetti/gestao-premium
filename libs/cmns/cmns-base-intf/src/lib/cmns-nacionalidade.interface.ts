@@ -17,6 +17,15 @@ export class CmnsNacionalidadeDto extends BasicModel implements ICmnsNacionalida
         this.ncnlCodigo = value?.ncnlCodigo ?? null;
         this.ncnlNome = value?.ncnlNome ?? null;
     }
+
+    public patchValues(values: Partial<ICmnsNacionalidade>) {
+        const keys = Object.keys(values);
+        keys.forEach((key) => {
+            if (this.hasOwnProperty(key)) {
+                this[key] = values[key]
+            }
+        });
+    }
 }
 
 

@@ -37,5 +37,14 @@ export class CmnsPaisDto extends BasicModel implements ICmnsPais {
         this.paisCepFinal = value?.paisCepFinal ?? null;
         this.cmnsUnidadeFederativas = value?.cmnsUnidadeFederativas ?? null;
     }
+
+    public patchValues(values: Partial<ICmnsPais>) {
+        const keys = Object.keys(values);
+        keys.forEach((key) => {
+            if (this.hasOwnProperty(key)) {
+                this[key] = values[key]
+            }
+        });
+    }
 }
 

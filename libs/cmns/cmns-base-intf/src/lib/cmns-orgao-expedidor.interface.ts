@@ -21,4 +21,13 @@ export class CmnsOrgaoExpedidorDto extends BasicModel implements ICmnsOrgaoExped
         this.orexSigla = value?.orexSigla ?? null;
         this.orexNome = value?.orexNome ?? null;
     }
+
+    public patchValues(values: Partial<ICmnsOrgaoExpedidor>){
+        const keys = Object.keys(values);
+        keys.forEach((key) => {
+            if (this.hasOwnProperty(key)) {
+                this[key] = values[key]
+            }
+        });
+    }
 }

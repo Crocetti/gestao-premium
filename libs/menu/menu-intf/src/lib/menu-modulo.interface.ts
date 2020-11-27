@@ -1,42 +1,42 @@
-import { BaseEntity, Column, Entity, Index, OneToMany } from "typeorm";
-import { MenuPasta } from "./menu-pasta";
-import { MenuSistemaModulo } from "./menu-sistema-modulo";
+import type { BasicInterface } from '@gpremium/shared-int';
+import { BasicModel } from '@gpremium/shared-int';
+import { prop, required } from '@rxweb/reactive-form-validators'
 
-@Index("PK_MENU_MODULO", ["modlId"], { unique: true })
-@Entity("MENU_MODULO")
-export class MenuModulo extends BaseEntity {
-  @Column("varchar", { primary: true, name: "MODL_ID", length: 27 })
-  public modlId: string;
+export interface IMenuModulo extends BasicInterface {
+    modlCodigo: string;
+    modlNome?: string;
+    modlDescricao?: string;
+    modlSmallIcon?: string;
+    modlNormalIcon?: string;
+    modlLargeIcon?: string;
+    menuPastas?: MenuPasta[];
+    menuSistemaModulos?: MenuSistemaModulo[];
+}
 
-  @Column("varchar", { name: "MODL_NOME", nullable: true, length: 40 })
-  public modlNome: string | null;
+export class MenuModuloDto extends BasicModel  implements IMenuModulo {
+    @required({message: 'O código do módulo é obrigatório!'})
+    modlCodigo: string;
+    @required({message: 'O nome do módulo é obrigatório!'})
+    public modlNome?: string | null;
+    @required({message: 'A descrição do módulo é obrigatório!'})
+    public modlDescricao?: string | null;
+    @prop()
+    public modlSmallIcon?: string | null;
+    @prop()
+    public modlNormalIcon?: string | null;
+    @prop()
+    public modlLargeIcon?: string | null;
 
-  @Column("varchar", { name: "MODL_DESCRICAO", nullable: true, length: 128 })
-  public modlDescricao: string | null;
+    public menuPastas?: MenuPasta[];
+    public menuSistemaModulos?: MenuSistemaModulo[];
 
-  @Column("image", { name: "MODL_SMALL_ICON", nullable: true })
-  public modlSmallIcon: Buffer | null;
+    constructor(param?: IMenuModulo) {
+        super(param);
+        this.modlNome = param?.modlNome ?? null;
+        this.modlDescricao = param?.modlDescricao ?? null;
+        this.modlSmallIcon = param?.modlSmallIcon ?? null;
+        this.modlNormalIcon = param?.modlNormalIcon ?? null;
+        this.modlLargeIcon = param?.modlLargeIcon ?? null;
+    }
 
-  @Column("image", { name: "MODL_NORMAL_ICON", nullable: true })
-  public modlNormalIcon: Buffer | null;
-
-  @Column("image", { name: "MODL_LARGE_ICON", nullable: true })
-  public modlLargeIcon: Buffer | null;
-
-  @Column("datetime", { name: "MODL_LASTUPDATE", nullable: true })
-  public modlLastupdate: LocalDateTime | null;
-
-  @OneToMany(() => MenuPasta, (menuPasta) => menuPasta.pstaModl)
-  public menuPastas: MenuPasta[];
-
-  @OneToMany(
-    () => MenuSistemaModulo,
-    (menuSistemaModulo) => menuSistemaModulo.ssmdModl
-  )
-  public menuSistemaModulos: MenuSistemaModulo[];
-
-  public constructor(init?: Partial<MenuModulo>) {
-    super();
-    Object.assign(this, init);
-  }
 }

@@ -1,0 +1,39 @@
+import { Column, Entity, Index } from "typeorm";
+
+@Index("PK_FSCL_CST", ["id"], { unique: true })
+@Entity("FSCL_CST")
+export default class FsclCst {
+  @Column("uniqueidentifier", {
+    primary: true,
+    name: "ID",
+    default: () => "newsequentialid()",
+  })
+  public id?: string;
+
+  @Column("nvarchar", { name: "FCST_CODIGO", nullable: true, length: 3 })
+  public fcstCodigo?: string | null;
+
+  @Column("nvarchar", { name: "FCST_DESCRICAO", nullable: true, length: 40 })
+  public fcstDescricao?: string | null;
+
+  @Column("bit", { name: "FCST_IPI", nullable: true })
+  public fcstIpi?: boolean | null;
+
+  @Column("nvarchar", { name: "FCST_TIPO", nullable: true, length: 10 })
+  public fcstTipo?: string | null;
+
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate?: Date;
+
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate?: Date | null;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate?: string;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate?: string | null;
+
+  @Column("bit", { name: "AUDT_ACTIVE" })
+  public audtActive?: boolean;
+}

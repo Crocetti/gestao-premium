@@ -38,5 +38,14 @@ export class CmnsRamoAtividadeDto extends BasicModel implements ICmnsRamoAtivida
         this.cmnsRamoAtividades = param?.cmnsRamoAtividades ?? null;
     }
 
+    public patchValues(values: Partial<ICmnsRamoAtividade>) {
+        const keys = Object.keys(values);
+        keys.forEach((key) => {
+            if (this.hasOwnProperty(key)) {
+                this[key] = values[key]
+            }
+        });
+    }
+
 }
 

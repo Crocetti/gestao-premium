@@ -1,0 +1,46 @@
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+} from "typeorm";
+import PecrEspecie from "./pecr-especie";
+import PecrLote from "./pecr-lote";
+
+@Index("PK_PECR_APTIDAO", ["id"], { unique: true })
+@Entity("PECR_APTIDAO")
+export default class PecrAptidao {
+  @Column("uniqueidentifier", {
+    primary: true,
+    name: "ID",
+    default: () => "newsequentialid()",
+  })
+  public id?: string;
+
+  @Column("nvarchar", { name: "APTD_NOME", nullable: true, length: 24 })
+  public aptdNome?: string | null;
+
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate?: Date;
+
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate?: Date | null;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate?: string;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate?: string | null;
+
+  @Column("bit", { name: "AUDT_ACTIVE" })
+  public audtActive?: boolean;
+
+  @ManyToOne(() => PecrEspecie, (pecrEspecie) => pecrEspecie.pecrAptidaos)
+  @JoinColumn([{ name: "APTD_ESPC_ID", referencedColumnName: "id" }])
+  public aptdEspc?: PecrEspecie;
+
+  @OneToMany(() => PecrLote, (pecrLote) => pecrLote.loteAptd)
+  public pecrLotes?: PecrLote[];
+}

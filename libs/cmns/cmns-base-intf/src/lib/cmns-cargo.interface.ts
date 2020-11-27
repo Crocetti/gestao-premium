@@ -12,10 +12,23 @@ export class CmnsCargoDto extends BasicModel implements ICmnsCargo {
     @required({message: 'O nome do Cargo é obrigatório!'})
     public cargNome: string | null;
 
-    constructor(value: Partial<ICmnsCargo>) {
-        super(value);
-        this.cargCodigo = value?.cargCodigo ?? null;
-        this.cargNome = value?.cargNome ?? null;
+    constructor(values: Partial<ICmnsCargo>) {
+        super(values);
+        const keys = Object.keys(values);
+        keys.forEach((key) => {
+            if (this.hasOwnProperty(key)) {
+                this[key] = values[key]
+            }
+        });
+    }
+
+    public patchValues(values: Partial<ICmnsCargo>) {
+        const keys = Object.keys(values);
+        keys.forEach((key) => {
+            if (this.hasOwnProperty(key)) {
+                this[key] = values[key]
+            }
+        });
     }
 }
 

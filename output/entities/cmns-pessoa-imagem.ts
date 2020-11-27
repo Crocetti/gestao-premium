@@ -1,0 +1,38 @@
+import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
+import CmnsPessoa from "./cmns-pessoa";
+
+@Index("PK_CMNS_PESSOA_IMAGEM", ["id"], { unique: true })
+@Entity("CMNS_PESSOA_IMAGEM")
+export default class CmnsPessoaImagem {
+  @Column("uniqueidentifier", {
+    primary: true,
+    name: "ID",
+    default: () => "newsequentialid()",
+  })
+  public id?: string;
+
+  @Column("nvarchar", { name: "PSIM_TIPO", nullable: true, length: 12 })
+  public psimTipo?: string | null;
+
+  @Column("nvarchar", { name: "PSIM_IMAGEM", nullable: true })
+  public psimImagem?: string | null;
+
+  @Column("datetime2", { name: "AUDT_DT_CREATE" })
+  public audtDtCreate?: Date;
+
+  @Column("datetime2", { name: "AUDT_DT_UPDATE", nullable: true })
+  public audtDtUpdate?: Date | null;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_CREATE" })
+  public audtUsrsCreate?: string;
+
+  @Column("uniqueidentifier", { name: "AUDT_USRS_UPDATE", nullable: true })
+  public audtUsrsUpdate?: string | null;
+
+  @Column("bit", { name: "AUDT_ACTIVE" })
+  public audtActive?: boolean;
+
+  @ManyToOne(() => CmnsPessoa, (cmnsPessoa) => cmnsPessoa.cmnsPessoaImagems)
+  @JoinColumn([{ name: "PSIM_PESS_ID", referencedColumnName: "id" }])
+  public psimPess?: CmnsPessoa;
+}

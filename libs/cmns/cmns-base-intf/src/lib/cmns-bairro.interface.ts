@@ -31,12 +31,21 @@ export class CmnsBairroDto extends BasicModel implements ICmnsBairro {
 
     constructor(param?: Partial<ICmnsBairro>) {
         super(param);
-        this.bairCodigo = param?.bairCodigo ?? null;
-        this.bairNome = param?.bairNome ?? null;
-        this.bairNomeAbreviado = param?.bairNomeAbreviado ?? null;
-        this.bairCepInicial = param?.bairCepInicial ?? null;
-        this.bairCepFinal = param?.bairCepFinal ?? null;
-        this.cmnsLocalidade = param?.cmnsLocalidade ?? null;
-        this.cmnsLogradouros = param?.cmnsLogradouros ?? null;
+        const keys = Object.keys(param);
+        keys.forEach((key) => {
+            if (this.hasOwnProperty(key)) {
+                this[key] = param[key]
+            }
+        });
     }
+
+    public patchValues(values: Partial<ICmnsBairro>) {
+        const keys = Object.keys(values);
+        keys.forEach((key) => {
+            if (this.hasOwnProperty(key)) {
+                this[key] = values[key]
+            }
+        });
+    }
+
 }

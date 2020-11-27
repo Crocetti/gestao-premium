@@ -35,15 +35,22 @@ export class CmnsLocalidadeDto extends BasicModel implements ICmnsLocalidade {
 
     public cmnsBairros: ICmnsBairro[];
 
-    constructor(value?: Partial<ICmnsLocalidade>) {
-        super(value);
-        this.lcldNome = value?.lcldNome ?? null;
-        this.lcldCep = value?.lcldCep ?? null;
-        this.lcldNrIbge = value?.lcldNrIbge ?? null;
-        this.lcldNomeAbrev = value?.lcldNomeAbrev ?? null;
-        this.lcldCepInicial = value?.lcldCepInicial ?? null;
-        this.lcldCepFinal = value?.lcldCepFinal ?? null;
-        this.cmnsUnfd = value?.cmnsUnfd ?? null;
-        this.cmnsBairros = value?.cmnsBairros ?? null;
+    constructor(values?: Partial<ICmnsLocalidade>) {
+        super(values);
+        const keys = Object.keys(values);
+        keys.forEach((key) => {
+            if (this.hasOwnProperty(key)) {
+                this[key] = values[key]
+            }
+        });
+    }
+
+    public patchValues(values: Partial<ICmnsLocalidade>) {
+        const keys = Object.keys(values);
+        keys.forEach((key) => {
+            if (this.hasOwnProperty(key)) {
+                this[key] = values[key]
+            }
+        });
     }
 }

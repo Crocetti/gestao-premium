@@ -18,4 +18,13 @@ export class CmnsTipoEmailDto extends BasicModel implements ICmnsTipoEmail {
         this.tpemCodigo = param?.tpemCodigo ?? null;
         this.tpemNome = param?.tpemNome ?? null;
     }
+
+    public patchValues(values: Partial<ICmnsTipoEmail>) {
+        const keys = Object.keys(values);
+        keys.forEach((key) => {
+            if (this.hasOwnProperty(key)) {
+                this[key] = values[key]
+            }
+        });
+    }
 }

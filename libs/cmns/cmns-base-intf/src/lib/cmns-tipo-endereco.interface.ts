@@ -14,4 +14,19 @@ export class CmnsTipoEnderecoDto extends BasicModel
     @prop()
     @required({message: 'O nome do tipo de endereço é obrigatório!'})
     public tpenNome: string;
+
+    constructor(values?: Partial<ICmnsTipoEndereco>) {
+        super(values);
+        this.tpenCodigo = values?.tpenCodigo ?? null;
+        this.tpenNome = values?.tpenNome ?? null;
+    }
+
+    public patchValues(values: Partial<ICmnsTipoEndereco>) {
+        const keys = Object.keys(values);
+        keys.forEach((key) => {
+            if (this.hasOwnProperty(key)) {
+                this[key] = values[key]
+            }
+        });
+    }
 }

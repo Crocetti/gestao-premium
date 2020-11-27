@@ -1,6 +1,6 @@
 [
   {
-    "resultsPath": ".\\tmp\\systems",
+    "resultsPath": "D:\\Desenvolvimento\\gestao-premium\\output",
     "pluralizeNames": true,
     "noConfigs": false,
     "convertCaseFile": "param",
@@ -13,13 +13,13 @@
     "generateConstructor": false,
     "customNamingStrategyPath": "",
     "relationIds": false,
-    "strictMode": "none",
+    "strictMode": "?",
     "skipSchema": true,
     "indexFile": false,
-    "exportType": "named"
+    "exportType": "default"
   },
   {
-    "host": "ALEX-LT",
+    "host": "alex-lt",
     "port": 1433,
     "databaseName": "NEW_SYSTEMS",
     "user": "sa",

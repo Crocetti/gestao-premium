@@ -29,5 +29,14 @@ export class CmnsProfissaoDto extends BasicModel implements  ICmnsProfissao {
         this.cmnsProfissao = param?.cmnsProfissao ?? null;
         this.cmnsProfissoes = param?.cmnsProfissoes ?? null;
     }
+
+    public patchValues(values: Partial<ICmnsProfissao>) {
+        const keys = Object.keys(values);
+        keys.forEach((key) => {
+            if (this.hasOwnProperty(key)) {
+                this[key] = values[key]
+            }
+        });
+    }
 }
 

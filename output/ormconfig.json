@@ -1,0 +1,14 @@
+[
+  {
+    "name": "default",
+    "type": "mssql",
+    "host": "alex-lt",
+    "port": 1433,
+    "username": "sa",
+    "password": "@aac663#",
+    "database": "NEW_SYSTEMS",
+    "schema": "dbo",
+    "synchronize": false,
+    "entities": ["entities/*.js"]
+  }
+]

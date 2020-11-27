@@ -1,66 +1,50 @@
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  OneToMany,
-  RelationId,
-} from "typeorm";
-import { MenuModulo } from "./menu-modulo";
-import { MenuRecurso } from "./menu-recurso";
-import { MenuSistemaPasta } from "./menu-sistema-pasta";
+import { required } from '@rxweb/reactive-form-validators';
+import type { BasicInterface } from '@gpremium/shared-int';
+import { BasicModel } from '@gpremium/shared-int';
 
-@Index("FK_MODL_RS_PSTA", ["pstaModlId"], {})
-@Index("PK_MENU_PASTA", ["pstaId"], { unique: true })
-@Entity("MENU_PASTA")
-export class MenuPasta extends BaseEntity {
-  @Column("varchar", { primary: true, name: "PSTA_ID", length: 27 })
-  public pstaId: string;
+export interface IMenuPasta extends BasicInterface {
+    pstaCodigo: string;
+    pstaModl?: MenuModulo;
+    pstaNome?: string | null;
+    pstaDescricao?: string | null;
+    pstaTpMenu?: string | null;
+    pstaSmallIcon?: string | null;
+    pstaNormalIcon?: string | null;
+    pstaLargeIcon?: string | null;
 
-  @Column("varchar", { name: "PSTA_MODL_ID", nullable: true, length: 27 })
-  public pstaModlId: string | null;
+    menuRecursos?: MenuRecurso[];
+    menuSistemaPastas?: MenuSistemaPasta[];
+}
 
-  @Column("varchar", { name: "PSTA_NOME", nullable: true, length: 40 })
-  public pstaNome: string | null;
+export class MenuPastaDto extends BasicModel implements IMenuPasta {
+    @required({message: 'O código da pasta é obrigatório!'})
+    pstaCodigo: string;
+    @required({message: 'O nome da pasta é obrigatório!'})
+    public pstaNome?: string | null;
+    @required({message: 'Descrição da pasta é obrigatório!'})
+    public pstaDescricao?: string | null;
+    @prop()
+    public pstaModl?: MenuModulo;
+    @prop()
+    public pstaTpMenu?: string | null;
+    @prop()
+    public pstaSmallIcon?: string | null;
+    @prop()
+    public pstaNormalIcon?: string | null;
+    @prop()
+    public pstaLargeIcon?: string | null;
 
-  @Column("varchar", { name: "PSTA_DESCRICAO", nullable: true, length: 128 })
-  public pstaDescricao: string | null;
+    public menuRecursos?: MenuRecurso[];
+    public menuSistemaPastas?: MenuSistemaPasta[];
 
-  @Column("varchar", { name: "PSTA_TP_MENU", nullable: true, length: 15 })
-  public pstaTpMenu: string | null;
-
-  @Column("image", { name: "PSTA_SMALL_ICON", nullable: true })
-  public pstaSmallIcon: Buffer | null;
-
-  @Column("image", { name: "PSTA_NORMAL_ICON", nullable: true })
-  public pstaNormalIcon: Buffer | null;
-
-  @Column("image", { name: "PSTA_LARGE_ICON", nullable: true })
-  public pstaLargeIcon: Buffer | null;
-
-  @Column("datetime", { name: "PSTA_LASTUPDATE", nullable: true })
-  public pstaLastupdate: LocalDateTime | null;
-
-  @ManyToOne(() => MenuModulo, (menuModulo) => menuModulo.menuPastas)
-  @JoinColumn([{ name: "PSTA_MODL_ID", referencedColumnName: "modlId" }])
-  public pstaModl: MenuModulo;
-
-  @OneToMany(() => MenuRecurso, (menuRecurso) => menuRecurso.rcrsPsta)
-  public menuRecursos: MenuRecurso[];
-
-  @OneToMany(
-    () => MenuSistemaPasta,
-    (menuSistemaPasta) => menuSistemaPasta.sspsPsta
-  )
-  public menuSistemaPastas: MenuSistemaPasta[];
-
-  @RelationId((menuPasta: MenuPasta) => menuPasta.pstaModl)
-  public pstaModlId2: string | null;
-
-  public constructor(init?: Partial<MenuPasta>) {
-    super();
-    Object.assign(this, init);
-  }
+    constructor(param?: IMenuPasta) {
+        super(param);
+        this.pstaModl = param?.pstaModl ?? null;
+        this.pstaNome = param?.pstaNome ?? null;
+        this.pstaDescricao = param?.pstaDescricao ?? null;
+        this.pstaTpMenu = param?.pstaTpMenu ?? null;
+        this.pstaSmallIcon = param?.pstaSmallIcon ?? null;
+        this.pstaNormalIcon = param?.pstaNormalIcon ?? null;
+        this.pstaLargeIcon = param?.pstaLargeIcon ?? null;
+    }
 }

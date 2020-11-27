@@ -18,4 +18,13 @@ export class CmnsTipoTelefoneDto extends BasicModel
         this.tptlCodigo = param?.tptlCodigo ?? null;
         this.tptlNome = param?.tptlNome ?? null;
     }
+
+    public patchValues(values: Partial<ICmnsTipoTelefone>) {
+        const keys = Object.keys(values);
+        keys.forEach((key) => {
+            if (this.hasOwnProperty(key)) {
+                this[key] = values[key]
+            }
+        });
+    }
 }

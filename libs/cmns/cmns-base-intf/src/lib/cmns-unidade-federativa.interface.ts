@@ -47,5 +47,14 @@ export class CmnsUnidadeFederativaDto extends BasicModel implements ICmnsUnidade
         this.cmnsPais = value?.cmnsPais ?? null;
         this.cmnsLocalidades = value?.cmnsLocalidades ?? null;
     }
+
+    public patchValues(values: Partial<ICmnsUnidadeFederativa>) {
+        const keys = Object.keys(values);
+        keys.forEach((key) => {
+            if (this.hasOwnProperty(key)) {
+                this[key] = values[key]
+            }
+        });
+    }
 }
 

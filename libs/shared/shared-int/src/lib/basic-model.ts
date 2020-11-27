@@ -18,5 +18,6 @@ export class BasicModel implements BasicInterface {
         this.audtUsrsUpdate = param?.audtUsrsUpdate ?? null;
         this.audtActive = param?.audtActive ?? null;
     }
+
 }
 

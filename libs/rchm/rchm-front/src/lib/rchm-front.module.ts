@@ -6,7 +6,8 @@ import { RouterModule } from '@angular/router';
   imports: [
     CommonModule,
 
-    RouterModule.forChild([
+    RouterModule.forChild([{ path: 'rchm-funcionario', loadChildren: () => import('./rchm-funcionario/rchm-funcionario.module').then(m => m.RchmFuncionarioModule) },
+      { path: 'rchm-funcionario-historico', loadChildren: () => import('./rchm-funcionario-historico/rchm-funcionario-historico.module').then(m => m.RchmFuncionarioHistoricoModule) }
       /* {path: '', pathMatch: 'full', component: InsertYourComponentHere} */
     ]),
   ],

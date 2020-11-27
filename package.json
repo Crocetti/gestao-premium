@@ -57,6 +57,7 @@
     "@nestjs/platform-express": "^7.0.0",
     "@nestjs/typeorm": "^7.1.4",
     "@nrwl/angular": "10.3.0",
+
     "@rxweb/ngx-translate-extension": "^1.0.6",
     "@rxweb/reactive-form-validators": "^2.1.2",
     "@rxweb/translate": "^1.0.13",
